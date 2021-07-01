@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor.UI;
+using UnityEngine.Events;
+using System;
+using UnityEngine.EventSystems;
+
 
 public class Event : MonoBehaviour
 {
@@ -28,6 +33,7 @@ public class Event : MonoBehaviour
     public GameObject back;
     public Sprite[] back_spr;
 
+    public GameObject ActBtn_obj, FeelBtn_obj;
 
 
     //캐릭터
@@ -41,11 +47,16 @@ public class Event : MonoBehaviour
 
     public GameObject GM;
 
+    
 
     //doorOpen_i 문이 열림 findKey_i 급수대에 열쇠를 봄 switchOn_i 스위치를 켬 getKey_i 열쇠 얻음 findswitch_i 스위치를 봄
     //findGlass_i 유리조각을 봄
     void Start()
     {
+
+        //버튼 투명영역 비활성화
+        ActBtn_obj.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.1f;
+        FeelBtn_obj.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.1f;
         /*
         char_i = 1;
         StopCoroutine("movechar");
@@ -525,7 +536,8 @@ public class Event : MonoBehaviour
                                 item();
                                 use_input.text = "";
                                 GM.GetComponent<SoundEvt>().DoorSound();
-                                
+                                //GM.GetComponent<SoundEvt>().BrokenSound();
+
                                 doorOpen_i = 1;
                                 Act_btn.SetActive(false);
                                 use_inp.SetActive(false);

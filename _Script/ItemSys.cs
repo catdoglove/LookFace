@@ -10,6 +10,7 @@ public class ItemSys : MonoBehaviour
     public GameObject[] slot_obj;
     public GameObject[] slotHand_obj;
     public int[] bagSlot_i;
+    public GameObject ItemMenu_obj;
 
     // Start is called before the first frame update
     void Start()
@@ -17,9 +18,18 @@ public class ItemSys : MonoBehaviour
         
     }
 
-    public void PickItem(int num_i)
+    void Update()
     {
+        // 마우스 입력을 받았 을 때
+        if (Input.GetMouseButtonUp(0))
+        {
+            ItemMenu_obj.SetActive(false);
+        }
+    }
 
+
+            public void PickItem(int num_i)
+    {
         Debug.Log(num_i);
         slotHand_obj[0].GetComponent<Image>().sprite = item_spr[num_i];
         slotHand_obj[0].SetActive(true);
@@ -56,9 +66,7 @@ public class ItemSys : MonoBehaviour
     }
     public void SetItemImage()
     {
-
         slot_obj[slot_i].GetComponent<Image>().sprite = item_spr[bagSlot_i[slot_i]];
-
     }
 
     //아이템을 손에 들고 있는지 체크하고 표시
