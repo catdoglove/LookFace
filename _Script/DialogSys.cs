@@ -23,10 +23,9 @@ public class DialogSys : MonoBehaviour
         /*
         if (data[0][str].Equals("스위치"))
         {
-
         }
         */
-
+        /*
         //각각 값을 불러와서 순서대로 추가
         code_str = code_str + Event.direction;
         code_str = code_str + Event.indexMove;
@@ -75,7 +74,7 @@ public class DialogSys : MonoBehaviour
             
             
         }
-
+        */
         //GetDictonaryValue(data, "스위치");
 
 
@@ -94,10 +93,15 @@ else
 }
          */
     }
-    
+
 
     public void TextShow()
     {
+        if (Event.stage_i==0)
+        {
+
+        }
+        else {
         //초기화 후 각각 값을 불러와서 순서대로 추가
         code_str = "";
         code_str = code_str + Event.direction;
@@ -182,5 +186,5 @@ else
             dialog_txt.text = "그런 것은 없어";
         }
     }
-
+    }
 }

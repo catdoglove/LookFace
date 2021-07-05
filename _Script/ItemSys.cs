@@ -13,11 +13,21 @@ public class ItemSys : MonoBehaviour
     public GameObject ItemMenu_obj;
     public GameObject ItemDetail_obj;
     public GameObject GM;
+    public string[] ItemName_str;
+    public GameObject bag_obj, itemWindow_obj;
+    public Text itemName_txt;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        ItemName_str[0]= "열쇠";
+        ItemName_str[1] = "나무 열쇠";
+        ItemName_str[2] = "드라이버";
+        ItemName_str[3] = "건전지";
+        ItemName_str[4] = "캡슐";
+        ItemName_str[5] = "불꺼진 리모콘";
+        ItemName_str[6] = "불켜진 리모콘";
+        ItemName_str[7] = "";
     }
 
     void Update()
@@ -30,18 +40,32 @@ public class ItemSys : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// 집어들기 왼클릭
+    /// </summary>
+    /// <param name="num_i"></param>
     public void PickItem(int num_i)
     {
         Debug.Log(num_i);
-       SetHands(bagSlot_i[num_i]);
-        slot_i = num_i;
+
+        if (slotHand_obj[num_i].activeSelf == false)
+        {
+            slot_i = num_i;
+            SetHands(bagSlot_i[num_i]);
+        }
     }
 
+    /// <summary>
+    /// 집어들기
+    /// </summary>
     public void PickItemBtn()
     {
         int pick=PlayerPrefs.GetInt("setitem", 0);
-        slot_i = pick;
-        SetHands(bagSlot_i[pick]);
+        if (slotHand_obj[pick].activeSelf ==false)
+        {
+            slot_i = pick;
+            SetHands(bagSlot_i[pick]);
+        }
     }
 
     public void SetItem()
@@ -58,6 +82,19 @@ public class ItemSys : MonoBehaviour
             itemList_i++;
             SetHands(num);
         }
+    }
+    public void ShowBag()
+    {
+        bag_obj.SetActive(true);
+    }
+
+    public void OpenBag()
+    {
+        itemWindow_obj.SetActive(true);
+    }
+    public void CloseBag()
+    {
+        itemWindow_obj.SetActive(false);
     }
 
     void SetHands(int num)
@@ -78,9 +115,15 @@ public class ItemSys : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 살펴보기
+    /// </summary>
     public void ShowDetail()
     {
-        ItemDetail_obj.SetActive(true);
+        if (PlayerPrefs.GetInt("setitem", 0) == 5)
+        {
+            ItemDetail_obj.SetActive(true);
+        }
     }
     public void CloseDetail()
     {
@@ -136,4 +179,7 @@ public class ItemSys : MonoBehaviour
         slot_obj[slot_i].SetActive(false);
         slotHand_obj[slot_i].SetActive(false);
     }
+
+
+
 }
