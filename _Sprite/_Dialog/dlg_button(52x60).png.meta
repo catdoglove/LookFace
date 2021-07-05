@@ -20,6 +20,33 @@ TextureImporter:
   - first:
       213: 7305982335240426414
     second: dlg_button(52x60)_5
+  - first:
+      213: -2912350764307686208
+    second: dlg_button(52x60)_0
+  - first:
+      213: -536356828296743431
+    second: dlg_button(52x60)_1
+  - first:
+      213: 1231514328144795259
+    second: dlg_button(52x60)_2
+  - first:
+      213: 3262397133575288934
+    second: dlg_button(52x60)_3
+  - first:
+      213: 7962218975741059208
+    second: dlg_button(52x60)_4
+  - first:
+      213: 7814289319240884962
+    second: dlg_button(52x60)_5
+  - first:
+      213: 8846286726357650860
+    second: dlg_button(52x60)_6
+  - first:
+      213: -7481938168037159935
+    second: dlg_button(52x60)_7
+  - first:
+      213: -7022216496122586573
+    second: dlg_button(52x60)_8
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -131,8 +158,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eba251c597cf0c2b0800000000000000
-      internalID: -5566171541263799618
+      spriteID: 0cc5a1009604597d0800000000000000
+      internalID: -2912350764307686208
       vertices: []
       indices: 
       edges: []
@@ -152,8 +179,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3412e9bad10e997f0800000000000000
-      internalID: -605206256866680509
+      spriteID: 9f574807e4a7e88f0800000000000000
+      internalID: -536356828296743431
       vertices: []
       indices: 
       edges: []
@@ -162,8 +189,8 @@ TextureImporter:
       name: dlg_button(52x60)_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 60
+        x: 104
+        y: 120
         width: 52
         height: 60
       alignment: 0
@@ -173,8 +200,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ab7ae70ead165000800000000000000
-      internalID: 24239481291439016
+      spriteID: b76dfd0b1c7371110800000000000000
+      internalID: 1231514328144795259
       vertices: []
       indices: 
       edges: []
@@ -183,6 +210,27 @@ TextureImporter:
       name: dlg_button(52x60)_3
       rect:
         serializedVersion: 2
+        x: 0
+        y: 60
+        width: 52
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 668f10778ec564d20800000000000000
+      internalID: 3262397133575288934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dlg_button(52x60)_4
+      rect:
+        serializedVersion: 2
         x: 52
         y: 60
         width: 52
@@ -194,14 +242,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c9b143f8964b96b0800000000000000
-      internalID: -5288555714686371390
+      spriteID: 880abe809fb7f7e60800000000000000
+      internalID: 7962218975741059208
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dlg_button(52x60)_4
+      name: dlg_button(52x60)_5
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 60
+        width: 52
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e26b75ebbee17c60800000000000000
+      internalID: 7814289319240884962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dlg_button(52x60)_6
       rect:
         serializedVersion: 2
         x: 0
@@ -215,14 +284,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0dc9cc0c9d9b97ca0800000000000000
-      internalID: -6018575082110280496
+      spriteID: cad0dc178e254ca70800000000000000
+      internalID: 8846286726357650860
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dlg_button(52x60)_5
+      name: dlg_button(52x60)_7
       rect:
         serializedVersion: 2
         x: 52
@@ -236,8 +305,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea3d843a930146560800000000000000
-      internalID: 7305982335240426414
+      spriteID: 10c45be80e0da2890800000000000000
+      internalID: -7481938168037159935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dlg_button(52x60)_8
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 0
+        width: 52
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33a99b45d431c8e90800000000000000
+      internalID: -7022216496122586573
       vertices: []
       indices: 
       edges: []

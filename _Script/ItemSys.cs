@@ -25,8 +25,8 @@ public class ItemSys : MonoBehaviour
         ItemName_str[2] = "드라이버";
         ItemName_str[3] = "건전지";
         ItemName_str[4] = "캡슐";
-        ItemName_str[5] = "불꺼진 리모콘";
-        ItemName_str[6] = "불켜진 리모콘";
+        ItemName_str[5] = "불 꺼진 리모컨";
+        ItemName_str[6] = "불 켜진 리모컨";
         ItemName_str[7] = "";
     }
 

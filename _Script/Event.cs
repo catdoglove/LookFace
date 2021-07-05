@@ -59,6 +59,7 @@ public class Event : MonoBehaviour
     public static int stage_i=0;
 
     public int tuto_i, tutoAct_i;
+    public int tutoPro_i=0;
     public GameObject tutoUp_obj, tutoDown_obj, tutoFeel_obj, tutoAct_obj, tutoMove_obj, tutoGet_obj, tutoGo_obj, tutoBack_obj, tutoDelay_obj, tutoAdd_obj, tutoResolve_obj, tutoBody_obj;
     public Sprite[] tutoBack_spr;
 
@@ -66,7 +67,6 @@ public class Event : MonoBehaviour
     //findGlass_i 유리조각을 봄
     void Start()
     {
-
         if (stage_i == 0)
         {
             TutorialStart();
@@ -255,25 +255,44 @@ public class Event : MonoBehaviour
 
     public void Feel()
     {
+        EventSystem.current.SetSelectedGameObject(null);
         if (stage_i == 0)
         {
             TutorialFeel();
         }
         else {
-        indexAct = 1;
         fal();
+            Debug.Log(switchOn_i);
         switch (direction)
-        {
-            case 1:
+            {
+                case 1:
                 if (indexAct == 1)
                 {
                     findswitch_i = 1;
                 }
+                    if (indexMove == 1)
+                    {
+                        if (switchOn_i == 1)
+                        {
+                            indexAct = 2;
+                        }
+                        else
+                        {
 
-                if (switchOn_i == 1)
-                {
-                    indexAct = 2;
-                }
+                            indexAct = 1;
+                        }
+                    }else if (indexMove == 0)
+                    {
+                        if (switchOn_i == 1)
+                        {
+                            indexAct = 1;
+                        }
+                        else
+                        {
+
+                            indexAct = 2;
+                        }
+                    }
                 break;
             case 2:
                 if (indexMove == 1)
@@ -297,6 +316,8 @@ public class Event : MonoBehaviour
         }
             
         }
+
+        Debug.Log(indexAct);
     }
 
 
@@ -739,7 +760,9 @@ GO버튼이 활성화되어서 나가짐
 
     public void TutorialStart()
     {
-        t_txt.text = "‘누구나 무엇이든 구매할 수 있다!’ ?0?마켓 사이트가 열려있다.";
+        //t_txt.text = "‘누구나 무엇이든 구매할 수 있다!’ ?0?마켓 사이트가 열려있다.";
+        tutoPro_i++;
+        GM.GetComponent<DialogSys>().TextShow();
         char_obj.SetActive(false);
         tutoBody_obj.SetActive(true);
         tutoBack_obj.SetActive(true);
@@ -756,12 +779,16 @@ GO버튼이 활성화되어서 나가짐
         switch (tuto_i)
         {
             case 0:
-                t_txt.text = "‘누구나 무엇이든 구매할 수 있다!’ ?0?마켓 사이트가 열려있다. 아!그래 주문해야지.분명..거울이라고 했었지 아마?";
-                
+                //t_txt.text = "‘누구나 무엇이든 구매할 수 있다!’ ?0?마켓 사이트가 열려있다. 아!그래 주문해야지.분명..거울이라고 했었지 아마?";
+
+                tutoPro_i++;
+                //GM.GetComponent<DialogSys>().TextShow();
                 tutoAct_obj.GetComponent<Button>().interactable = true;
                 break;
             case 1:
-                t_txt.text = "내가 앉았던 자리다. 구석에 놓아 뒀던 가방이 보인다 ..많이 낡았네";
+                //t_txt.text = "내가 앉았던 자리다. 구석에 놓아 뒀던 가방이 보인다 ..많이 낡았네";
+                tutoPro_i++;
+                //GM.GetComponent<DialogSys>().TextShow();
                 tutoGet_obj.GetComponent<Button>().interactable = true;
                 break;
             default:
@@ -775,8 +802,11 @@ GO버튼이 활성화되어서 나가짐
         {
             TutoFalse();
             tutoBack_obj.GetComponent<Image>().sprite = tutoBack_spr[0];
-            t_txt.text = "텍스트 필요";
+            //t_txt.text = "텍스트 필요";
+            tutoPro_i++;
+            //GM.GetComponent<DialogSys>().TextShow();
             tutoDelay_obj.SetActive(true);
+            use_input.text = "";
         }
     }
     public void TutoDelay()
@@ -785,14 +815,18 @@ GO버튼이 활성화되어서 나가짐
         TutoFalse();
         tutoBack_obj.SetActive(false);
         tutoDelay_obj.SetActive(false);
-        t_txt.text = "주문이 완료 되었다. 이제 오는 걸 기다리면 되겠지.";
+        //t_txt.text = "주문이 완료 되었다. 이제 오는 걸 기다리면 되겠지.";
+        tutoPro_i++;
+        GM.GetComponent<DialogSys>().TextShow();
         tutoUp_obj.SetActive(true);
     }
     void TutorialUp()
     {
         back.GetComponent<Image>().sprite = tutoBack_spr[1];
         TutoFalse();
-        t_txt.text = "이제 집으로 가야겠다. 으.. 어서 문을 열고 나가자.";
+        //t_txt.text = "이제 집으로 가야겠다. 으.. 어서 문을 열고 나가자.";
+        tutoPro_i++;
+        //GM.GetComponent<DialogSys>().TextShow();
         tutoMove_obj.GetComponent<Button>().interactable = true;
     }
     void TutorialMove()
@@ -801,29 +835,39 @@ GO버튼이 활성화되어서 나가짐
         switch (tutoAct_i)
         {
             case 0:
-                t_txt.text = "문 앞에 섰다. ...아! 가방을 가져오는 걸 깜빡했어.";
-                
+                //t_txt.text = "문 앞에 섰다. ...아! 가방을 가져오는 걸 깜빡했어.";
+                tutoPro_i++;
+                //GM.GetComponent<DialogSys>().TextShow();
+
                 tutoDown_obj.SetActive(true);
                 break;
             case 1:
-                t_txt.text = "문 앞에 섰다.";
+                //t_txt.text = "문 앞에 섰다.";
+                tutoPro_i++;
+                //GM.GetComponent<DialogSys>().TextShow();
                 tutoGo_obj.SetActive(true);
                 break;
         }
+        move_input.text = "";
         tutoAct_i++;
     }
     void TutorialDown()
     {
         back.GetComponent<Image>().sprite = tutoBack_spr[2];
         TutoFalse();
-        t_txt.text = "내가 앉았던 자리다. 아마 평생 여기서 일하겠지..";
+        //t_txt.text = "내가 앉았던 자리다. 아마 평생 여기서 일하겠지..";
+        tutoPro_i++;
+        //GM.GetComponent<DialogSys>().TextShow();
         tutoFeel_obj.GetComponent<Button>().interactable = true;
     }
     void TutorialGet()
     {
         TutoFalse();
-        t_txt.text = "낡은 가방을 얻었다.";
+        //t_txt.text = "낡은 가방을 얻었다.";
+        tutoPro_i++;
+        //GM.GetComponent<DialogSys>().TextShow();
         tutoUp_obj.SetActive(true);
+        get_input.text = "";
     }
     void TutorialGo()
     {

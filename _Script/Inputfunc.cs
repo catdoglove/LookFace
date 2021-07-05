@@ -32,10 +32,9 @@ public class Inputfunc : MonoBehaviour, ISelectHandler
         }
         */
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
 
-        }
+
+        /*
             if (Input.GetKeyDown(KeyCode.Return))
         {
 
@@ -44,15 +43,14 @@ public class Inputfunc : MonoBehaviour, ISelectHandler
                 Debug.Log("a");
             }
         }
-
-        if (this.gameObject.GetComponent<InputField>().isFocused == true)
+        
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                Debug.Log("a");
-            }
+
         }
+
+        */
+        //f.selectionFocusPosition = f.selectionAnchorPosition;
         this.gameObject.GetComponent<InputField>().selectionFocusPosition = this.gameObject.GetComponent<InputField>().selectionAnchorPosition;
     }
 
@@ -60,7 +58,7 @@ public class Inputfunc : MonoBehaviour, ISelectHandler
     //Do this when the selectable UI object is selected.
     public void OnSelect(BaseEventData eventData)
     {
-        Debug.Log(this.gameObject.name + " was selected");
+        //Debug.Log(this.gameObject.name + " was selected");
         StartCoroutine(end_text());
     }
 

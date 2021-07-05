@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SoundEvt : MonoBehaviour
 {
-    public AudioSource se_move, se_switch, se_button, se_door, se_broken;
-    public AudioClip sp_move, sp_switch, sp_button, sp_door, sp_broken;
+    public AudioSource se_move, se_switch, se_button, se_door, se_broken, se_talk;
+    public AudioClip sp_move, sp_switch, sp_button, sp_door, sp_broken, sp_talk;
 
     public AudioSource BGM, BGS;
     float BGMVol_f, BGSVol_f;
@@ -75,6 +75,16 @@ public class SoundEvt : MonoBehaviour
         se_broken.clip = sp_broken;
         se_broken.loop = false;
         se_broken.Play();
+    }
+    /// <summary>
+    /// 부서지는 소리
+    /// </summary>
+    public void TalkSound()
+    {
+        se_talk = gameObject.GetComponent<AudioSource>();
+        se_talk.clip = sp_talk;
+        se_talk.loop = false;
+        se_talk.Play();
     }
 
 }
