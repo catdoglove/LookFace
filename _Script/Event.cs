@@ -77,7 +77,7 @@ public class Event : MonoBehaviour
     {
         testcamera.Fade = 0.2f;
         testcamera2._Fade = 0f;
-        stage_i = 2;
+        
         if (stage_i == 0)
         {
             TutorialStart();
@@ -504,7 +504,7 @@ public class Event : MonoBehaviour
                 switch (direction)
                 {
                     case 1:
-                        if (inputM_str.Equals("스위치") || inputM_str.Equals("낡은스위치") || inputM_str.Equals("낡은 스위치"))
+                        if (inputM_str.Equals("붉은 빛") || inputM_str.Equals("붉은빛"))
                         {
                             t_txt.text = "스위치 앞에 섰다.";
                             move_input.text = "";
