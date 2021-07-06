@@ -12,6 +12,7 @@ public class DialogSys : MonoBehaviour
     int num = 0;
     float speedF = 0.05f;
     public GameObject speedBtn;//스피드업버튼
+    public GameObject endWnd;
 
     List<Dictionary<string, object>> data_talk, data0_talk, data1_talk, data_eventtalk; //csv파일
 
@@ -33,6 +34,21 @@ public class DialogSys : MonoBehaviour
             Debug.Log("스페이스 키 누름");
             textSpeedUp();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            endWnd.SetActive(true);
+        }
+    }
+
+    public void closeEndWnd()
+    {
+        endWnd.SetActive(false);
+    }
+
+    public void closegame()
+    {
+        Application.Quit();
     }
 
     void Awake()
