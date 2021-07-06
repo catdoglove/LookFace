@@ -17,6 +17,8 @@ public class ItemSys : MonoBehaviour
     public GameObject bag_obj, itemWindow_obj;
     public Text itemName_txt;
 
+    public GameObject closeZipper_obj,openZipper_obj;
+
     // Start is called before the first frame update
     void Start()
     {

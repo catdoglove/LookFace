@@ -25,13 +25,13 @@ public class Event : MonoBehaviour
     public int where_i, switchOn_i, findKey_i, doorOpen_i, pos_i, getKey_i, findswitch_i, waterCoundt_i, findGlass_i, progress_i;
     public string[] s_str, sf_str;
     //텍스트
-    public string inputF_str, inputM_str, inputA_str, inputG_str;
+    public string inputF_str, inputM_str, inputA_str, inputG_str, inputSum_str, inputDis_str;
     //인풋필드 및 행동 버튼
-    public GameObject text, move_inp, use_inp, Act_btn, back_btn, go_btn, get_inp;
+    public GameObject text, move_inp, use_inp, Act_btn, back_btn, go_btn, get_inp, Sum_inp, Sum2_inp, Dis_inp, Sum_obj;
     public Text t_txt, E_txt;
-    public InputField use_input, move_input, get_input;
+    public InputField use_input, move_input, get_input, sum1_input, sum2_input, dis_input;
     public GameObject back;
-    public Sprite[] back_spr;
+    public Sprite[] back_spr, back2_spr;
 
     public GameObject ActBtn_obj, FeelBtn_obj;
 
@@ -43,7 +43,6 @@ public class Event : MonoBehaviour
 
     //이밴트
     public GameObject eventBtn_obj, dark_obj, eventTalk_obj;
-
 
     public GameObject GM;
 
@@ -62,6 +61,8 @@ public class Event : MonoBehaviour
     public int tutoPro_i=0;
     public GameObject tutoUp_obj, tutoDown_obj, tutoFeel_obj, tutoAct_obj, tutoMove_obj, tutoGet_obj, tutoGo_obj, tutoBack_obj, tutoDelay_obj, tutoAdd_obj, tutoResolve_obj, tutoBody_obj;
     public Sprite[] tutoBack_spr;
+
+    public GameObject tutohand;
 
     //doorOpen_i 문이 열림 findKey_i 급수대에 열쇠를 봄 switchOn_i 스위치를 켬 getKey_i 열쇠 얻음 findswitch_i 스위치를 봄
     //findGlass_i 유리조각을 봄
@@ -169,10 +170,17 @@ public class Event : MonoBehaviour
         arrowU_obj.SetActive(false);
         arrowD_obj.SetActive(true);
 
-        if (findswitch_i == 1)
-        {
-            indexAct = 1;
-        }
+            if (findswitch_i == 1)
+            {
+                indexAct = 1;
+            }
+            if (stage_i == 2)
+            {
+                indexAct = 0;
+                back.GetComponent<Image>().sprite = back2_spr[pos_i];
+                arrowL_obj.SetActive(true);
+                arrowR_obj.SetActive(true);
+            }
         }
     }
     public void ArrowD()
@@ -204,6 +212,13 @@ public class Event : MonoBehaviour
             //arrowR_obj.SetActive(true);
             arrowU_obj.SetActive(true);
             arrowD_obj.SetActive(false);
+
+            if (stage_i == 2)
+            {
+                back.GetComponent<Image>().sprite = back2_spr[pos_i];
+                arrowL_obj.SetActive(true);
+                arrowR_obj.SetActive(true);
+            }
         }
     }
 
@@ -229,6 +244,12 @@ public class Event : MonoBehaviour
         //arrowR_obj.SetActive(false);
         arrowU_obj.SetActive(true);
         arrowD_obj.SetActive(true);
+        if (stage_i == 2)
+        {
+            back.GetComponent<Image>().sprite = back2_spr[pos_i];
+            arrowL_obj.SetActive(true);
+            arrowR_obj.SetActive(false);
+        }
     }
 
     public void ArrowL()
@@ -251,6 +272,12 @@ public class Event : MonoBehaviour
         //arrowR_obj.SetActive(true);
         arrowU_obj.SetActive(true);
         arrowD_obj.SetActive(true);
+        if (stage_i == 2)
+        {
+            back.GetComponent<Image>().sprite = back2_spr[pos_i];
+            arrowL_obj.SetActive(false);
+            arrowR_obj.SetActive(true);
+        }
     }
 
     public void Feel()
@@ -263,7 +290,26 @@ public class Event : MonoBehaviour
         else {
         fal();
             Debug.Log(switchOn_i);
-        switch (direction)
+
+            if (stage_i == 2)
+            {
+                switch (direction)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+
+                    default:
+                        break;
+                }
+                }
+            else { 
+            switch (direction)
             {
                 case 1:
                 if (indexAct == 1)
@@ -314,7 +360,7 @@ public class Event : MonoBehaviour
             default:
                 break;
         }
-            
+            }
         }
 
         Debug.Log(indexAct);
@@ -364,67 +410,119 @@ public class Event : MonoBehaviour
         {
             indexAct = 9;
             inputM_str = move_input.text;
-            switch (direction)
+
+            if (stage_i == 2)
             {
-                case 1:
-                    if (inputM_str.Equals("스위치") || inputM_str.Equals("낡은스위치") || inputM_str.Equals("낡은 스위치"))
-                    {
-                        t_txt.text = "스위치 앞에 섰다.";
-                        move_input.text = "";
-                        fal();
-
-                        back_btn.SetActive(true);
-                        indexMove = 1;
-
-
-                        if (switchOn_i == 1)
+                switch (direction)
+                {
+                    case 1:
+                        if (inputM_str.Equals("문양") || inputM_str.Equals("커다란문양") || inputM_str.Equals("커다란 문양"))
                         {
-                        }
-                    }
-                    else
-                    {
-                        //오타가 난 경우 확인할 수 있도록
-                        t_txt.text = "그런 곳으로는 갈수 없어.";
-                    }
-                    break;
-                case 2:
-                    if (inputM_str.Equals("급수대"))
-                    {
-                        move_input.text = "";
-                        fal();
-                        back_btn.SetActive(true);
-                        indexMove = 1;
-
-                        if (getKey_i == 1)
-                        {
-                        }
-                    }
-                    else
-                    {
-                        if (inputM_str.Equals("문") || inputM_str.Equals("작은문") || inputM_str.Equals("작은 문"))
-                        {
+                            indexMove = 1;
                             move_input.text = "";
                             fal();
                             back_btn.SetActive(true);
-                            indexMove = 3;
-                            if (doorOpen_i == 1)
-                            {
-                                go_btn.SetActive(true);
-                            }
+                        }
+                            break;
+                    case 2:
+                        if (inputM_str.Equals("문"))
+                        {
+                            indexMove = 0;
+                            move_input.text = "";
+                            fal();
+                            back_btn.SetActive(true);
+                        }
+                        break;
+                    case 3:
+                        if (inputM_str.Equals("책상"))
+                        {
+                            indexMove = 0;
+                            move_input.text = "";
+                            fal();
+                            back_btn.SetActive(true);
+                            indexMove = 1;
+                        }
+                        break;
+                    case 4:
+                        if (inputM_str.Equals("선반") || inputM_str.Equals("커다란선반") || inputM_str.Equals("커다란 선반"))
+                        {
+                            indexMove = 0;
+                            move_input.text = "";
+                            fal();
+                            back_btn.SetActive(true);
+                            indexMove = 1;
+                        }
+                            break;
 
-                            indexMove = 3;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch (direction)
+                {
+                    case 1:
+                        if (inputM_str.Equals("스위치") || inputM_str.Equals("낡은스위치") || inputM_str.Equals("낡은 스위치"))
+                        {
+                            t_txt.text = "스위치 앞에 섰다.";
+                            move_input.text = "";
+                            fal();
+
+                            back_btn.SetActive(true);
+                            indexMove = 1;
+
+
+                            if (switchOn_i == 1)
+                            {
+                            }
                         }
                         else
                         {
                             //오타가 난 경우 확인할 수 있도록
                             t_txt.text = "그런 곳으로는 갈수 없어.";
                         }
-                    }
+                        break;
+                    case 2:
+                        if (inputM_str.Equals("급수대"))
+                        {
+                            move_input.text = "";
+                            fal();
+                            back_btn.SetActive(true);
+                            indexMove = 1;
 
-                    break;
+                            if (getKey_i == 1)
+                            {
+                            }
+                        }
+                        else
+                        {
+                            if (inputM_str.Equals("문") || inputM_str.Equals("갈색문") || inputM_str.Equals("갈색 문"))
+                            {
+                                move_input.text = "";
+                                fal();
+                                back_btn.SetActive(true);
+                                indexMove = 3;
+                                if (doorOpen_i == 1)
+                                {
+                                    go_btn.SetActive(true);
+                                }
 
-                default:
-                    break;
+                                indexMove = 3;
+                            }
+                            else
+                            {
+                                //오타가 난 경우 확인할 수 있도록
+                                t_txt.text = "그런 곳으로는 갈수 없어.";
+                            }
+                        }
+
+                        break;
+
+                    default:
+                        break;
+                }
+
             }
         }
     }
@@ -444,6 +542,13 @@ public class Event : MonoBehaviour
         BasicFace();
     }
 
+    public void SumOK()
+    {
+    }
+    public void DisOK()
+    {
+    }
+
     public void ActOK()
     {
 
@@ -456,130 +561,148 @@ public class Event : MonoBehaviour
         {
             indexAct = 99;
             t_txt.text = "그런 것은 없어.";
-            switch (direction)
+
+            inputA_str = use_input.text;
+            if (stage_i == 2)
             {
-                case 1:
-                    if (indexMove == 1)
-                    {
-                        inputA_str = use_input.text;
-                        if (inputA_str.Equals("스위치") || inputA_str.Equals("낡은스위치") || inputA_str.Equals("낡은 스위치"))
+                switch (direction)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch (direction)
+                {
+                    case 1:
+                        if (indexMove == 1)
                         {
-                            if (switchOn_i == 1)
+                            if (inputA_str.Equals("스위치") || inputA_str.Equals("낡은스위치") || inputA_str.Equals("낡은 스위치"))
                             {
-                                //액션을 취할것이 없을 때 10개 정도 이제 할것은 없다 이제 만질 것은 없다.
-                                t_txt.text = "그건 이미 했어.";
-                            }
-                            else
-                            {
-                                item();
-                                use_input.text = "";
-
-                                Debug.Log("a");
-                                indexAct = 10;
-
-                                switchOn_i = 1;
-                                dark_obj.SetActive(false);
-                                GM.GetComponent<SoundEvt>().SwitchSound();
-
-                                arrowD_obj.SetActive(true);
-                            }
-                            Act_btn.SetActive(false);
-                            use_inp.SetActive(false);
-                        }
-                    }
-                    break;
-                case 2:
-                    if (indexMove == 1)
-                    {
-                        inputA_str = use_input.text;
-                        if (inputA_str.Equals("급수대"))
-                        {
-
-                            if (findGlass_i == 0)
-                            {
-                                indexAct = 10;
-                                findGlass_i = 1;
-                            }
-                            else
-                            {
-                                if (findKey_i == 1)
+                                if (switchOn_i == 1)
                                 {
                                     //액션을 취할것이 없을 때 10개 정도 이제 할것은 없다 이제 만질 것은 없다.
                                     t_txt.text = "그건 이미 했어.";
-
-                                    if (getKey_i == 1)
-                                    {
-
-                                    }
-                                    else
-                                    {
-                                        if (findKey_i != 2)
-                                        {
-                                            findKey_i = 1;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    item();
-
-
-                                    if (getKey_i == 1)
-                                    {
-
-                                    }
-                                    else
-                                    {
-                                        if (findKey_i != 2)
-                                        {
-                                            findKey_i = 1;
-                                        }
-                                    }
-                                }
-                                indexAct = 11;
-                            }
-                            use_input.text = "";
-                            waterCoundt_i++;
-                            if (waterCoundt_i >= 5)
-                            {
-                                indexAct = 12;
-                            }
-                            Act_btn.SetActive(false);
-                            use_inp.SetActive(false);
-                        }
-
-                    }
-                    else
-                    {
-                        if (indexMove == 3)
-                        {
-                            inputA_str = use_input.text;
-                            if (inputA_str.Equals("열쇠") || inputA_str.Equals("나무 열쇠") || inputA_str.Equals("나무열쇠"))
-                            {
-                                if (doorOpen_i == 1)
-                                {
-                                    //액션을 취할것이 없을 때 10개 정도 이제 할것은 없다 이제 만질 것은 없다.
                                 }
                                 else
                                 {
                                     item();
                                     use_input.text = "";
-                                    GM.GetComponent<SoundEvt>().DoorSound();
-                                    //GM.GetComponent<SoundEvt>().BrokenSound();
 
-                                    doorOpen_i = 1;
-                                    go_btn.SetActive(true);
+                                    Debug.Log("a");
                                     indexAct = 10;
-                                    Act_btn.SetActive(false);
-                                    use_inp.SetActive(false);
-                                    //itemR_obj.SetActive(false);
+
+                                    switchOn_i = 1;
+                                    dark_obj.SetActive(false);
+                                    GM.GetComponent<SoundEvt>().SwitchSound();
+
+                                    arrowD_obj.SetActive(true);
+                                }
+                                Act_btn.SetActive(false);
+                                use_inp.SetActive(false);
+                            }
+                        }
+                        break;
+                    case 2:
+                        if (indexMove == 1)
+                        {
+                            if (inputA_str.Equals("급수대"))
+                            {
+
+                                if (findGlass_i == 0)
+                                {
+                                    indexAct = 10;
+                                    findGlass_i = 1;
+                                }
+                                else
+                                {
+                                    if (findKey_i == 1)
+                                    {
+                                        //액션을 취할것이 없을 때 10개 정도 이제 할것은 없다 이제 만질 것은 없다.
+                                        t_txt.text = "그건 이미 했어.";
+
+                                        if (getKey_i == 1)
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            if (findKey_i != 2)
+                                            {
+                                                findKey_i = 1;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        item();
+
+
+                                        if (getKey_i == 1)
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            if (findKey_i != 2)
+                                            {
+                                                findKey_i = 1;
+                                            }
+                                        }
+                                    }
+                                    indexAct = 11;
+                                }
+                                use_input.text = "";
+                                waterCoundt_i++;
+                                if (waterCoundt_i >= 5)
+                                {
+                                    indexAct = 12;
+                                }
+                                Act_btn.SetActive(false);
+                                use_inp.SetActive(false);
+                            }
+
+                        }
+                        else
+                        {
+                            if (indexMove == 3)
+                            {
+                                if (inputA_str.Equals("열쇠") || inputA_str.Equals("나무 열쇠") || inputA_str.Equals("나무열쇠"))
+                                {
+                                    if (doorOpen_i == 1)
+                                    {
+                                        //액션을 취할것이 없을 때 10개 정도 이제 할것은 없다 이제 만질 것은 없다.
+                                    }
+                                    else
+                                    {
+                                        item();
+                                        use_input.text = "";
+                                        GM.GetComponent<SoundEvt>().DoorSound();
+                                        //GM.GetComponent<SoundEvt>().BrokenSound();
+
+                                        doorOpen_i = 1;
+                                        go_btn.SetActive(true);
+                                        indexAct = 10;
+                                        Act_btn.SetActive(false);
+                                        use_inp.SetActive(false);
+                                        //itemR_obj.SetActive(false);
+                                    }
                                 }
                             }
                         }
-                    }
-                    break;
-                default:
-                    break;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
@@ -598,85 +721,106 @@ public class Event : MonoBehaviour
         }
         else
         {
-            switch (direction)
+
+            inputG_str = get_input.text;
+            if (stage_i == 2)
             {
-                case 1:
-                    if (indexMove == 1)
-                    {
-                        t_txt.text = "그런 것은 없어.";
-                    }
-                    break;
-                case 2:
-                    if (indexMove == 1)
-                    {
-                        inputG_str = get_input.text;
-                        int ckKey = 0;
-                        if (inputG_str.Equals("열쇠") || inputG_str.Equals("나무 열쇠") || inputG_str.Equals("나무열쇠"))
+                switch (direction)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch (direction)
+                {
+                    case 1:
+                        if (indexMove == 1)
                         {
-                            ckKey = 1;
+                            t_txt.text = "그런 것은 없어.";
                         }
-                        if (findKey_i == 2 && ckKey == 1)
+                        break;
+                    case 2:
+                        if (indexMove == 1)
                         {
-                            if (getKey_i == 1)
+                            int ckKey = 0;
+                            if (inputG_str.Equals("열쇠") || inputG_str.Equals("나무 열쇠") || inputG_str.Equals("나무열쇠"))
                             {
-                                //액션을 취할것이 없을 때 10개 정도 이제 할것은 없다 이제 만질 것은 없다.
-                                t_txt.text = "그건 이미 했어.";
+                                ckKey = 1;
+                            }
+                            if (findKey_i == 2 && ckKey == 1)
+                            {
+                                if (getKey_i == 1)
+                                {
+                                    //액션을 취할것이 없을 때 10개 정도 이제 할것은 없다 이제 만질 것은 없다.
+                                    t_txt.text = "그건 이미 했어.";
+                                }
+                                else
+                                {
+
+                                    item();
+                                    t_txt.text = "나무 열쇠를 얻었다.";
+                                    get_input.text = "";
+                                    getKey_i = 1;
+
+                                    for (int i = 0; i <= 3; i++)
+                                    {
+                                        Debug.Log(GM.GetComponent<ItemSys>().bagSlot_i[i]);
+                                        if (GM.GetComponent<ItemSys>().bagSlot_i[i] == 0)
+                                        {
+                                            GM.GetComponent<ItemSys>().bagSlot_i[i] = 1;
+                                            GM.GetComponent<ItemSys>().slot_obj[i].SetActive(true);
+                                            GM.GetComponent<ItemSys>().slot_obj[i].GetComponent<Image>().sprite = GM.GetComponent<ItemSys>().item_spr[1];
+                                            if (GM.GetComponent<ItemSys>().itemL_i == 0)
+                                            {
+                                                GM.GetComponent<ItemSys>().hand_obj[0].GetComponent<Image>().sprite = GM.GetComponent<ItemSys>().handItem_spr[1];
+                                                GM.GetComponent<ItemSys>().hand_obj[0].SetActive(true);
+                                                GM.GetComponent<ItemSys>().slotHand_obj[i].SetActive(true);
+                                                GM.GetComponent<ItemSys>().itemL_i = 1;
+                                            }
+                                            else if (GM.GetComponent<ItemSys>().itemR_i == 0)
+                                            {
+                                                GM.GetComponent<ItemSys>().hand_obj[1].GetComponent<Image>().sprite = GM.GetComponent<ItemSys>().handItem_spr[1];
+                                                GM.GetComponent<ItemSys>().hand_obj[1].SetActive(true);
+                                                GM.GetComponent<ItemSys>().slotHand_obj[i].SetActive(true);
+                                                GM.GetComponent<ItemSys>().itemR_i = 1;
+                                            }
+                                            i = 4;
+                                        }
+                                    }
+
+
+
+                                    //handR_obj.SetActive(true);
+                                    //itemR_obj.GetComponent<Image>().sprite = key_spr;
+                                }
+                                Act_btn.SetActive(false);
+                                get_inp.SetActive(false);
                             }
                             else
                             {
-
-                                item();
-                                t_txt.text = "나무 열쇠를 얻었다.";
-                                get_input.text = "";
-                                getKey_i = 1;
-
-                                for (int i = 0; i <= 3; i++)
-                                {
-                                    Debug.Log(GM.GetComponent<ItemSys>().bagSlot_i[i]);
-                                    if (GM.GetComponent<ItemSys>().bagSlot_i[i] == 0)
-                                    {
-                                        GM.GetComponent<ItemSys>().bagSlot_i[i] = 1;
-                                        GM.GetComponent<ItemSys>().slot_obj[i].SetActive(true);
-                                        GM.GetComponent<ItemSys>().slot_obj[i].GetComponent<Image>().sprite = GM.GetComponent<ItemSys>().item_spr[1];
-                                        if (GM.GetComponent<ItemSys>().itemL_i == 0)
-                                        {
-                                            GM.GetComponent<ItemSys>().hand_obj[0].GetComponent<Image>().sprite = GM.GetComponent<ItemSys>().handItem_spr[1];
-                                            GM.GetComponent<ItemSys>().hand_obj[0].SetActive(true);
-                                            GM.GetComponent<ItemSys>().slotHand_obj[i].SetActive(true);
-                                            GM.GetComponent<ItemSys>().itemL_i = 1;
-                                        }
-                                        else if (GM.GetComponent<ItemSys>().itemR_i == 0)
-                                        {
-                                            GM.GetComponent<ItemSys>().hand_obj[1].GetComponent<Image>().sprite = GM.GetComponent<ItemSys>().handItem_spr[1];
-                                            GM.GetComponent<ItemSys>().hand_obj[1].SetActive(true);
-                                            GM.GetComponent<ItemSys>().slotHand_obj[i].SetActive(true);
-                                            GM.GetComponent<ItemSys>().itemR_i = 1;
-                                        }
-                                        i = 4;
-                                    }
-                                }
-
-
-
-                                //handR_obj.SetActive(true);
-                                //itemR_obj.GetComponent<Image>().sprite = key_spr;
+                                //오타가 난 경우 확인할 수 있도록
+                                t_txt.text = "그런 것은 없어.";
                             }
-                            Act_btn.SetActive(false);
-                            get_inp.SetActive(false);
                         }
                         else
                         {
-                            //오타가 난 경우 확인할 수 있도록
                             t_txt.text = "그런 것은 없어.";
                         }
-                    }
-                    else
-                    {
-                        t_txt.text = "그런 것은 없어.";
-                    }
-                    break;
-                default:
-                    break;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
@@ -686,9 +830,19 @@ public class Event : MonoBehaviour
         if (stage_i == 0)
         {
             TutorialGo();
+            t_txt.text = "";
         }
         else
         {
+            t_txt.text = "";
+            direction = 2;
+            pos_i = 2;
+            arrowU_obj.SetActive(true);//문양1
+            arrowD_obj.SetActive(false);//문2
+            arrowL_obj.SetActive(true);//책상3
+            arrowR_obj.SetActive(true);//선반4
+            back.GetComponent<Image>().sprite = back2_spr[2];
+            stage_i = 2;
         }
     }
 
@@ -831,25 +985,30 @@ GO버튼이 활성화되어서 나가짐
     }
     void TutorialMove()
     {
-        TutoFalse();
-        switch (tutoAct_i)
-        {
-            case 0:
-                //t_txt.text = "문 앞에 섰다. ...아! 가방을 가져오는 걸 깜빡했어.";
-                tutoPro_i++;
-                //GM.GetComponent<DialogSys>().TextShow();
+        
 
-                tutoDown_obj.SetActive(true);
-                break;
-            case 1:
-                //t_txt.text = "문 앞에 섰다.";
-                tutoPro_i++;
-                //GM.GetComponent<DialogSys>().TextShow();
-                tutoGo_obj.SetActive(true);
-                break;
+        if (inputM_str.Equals("문"))
+        {
+            TutoFalse();
+            switch (tutoAct_i)
+            {
+                case 0:
+                    //t_txt.text = "문 앞에 섰다. ...아! 가방을 가져오는 걸 깜빡했어.";
+                    tutoPro_i++;
+                    //GM.GetComponent<DialogSys>().TextShow();
+
+                    tutoDown_obj.SetActive(true);
+                    break;
+                case 1:
+                    //t_txt.text = "문 앞에 섰다.";
+                    tutoPro_i++;
+                    //GM.GetComponent<DialogSys>().TextShow();
+                    tutoGo_obj.SetActive(true);
+                    break;
+            }
+            move_input.text = "";
+            tutoAct_i++;
         }
-        move_input.text = "";
-        tutoAct_i++;
     }
     void TutorialDown()
     {
@@ -862,12 +1021,16 @@ GO버튼이 활성화되어서 나가짐
     }
     void TutorialGet()
     {
-        TutoFalse();
-        //t_txt.text = "낡은 가방을 얻었다.";
-        tutoPro_i++;
-        //GM.GetComponent<DialogSys>().TextShow();
-        tutoUp_obj.SetActive(true);
-        get_input.text = "";
+        if (inputG_str.Equals("가방"))
+        {
+            TutoFalse();
+            //t_txt.text = "낡은 가방을 얻었다.";
+            tutoPro_i++;
+            //GM.GetComponent<DialogSys>().TextShow();
+            tutoUp_obj.SetActive(true);
+            get_input.text = "";
+            tutohand.SetActive(true);
+        }
     }
     void TutorialGo()
     {
