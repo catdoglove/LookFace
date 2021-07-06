@@ -79,8 +79,8 @@ public class SoundEvt : MonoBehaviour
         se_broken.Play();
     }
 
-    //화살표버튼소리가 아니라
-    public void ArrowSound()
+    // 말하는 소리
+    public void TalkSound()
     {
         se_talk = gameObject.GetComponent<AudioSource>();
         se_talk.clip = sp_talk;
@@ -90,9 +90,9 @@ public class SoundEvt : MonoBehaviour
 
 
     /// <summary>
-    /// 말하는 소리가 아니라 
+    /// 화살표버튼소리
     /// </summary>
-    public void TalkSound()
+    public void ArrowSound()
     {
         se_arrowdlg = gameObject.GetComponent<AudioSource>();
         se_arrowdlg.clip = sp_arrowdlg;

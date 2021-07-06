@@ -347,6 +347,11 @@ MonoBehaviour:
   - 
   - 
   - 
+  getBattery_i: 0
+  getDr_i: 0
+  getcap_i: 0
+  getReoff_i: 0
+  getReOn_i: 0
   inputF_str: 
   inputM_str: 
   inputA_str: 
@@ -398,6 +403,8 @@ MonoBehaviour:
   dark_obj: {fileID: 472231557}
   eventTalk_obj: {fileID: 323242781}
   GM: {fileID: 72734669}
+  testcamera: {fileID: 519420030}
+  testcamera2: {fileID: 519420034}
   fade_obj: {fileID: 744984248}
   tuto_i: 0
   tutoAct_i: 0
@@ -1224,7 +1231,6 @@ GameObject:
   m_Component:
   - component: {fileID: 111132984}
   - component: {fileID: 111132983}
-  - component: {fileID: 111132982}
   m_Layer: 0
   m_Name: Main Camera (1)
   m_TagString: MainCamera
@@ -1232,14 +1238,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &111132982
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 111132980}
-  m_Enabled: 1
 --- !u!20 &111132983
 Camera:
   m_ObjectHideFlags: 0
@@ -5774,7 +5772,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 955078541}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 72734670}
+        m_MethodName: Sum
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &955078541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7692,8 +7701,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.3500061, y: 0.13999939}
-  m_SizeDelta: {x: -21.619812, y: -6.0337257}
+  m_AnchoredPosition: {x: 0.6300049, y: 0}
+  m_SizeDelta: {x: -22.119019, y: -5.9880447}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1292069956
 MonoBehaviour:
@@ -7716,7 +7725,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: f3f110722a0847545b300f49c0e62171, type: 3}
-    m_FontSize: 16
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -8988,7 +8997,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1435415238}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 72734670}
+        m_MethodName: Dis
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1435415238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16404,8 +16424,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.19000244, y: 0.14999962}
-  m_SizeDelta: {x: -21.16858, y: -6.466919}
+  m_AnchoredPosition: {x: 0.6300049, y: 0}
+  m_SizeDelta: {x: -22.119019, y: -5.9880447}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1947394439
 MonoBehaviour:
@@ -16428,7 +16448,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: f3f110722a0847545b300f49c0e62171, type: 3}
-    m_FontSize: 16
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -16983,8 +17003,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.6000061, y: 0.11999893}
-  m_SizeDelta: {x: -22.188538, y: -6.3310013}
+  m_AnchoredPosition: {x: 0.6300049, y: 0}
+  m_SizeDelta: {x: -22.119019, y: -5.9880447}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2028660499
 MonoBehaviour:

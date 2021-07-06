@@ -55,6 +55,11 @@ public class ItemSys : MonoBehaviour
             slot_i = num_i;
             SetHands(bagSlot_i[num_i]);
         }
+        else
+        {
+            slot_i = num_i;
+            offHands(bagSlot_i[num_i]);
+        }
     }
 
     /// <summary>
@@ -114,6 +119,22 @@ public class ItemSys : MonoBehaviour
             SetItemcheck(itemR_i);
             hand_obj[1].GetComponent<Image>().sprite = handItem_spr[num];
             hand_obj[1].SetActive(true);
+        }
+    }
+
+    void offHands(int num)
+    {
+        if (num== itemL_i)
+        {
+            itemL_i = 0;
+            hand_obj[0].SetActive(false);
+            SetItemcheck(itemL_i);
+        }
+        else if(num == itemR_i)
+        {
+            itemR_i = 0;
+            hand_obj[1].SetActive(false);
+            SetItemcheck(itemR_i);
         }
     }
 
