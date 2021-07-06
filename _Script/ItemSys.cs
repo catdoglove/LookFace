@@ -11,7 +11,7 @@ public class ItemSys : MonoBehaviour
     public GameObject[] slotHand_obj, hand_obj;
     public int[] bagSlot_i;
     public GameObject ItemMenu_obj;
-    public GameObject ItemDetail_obj;
+    public GameObject ItemDetail_obj, ItemDetailBtn_obj;
     public GameObject GM;
     public string[] ItemName_str;
     public GameObject bag_obj, itemWindow_obj;
@@ -41,11 +41,7 @@ public class ItemSys : MonoBehaviour
         }
     }
 
-
-    /// <summary>
-    /// 집어들기 왼클릭
-    /// </summary>
-    /// <param name="num_i"></param>
+    
     public void PickItem(int num_i)
     {
         Debug.Log(num_i);
@@ -73,6 +69,20 @@ public class ItemSys : MonoBehaviour
             slot_i = pick;
             SetHands(bagSlot_i[pick]);
         }
+        else
+        {
+            slot_i = pick;
+            offHands(bagSlot_i[pick]);
+        }
+    }
+
+    /// <summary>
+    /// 아이템 이름 확인
+    /// </summary>
+    /// <param name="num_i"></param>
+    public void ItemnameBtn(int num_i)
+    {
+        itemName_txt.text = ItemName_str[bagSlot_i[num_i]];
     }
 
     public void SetItem()
@@ -145,6 +155,7 @@ public class ItemSys : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("setitem", 0) == 5)
         {
+
             ItemDetail_obj.SetActive(true);
         }
     }

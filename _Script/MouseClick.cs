@@ -18,7 +18,7 @@ public class MouseClick : MonoBehaviour, IPointerClickHandler
             Debug.Log("Mouse Click Button : Left");
             str = this.name;
             sub_i=int.Parse(str.Substring(2, 1));
-            GM.GetComponent<ItemSys>().PickItem(sub_i);
+            GM.GetComponent<ItemSys>().ItemnameBtn(sub_i);
             menu_obj.SetActive(false);
         }
         else if (eventData.button == PointerEventData.InputButton.Middle)

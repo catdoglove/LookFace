@@ -166,8 +166,12 @@ public class DialogSys : MonoBehaviour
             Debug.Log(code_str);
             str = "" + data[0][code_str];
 
-            GM.GetComponent<SoundEvt>().TalkSound();
+            //GM.GetComponent<SoundEvt>().ArrowSound();
             //TalkSound();
+            if (GM.GetComponent<Event>().tutocant_i==1)
+            {
+                str = "그/런/ /것/은/ /할/ /수/ /없/어/.";
+            }
             Text_cut = str.Split('/');
             cleantalk();
             StartCoroutine("talkRun");
@@ -190,8 +194,8 @@ public class DialogSys : MonoBehaviour
             {
                 //대사
                 str = "" + data[0][code_str];
-
-                GM.GetComponent<SoundEvt>().TalkSound();
+                Debug.Log(str);
+                //GM.GetComponent<SoundEvt>().ArrowSound();
                 //TalkSound();
                 Text_cut = str.Split('/');
                 cleantalk();
