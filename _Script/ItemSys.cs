@@ -91,6 +91,7 @@ public class ItemSys : MonoBehaviour
     }
     public void GetItem(int num)
     {
+        itemName_txt.text= ItemName_str[num];
         if (itemList_i < 4)
         {
             bagSlot_i[itemList_i] = num;
