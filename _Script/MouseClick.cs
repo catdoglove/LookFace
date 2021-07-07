@@ -32,7 +32,14 @@ public class MouseClick : MonoBehaviour, IPointerClickHandler
             str = this.name;
             sub_i = int.Parse(str.Substring(2, 1));
             PlayerPrefs.SetInt("setitem",sub_i);
-
+            if (GM.GetComponent<ItemSys>().bagSlot_i[sub_i] == 5)
+            {
+                GM.GetComponent<ItemSys>().ItemDetailBtn_obj.GetComponent<Button>().interactable = false;
+            }
+            else
+            {
+                GM.GetComponent<ItemSys>().ItemDetailBtn_obj.GetComponent<Button>().interactable = false;
+            }
             wldObjectPos = Camera.main.ScreenToWorldPoint(new Vector2(eventData.position.x, eventData.position.y));
             menu_obj.transform.position = new Vector3(wldObjectPos.x, wldObjectPos.y, 0f);
         }

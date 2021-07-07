@@ -84,7 +84,6 @@ public class Event : MonoBehaviour
     {
         //testcamera.Fade = 0.2f;
         //testcamera2._Fade = 0f;
-        stage_i = 1;
         if (stage_i == 0)
         {
             TutorialStart();
@@ -471,7 +470,7 @@ public class Event : MonoBehaviour
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     GM.GetComponent<SoundEvt>().fallingSound();
-                    StartCoroutine("imgFadeOut");
+                    StartCoroutine("imgFadeOutend");
                     break;
                 case 38:
                     end_obj.SetActive(true);
@@ -2113,5 +2112,18 @@ GO버튼이 활성화되어서 나가짐
         box_obj.transform.localPosition = position;
     }
 
+    IEnumerator imgFadeOutend()
+    {
+
+        yield return new WaitForSeconds(0.1f);
+        for (float i = 1f; i >= 0f; i -= 0.05f)
+        {
+            fade_obj.SetActive(true);
+            color.a = Mathf.Lerp(1f, 0f, i);
+            fade_obj.GetComponent<Image>().color = color;
+            yield return new WaitForSeconds(0.01f);
+        }
+        fade_obj.SetActive(false);
+    }
 
 }
