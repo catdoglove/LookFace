@@ -21,9 +21,10 @@ public class Event : MonoBehaviour
     public Sprite key_spr;
 
     //변수
-    public int where_i, switchOn_i, findKey_i, doorOpen_i, pos_i, getKey_i, findswitch_i, waterCoundt_i, findGlass_i, progress_i;
+    public int where_i, switchOn_i, findKey_i, doorOpen_i, pos_i, getKey_i, findswitch_i, waterCoundt_i, findGlass_i, progress_i, waterSee_i, waterdrink_i, progress2_i, eventsat2;
     public string[] s_str, sf_str;
     public int getBattery_i, getDr_i, getcap_i, getReoff_i, getReOn_i;
+    public GameObject dr_obj,box_obj;
     //텍스트
     public string inputF_str, inputM_str, inputA_str, inputG_str, inputSum_str, inputDis_str;
     //인풋필드 및 행동 버튼
@@ -34,15 +35,15 @@ public class Event : MonoBehaviour
     public Sprite[] back_spr, back2_spr;
 
     public GameObject ActBtn_obj, FeelBtn_obj;
-
+    public GameObject[] hp_obj;
 
     //캐릭터
     public int char_i;
-    public GameObject char_obj, body_obj, hair_obj;
-    public Sprite[] char_spr;
+    public GameObject char_obj, body_obj, hair_obj,mirror_obj;
+    public Sprite[] char_spr, mirror_spr;
 
     //이밴트
-    public GameObject eventBtn_obj, dark_obj, eventTalk_obj;
+    public GameObject eventBtn_obj, dark_obj, eventTalk_obj, eventCharMove_obj, eventCharMove2_obj, eventBall_obj, eventTalk2_obj, end_obj;
 
     public GameObject GM;
 
@@ -61,7 +62,7 @@ public class Event : MonoBehaviour
 
     public int tuto_i, tutoAct_i, tutocant_i;
     public int tutoPro_i=0;
-    public GameObject tutoUp_obj, tutoDown_obj, tutoFeel_obj, tutoAct_obj, tutoMove_obj, tutoGet_obj, tutoGo_obj, tutoBack_obj, tutoDelay_obj, tutoAdd_obj, tutoResolve_obj, tutoBody_obj;
+    public GameObject tutoUp_obj, tutoDown_obj, tutoFeel_obj, tutoAct_obj, tutoMove_obj, tutoGet_obj, tutoGo_obj, tutoBack_obj, tutoBackBtn_obj, tutoDelay_obj, tutoAdd_obj, tutoResolve_obj, tutoBody_obj, tutoUse_obj;
     public Sprite[] tutoBack_spr;
 
     public GameObject tutohand;
@@ -72,7 +73,6 @@ public class Event : MonoBehaviour
 
     public AudioSource BGS;
     float BGSVol_f;
-    public GameObject audio_obj;
     
     
 
@@ -82,12 +82,8 @@ public class Event : MonoBehaviour
     }
     void Start()
     {
-        StopCoroutine("imgFadeOut");
-        //StartCoroutine("imgFadeOut");
-        //Event.stage_i = 2;
         //testcamera.Fade = 0.2f;
         //testcamera2._Fade = 0f;
-        
         if (stage_i == 0)
         {
             TutorialStart();
@@ -114,36 +110,468 @@ public class Event : MonoBehaviour
         //색초기설정
         color = fade_obj.GetComponent<Image>().color;
         colorw = fadein_obj.GetComponent<Image>().color;
+        StopCoroutine("imgFadeOut");
+        StartCoroutine("imgFadeOut");
     }
 
     public void EventSnene1()
     {
+
+        GM.GetComponent<ItemSys>().hand_obj[1].SetActive(false);
+        GM.GetComponent<ItemSys>().hand_obj[0].SetActive(false);
         s_str[0] = "(터벅 터벅)";
         s_str[1] = "으... 엎친 데 덮친 격이네";
         s_str[2] = "주변이 좀 어두운 데 불 키는 거 없나?";
-
-        switch (progress_i)
+        if (stage_i == 2)
         {
-            case 0:
-                GM.GetComponent<SoundEvt>().MoveSound();
-                E_txt.text = s_str[0];
-                eventTalk_obj.SetActive(true);
-                break;
-            case 1:
-                E_txt.text = s_str[1];
-                break;
-            case 2:
-                E_txt.text = s_str[2];
-                break;
-            case 3:
-                eventBtn_obj.SetActive(false);
-                eventTalk_obj.SetActive(false);
-                E_txt.text = "";
-                break;
-            default:
-                break;
+            switch (progress2_i)
+            {
+                case 0:
+                    //“여기는 무슨 창고인가.. 뭔가 잡다한 게 많네.”
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    eventTalk_obj.SetActive(true);
+                    GM.GetComponent<SoundEvt>().MoveSound();
+                    GM.GetComponent<FaceEvent>().WorryFace();
+                    break;
+                case 1:
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    eventBtn_obj.SetActive(false);
+                    if (GM.GetComponent<ItemSys>().itemR_i != 0)
+                    {
+                        GM.GetComponent<ItemSys>().hand_obj[1].SetActive(true);
+                    }
+                    if (GM.GetComponent<ItemSys>().itemL_i != 0)
+                    {
+                        GM.GetComponent<ItemSys>().hand_obj[0].SetActive(true);
+                    }
+                    eventTalk_obj.SetActive(false);
+                    E_txt.text = "";
+                    eventsat2 = 1;
+                    break;
+                case 2:
+
+                    arrowL_obj.SetActive(false);//책상3
+                    arrowR_obj.SetActive(false);//선반4
+                    //“콜록 콜록!”
+                    eventTalk2_obj.SetActive(true);
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkMirrorSound();
+                    break;
+                case 3:
+                    //“뭐지? 어디선가 기침소리가 들리는데?” (불안한 표정)
+                    eventTalk2_obj.SetActive(false);
+                    eventTalk_obj.SetActive(true);
+                    GM.GetComponent<FaceEvent>().WorryFace();
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 4:
+                    //선반 아래쪽 구석을 쳐다봤다.
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().ArrowSound();
+                    break;
+                case 5:
+                    //“음.. 여기서 소리가 났을 리는 없고..” (생각하는 표정)
+                    GM.GetComponent<FaceEvent>().ThinkFace();
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    t_txt.text = "";
+                    break;
+                case 6:
+                    //“대체 어디서..”
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 7:
+                    //“콜록 콜록!”
+                    eventTalk2_obj.SetActive(true);
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkMirrorSound();
+                    break;
+                case 8:
+                    //“여기서 나잖아!” (놀란 표정)
+                    eventTalk2_obj.SetActive(false);
+                    GM.GetComponent<FaceEvent>().SurprisedFace();
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 9:
+                    //아래를 향해 손을 뻗었다. .//.///. 무언가 손에 잡혔다.
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().ArrowSound();
+                    break;
+                case 10:
+                    //“..거울?” (생각하는 표정)
+                    mirror_obj.SetActive(true);
+                    t_txt.text = "";
+                    GM.GetComponent<FaceEvent>().ThinkFace();
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    EventCharMove();
+                    break;
+                case 11:
+                    //콜록 콜.. 음? 오! 꺼내졌네. 고마워!” (신난 거)
+                    eventTalk2_obj.SetActive(true);
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkMirrorSound();
+                    mirror_obj.GetComponent<Image>().sprite = mirror_spr[1];
+                    break;
+                case 12:
+                    //“거울이 말을 하잖아?????!!!!!!” (놀란 표정)
+                    GM.GetComponent<FaceEvent>().SurprisedFace();
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    mirror_obj.GetComponent<Image>().sprite = mirror_spr[0];
+                    break;
+                case 13:
+                    //“아이고 시끄러워. 토끼소녀 좀 조용히 해줘.” “나도 지금 정신없다고.” (화난 거)
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkMirrorSound();
+                    mirror_obj.GetComponent<Image>().sprite = mirror_spr[3];
+                    break;
+                case 14:
+                    //“예 아 음.. 말하는 거울은 처음 봤어요.” (일반 표정)
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 15:
+                    //“아무렴 어때! 너도 여기서 나가고 싶지?” (일반)
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkMirrorSound();
+                    mirror_obj.GetComponent<Image>().sprite = mirror_spr[0];
+                    break;
+                case 16:
+                    //“에 그렇긴 하지만..” (불안한 표정)
+                    GM.GetComponent<FaceEvent>().WorryFace();
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 17:
+                    //자 어서 둘러보자구! 토끼소녀!” (신난 거)
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkMirrorSound();
+                    mirror_obj.GetComponent<Image>().sprite = mirror_spr[1];
+                    break;
+                case 18:
+                    //“뭐가 어떻게 된 거지..”(불안한 표정)
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 19:
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    eventBtn_obj.SetActive(false);
+                    if (GM.GetComponent<ItemSys>().itemR_i != 0)
+                    {
+                        GM.GetComponent<ItemSys>().hand_obj[1].SetActive(true);
+                    }
+                    if (GM.GetComponent<ItemSys>().itemL_i != 0)
+                    {
+                        GM.GetComponent<ItemSys>().hand_obj[0].SetActive(true);
+                    }
+                    eventTalk_obj.SetActive(false);
+                    eventTalk2_obj.SetActive(false);
+                    mirror_obj.SetActive(false);
+                    arrowU_obj.SetActive(true);//문양1
+                    arrowD_obj.SetActive(true);//문2
+                    arrowL_obj.SetActive(true);//책상3
+                    arrowR_obj.SetActive(false);//선반4
+                    E_txt.text = "";
+                    EventCharBack();
+                    break;
+                case 20:
+
+                    arrowL_obj.SetActive(false);//책상3
+                    arrowR_obj.SetActive(false);//선반4
+                    //드라이버로 무언가를 열 수 있겠는데.
+                    eventTalk2_obj.SetActive(true);
+                    mirror_obj.SetActive(true);
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkMirrorSound();
+                    EventCharMove();
+                    break;
+                case 21:
+                    //“아마 열만한 게..”(생각표정
+                    eventTalk_obj.SetActive(true);
+                    GM.GetComponent<FaceEvent>().ThinkFace();
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 22:
+                    //“여기 있구만. 상자에 있는 못을 드라이버로 풀 수 있겠어.” (일반)
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkMirrorSound();
+                    break;
+                case 23:
+                    //“아 그러면 되겠네요!” (놀란표정 손은 내림
+                    eventTalk2_obj.SetActive(false);
+                    GM.GetComponent<FaceEvent>().SurprisedFace();
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[0];
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 24:
+                    EventCharBack();
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    eventBtn_obj.SetActive(false);
+                    if (GM.GetComponent<ItemSys>().itemR_i != 0)
+                    {
+                        GM.GetComponent<ItemSys>().hand_obj[1].SetActive(true);
+                    }
+                    if (GM.GetComponent<ItemSys>().itemL_i != 0)
+                    {
+                        GM.GetComponent<ItemSys>().hand_obj[0].SetActive(true);
+                    }
+                    eventTalk_obj.SetActive(false);
+                    eventTalk2_obj.SetActive(false);
+                    mirror_obj.SetActive(false);
+                    arrowR_obj.SetActive(false);
+                    arrowL_obj.SetActive(false);
+                    tutoUp_obj.SetActive(false);
+                    tutoDown_obj.SetActive(false);
+                    tutoResolve_obj.GetComponent<Button>().interactable = false;
+                    tutoUse_obj.GetComponent<Button>().interactable = false;
+                    tutoFeel_obj.GetComponent<Button>().interactable = false;
+                    tutoMove_obj.GetComponent<Button>().interactable = false;
+                    tutoBackBtn_obj.GetComponent<Button>().interactable = false;
+                    tutoGet_obj.GetComponent<Button>().interactable = false;
+                    E_txt.text = "";
+                    EventCharBack();
+                    break;
+                case 25:
+                    arrowL_obj.SetActive(false);//책상3
+                    arrowR_obj.SetActive(false);//선반4
+                    //“캡슐 안에 뭔가 있어요.” (다 일반
+                    EventCharMove();
+                    eventTalk_obj.SetActive(true);
+                    mirror_obj.SetActive(true);
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 26:
+                    //“이건 그냥 손으로 열 수 있겠는데” (일반)
+                    eventTalk2_obj.SetActive(true);
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkMirrorSound();
+                    break;
+                case 27:
+                    //“한번 해볼게요.”
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 28:
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    eventBtn_obj.SetActive(false);
+                    if (GM.GetComponent<ItemSys>().itemR_i != 0)
+                    {
+                        GM.GetComponent<ItemSys>().hand_obj[1].SetActive(true);
+                    }
+                    if (GM.GetComponent<ItemSys>().itemL_i != 0)
+                    {
+                        GM.GetComponent<ItemSys>().hand_obj[0].SetActive(true);
+                    }
+                    eventTalk_obj.SetActive(false);
+                    eventTalk2_obj.SetActive(false);
+                    mirror_obj.SetActive(false);
+                    arrowR_obj.SetActive(false);
+                    arrowL_obj.SetActive(false);
+                    tutoUp_obj.SetActive(false);
+                    tutoDown_obj.SetActive(false);
+                    tutoAdd_obj.GetComponent<Button>().interactable = false;
+                    tutoUse_obj.GetComponent<Button>().interactable = false;
+                    tutoFeel_obj.GetComponent<Button>().interactable = false;
+                    tutoMove_obj.GetComponent<Button>().interactable = false;
+                    tutoBackBtn_obj.GetComponent<Button>().interactable = false;
+                    tutoGet_obj.GetComponent<Button>().interactable = false;
+                    E_txt.text = "";
+                    EventCharBack();
+                    break;
+                case 29:
+                    EventCharMove();
+                    //“어디서 본 거 같아요.” (생각하는 표정)
+                    mirror_obj.SetActive(true);
+                    GM.GetComponent<FaceEvent>().ThinkFace();
+                    eventTalk_obj.SetActive(true);
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 30:
+                    //“나도 방금까지 본 거 같은데..”(일반
+                    eventTalk2_obj.SetActive(true);
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkMirrorSound();
+                    break;
+                case 31:
+                    //“아! 리모콘에서 봤어요!” (놀란 + 손은 내리고)
+                    GM.GetComponent<FaceEvent>().SurprisedFace();
+                    GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[0];
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 32:
+                    //“오 좋아. 그럼 한번 살펴보자고”(신난 거
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkMirrorSound();
+                    mirror_obj.GetComponent<Image>().sprite = mirror_spr[1];
+                    break;
+                case 33:
+                    mirror_obj.GetComponent<Image>().sprite = mirror_spr[0];
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    eventBtn_obj.SetActive(false);
+                    if (GM.GetComponent<ItemSys>().itemR_i != 0)
+                    {
+                        GM.GetComponent<ItemSys>().hand_obj[1].SetActive(true);
+                    }
+                    if (GM.GetComponent<ItemSys>().itemL_i != 0)
+                    {
+                        GM.GetComponent<ItemSys>().hand_obj[0].SetActive(true);
+                    }
+                    eventTalk_obj.SetActive(false);
+                    eventTalk2_obj.SetActive(false);
+                    mirror_obj.SetActive(false);
+                    arrowR_obj.SetActive(false);
+                    arrowL_obj.SetActive(false);
+                    tutoUp_obj.SetActive(false);
+                    tutoDown_obj.SetActive(false);
+                    tutoResolve_obj.GetComponent<Button>().interactable = false;
+                    tutoUse_obj.GetComponent<Button>().interactable = true;
+                    tutoAdd_obj.GetComponent<Button>().interactable = false;
+                    tutoFeel_obj.GetComponent<Button>().interactable = false;
+                    tutoMove_obj.GetComponent<Button>().interactable = false;
+                    tutoBackBtn_obj.GetComponent<Button>().interactable = false;
+                    tutoGet_obj.GetComponent<Button>().interactable = false;
+                    E_txt.text = "";
+                    EventCharBack();
+                    break;
+                case 34:
+                    //“뭐지? 무슨 소리가 났는데.” (일반
+                    eventTalk2_obj.SetActive(true);
+                    mirror_obj.SetActive(true);
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkMirrorSound();
+                    break;
+                case 35:
+                    //“딱히 변한 건 없어요.” (불안한 표정으로)
+                    eventTalk_obj.SetActive(true);
+                    GM.GetComponent<FaceEvent>().WorryFace();
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 36:
+                    //“음.. 다른데를 살펴볼..” (일반
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkMirrorSound();
+                    break;
+                case 37:
+                    //으아아아아!! (놀란+ 손은 내리고) (불안하거나 걱정되는 땀 삐질)
+                    GM.GetComponent<FaceEvent>().SurprisedFace();
+                    GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[0];
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 38:
+                    end_obj.SetActive(true);
+                    break;
+                default:
+                    break;
+            }
+            progress2_i++;
         }
-        progress_i++;
+        if (stage_i == 1)
+        {
+            switch (progress_i)
+            {
+                case 0:
+                    //E_txt.text = s_str[0];
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    eventTalk_obj.SetActive(true);
+                    GM.GetComponent<SoundEvt>().MoveSound();
+                    GM.GetComponent<FaceEvent>().WorryFace();
+                    break;
+                case 1:
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 2:
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 3:
+
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    eventBtn_obj.SetActive(false);
+                    eventTalk_obj.SetActive(false);
+                    E_txt.text = "";
+                    break;
+                case 4:
+                    eventTalk_obj.SetActive(true);
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    GM.GetComponent<FaceEvent>().RelaxFace();
+                    break;
+                case 5:
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 6:
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 7:
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    eventBtn_obj.SetActive(false);
+                    eventTalk_obj.SetActive(false);
+                    E_txt.text = "";
+                    break;
+                case 8:
+                    eventTalk_obj.SetActive(true);
+                    GM.GetComponent<FaceEvent>().WorryFace();
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 9:
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    eventBtn_obj.SetActive(false);
+                    eventTalk_obj.SetActive(false);
+                    E_txt.text = "";
+                    break;
+                case 10:
+                    eventTalk_obj.SetActive(true);
+                    GM.GetComponent<FaceEvent>().RelaxFace();
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 11:
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 12:
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    eventBtn_obj.SetActive(false);
+                    eventTalk_obj.SetActive(false);
+                    E_txt.text = "";
+                    break;
+                case 13:
+                    eventTalk_obj.SetActive(true);
+                    GM.GetComponent<FaceEvent>().SurprisedFace();
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().BrokenSound();
+                    break;
+                case 14:
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkSound();
+                    break;
+                case 15:
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    eventBtn_obj.SetActive(false);
+                    eventTalk_obj.SetActive(false);
+                    E_txt.text = "";
+                    break;
+                default:
+                    break;
+            }
+            progress_i++;
+        }
     }
 
 
@@ -164,6 +592,7 @@ public class Event : MonoBehaviour
 
     public void ArrowU()
     {
+        BackReSize();
         GM.GetComponent<SoundEvt>().ArrowSound();
         fal();
 
@@ -208,9 +637,12 @@ public class Event : MonoBehaviour
                 arrowR_obj.SetActive(true);
             }
         }
+        dr_obj.SetActive(false);
+        box_obj.SetActive(false);
     }
     public void ArrowD()
     {
+        BackReSize();
         GM.GetComponent<SoundEvt>().ArrowSound();
         fal();
 
@@ -239,6 +671,11 @@ public class Event : MonoBehaviour
             //arrowR_obj.SetActive(true);
             arrowU_obj.SetActive(true);
             arrowD_obj.SetActive(false);
+            if (waterSee_i == 0)
+            {
+                waterSee_i = 1;
+                eventBtn_obj.SetActive(true);
+            }
 
             if (stage_i == 2)
             {
@@ -248,10 +685,13 @@ public class Event : MonoBehaviour
                 arrowR_obj.SetActive(true);
             }
         }
+        dr_obj.SetActive(false);
+        box_obj.SetActive(false);
     }
 
     public void ArrowR()
     {
+        BackReSize();
         GM.GetComponent<SoundEvt>().ArrowSound();
         fal();
         direction = 4;
@@ -279,13 +719,34 @@ public class Event : MonoBehaviour
             back.GetComponent<Image>().sprite = back2_spr[pos_i];
             arrowL_obj.SetActive(true);
             arrowR_obj.SetActive(false);
+            if (eventsat2 == 1)
+            {
+                eventBtn_obj.SetActive(true);
+                eventsat2 = 2;
+            }
         }
+
+        dr_obj.SetActive(false);
+        box_obj.SetActive(false);
     }
 
     public void ArrowL()
     {
+        BackReSize();
+        EventBoxBack();
         GM.GetComponent<SoundEvt>().ArrowSound();
         fal();
+        if (stage_i == 2)
+        {
+            if (getDr_i == 0)
+            {
+                dr_obj.SetActive(true);
+            }
+            if (getcap_i == 0)
+            {
+                box_obj.SetActive(true);
+            }
+        }
         direction = 3;
         indexMove = 0;
         indexAct = 0;
@@ -330,12 +791,24 @@ public class Event : MonoBehaviour
                 {
                     case 1:
                         indexAct = 1;
+                        if (indexMove == 1)
+                        {
+                            if (eventsat2 == 4 && getReoff_i==1)
+                            {
+                                eventBtn_obj.SetActive(true);
+                                eventsat2 = 5;
+                            }
+                        }
                         break;
                     case 2:
                         indexAct = 1;
                         break;
                     case 3:
                         indexAct = 1;
+                        if (getDr_i == 1 && indexMove == 1)
+                        {
+                            indexAct = 3;
+                        }
                         if (getcap_i==1&& indexMove==1)
                         {
                             indexAct = 2;
@@ -353,58 +826,65 @@ public class Event : MonoBehaviour
                         break;
                 }
                 }
-            else { 
-            switch (direction)
-            {
-                case 1:
-                if (indexAct == 1)
+            else {
+                switch (direction)
                 {
-                    findswitch_i = 1;
-                }
-                    if (indexMove == 1)
-                    {
-                        if (switchOn_i == 1)
+                    case 1:
+                        if (indexAct == 1)
                         {
-                            indexAct = 2;
+                            findswitch_i = 1;
                         }
-                        else
+                        if (indexMove == 1)
                         {
+                            if (switchOn_i == 1)
+                            {
+                                indexAct = 2;
+                            }
+                            else
+                            {
 
+                                indexAct = 1;
+                            }
+                        }
+                        else if (indexMove == 0)
+                        {
+                            if (switchOn_i == 1)
+                            {
+                                indexAct = 1;
+                            }
+                            else
+                            {
+
+                                indexAct = 2;
+                            }
+                        }
+                        break;
+                    case 2:
+                        if (indexMove == 3)
+                        {
                             indexAct = 1;
                         }
-                    }else if (indexMove == 0)
-                    {
-                        if (switchOn_i == 1)
+                        if (indexMove == 1)
                         {
+                            findGlass_i = 1;
                             indexAct = 1;
-                        }
-                        else
-                        {
+                            if (findKey_i >= 1)
+                            {
+                                indexAct = 2;
+                                findKey_i = 2;
+                            }
 
-                            indexAct = 2;
+                            if (getKey_i == 1)
+                            {
+                                indexAct = 3;
+                            }
                         }
-                    }
-                break;
-            case 2:
-                if (indexMove == 1)
-                {
-                    if (findKey_i >= 1)
-                    {
-                        indexAct = 2;
-                        findKey_i = 2;
-                    }
 
-                    if (getKey_i == 1)
-                    {
-                        indexAct = 3;
-                    }
-                    findGlass_i = 1;
+                        break;
+
+                    default:
+                        break;
                 }
-                break;
-
-            default:
-                break;
-        }
             }
         }
 
@@ -437,12 +917,15 @@ public class Event : MonoBehaviour
         GM.GetComponent<SoundEvt>().ArrowSound();
         fal();
         Dis_inp.SetActive(true);
+        dis_input.text = "";
     }
     public void Sum()
     {
         GM.GetComponent<SoundEvt>().ArrowSound();
         fal();
         Sum_obj.SetActive(true);
+        sum1_input.text = "";
+        sum2_input.text = "";
     }
 
 
@@ -482,6 +965,7 @@ public class Event : MonoBehaviour
                     case 1:
                         if (inputM_str.Equals("문양") || inputM_str.Equals("커다란문양") || inputM_str.Equals("커다란 문양"))
                         {
+                            BackUpSizeM();
                             indexMove = 1;
                             move_input.text = "";
                             fal();
@@ -491,6 +975,7 @@ public class Event : MonoBehaviour
                     case 2:
                         if (inputM_str.Equals("문"))
                         {
+                            BackUpSizeM();
                             indexMove = 0;
                             move_input.text = "";
                             fal();
@@ -500,6 +985,8 @@ public class Event : MonoBehaviour
                     case 3:
                         if (inputM_str.Equals("책상"))
                         {
+                            BackUpSizeR();
+                            EventBoxM();
                             indexMove = 1;
                             move_input.text = "";
                             fal();
@@ -510,6 +997,7 @@ public class Event : MonoBehaviour
                     case 4:
                         if (inputM_str.Equals("선반") || inputM_str.Equals("커다란선반") || inputM_str.Equals("커다란 선반"))
                         {
+                            BackUpSizeR();
                             indexMove = 1;
                             move_input.text = "";
                             fal();
@@ -529,6 +1017,7 @@ public class Event : MonoBehaviour
                     case 1:
                         if (inputM_str.Equals("붉은 빛") || inputM_str.Equals("붉은빛"))
                         {
+                            BackUpSizeL();
                             t_txt.text = "스위치 앞에 섰다.";
                             move_input.text = "";
                             fal();
@@ -550,6 +1039,7 @@ public class Event : MonoBehaviour
                     case 2:
                         if (inputM_str.Equals("급수대"))
                         {
+                            BackUpSizeR();
                             move_input.text = "";
                             fal();
                             back_btn.SetActive(true);
@@ -563,6 +1053,7 @@ public class Event : MonoBehaviour
                         {
                             if (inputM_str.Equals("문") || inputM_str.Equals("갈색문") || inputM_str.Equals("갈색 문"))
                             {
+                                BackUpSizeL();
                                 move_input.text = "";
                                 fal();
                                 back_btn.SetActive(true);
@@ -605,6 +1096,8 @@ public class Event : MonoBehaviour
         go_btn.SetActive(false);
         t_txt.text = "다시 제자리로 돌아왔다.";
         BasicFace();
+        BackReSize();
+        EventBoxBack();
     }
 
     public void SumOK()
@@ -623,7 +1116,7 @@ public class Event : MonoBehaviour
                 {
                     int cdck = 0;
                     inputSum_str = sum1_input.text;
-                    if (inputSum_str.Equals("철제 상자") || inputSum_str.Equals("철제상자"))
+                    if (inputSum_str.Equals("철제 상자") || inputSum_str.Equals("철제상자") || inputSum_str.Equals("상자"))
                     {
                         cdck++;
                         inputSum_str = sum2_input.text;
@@ -641,7 +1134,7 @@ public class Event : MonoBehaviour
                     {
                         cdck++;
                         inputSum_str = sum2_input.text;
-                        if (inputSum_str.Equals("철제 상자") || inputSum_str.Equals("철제상자"))
+                        if (inputSum_str.Equals("철제 상자") || inputSum_str.Equals("철제상자") || inputSum_str.Equals("상자"))
                         {
                             cdck++;
                         }
@@ -650,11 +1143,29 @@ public class Event : MonoBehaviour
                     {
                         //캡슐 얻음
                         getcap_i = 1;
+                        box_obj.SetActive(false);
                         GetI(4);
                         Act_btn.SetActive(false);
                         Sum_obj.SetActive(false);
                         indexAct = 10;
                         GM.GetComponent<DialogSys>().TextShow();
+                        arrowR_obj.SetActive(true);
+                        arrowL_obj.SetActive(true);
+                        tutoUp_obj.SetActive(true);
+                        tutoDown_obj.SetActive(true);
+                        tutoResolve_obj.GetComponent<Button>().interactable = true;
+                        tutoAdd_obj.GetComponent<Button>().interactable = true;
+                        tutoUse_obj.GetComponent<Button>().interactable = true;
+                        tutoFeel_obj.GetComponent<Button>().interactable = true;
+                        tutoMove_obj.GetComponent<Button>().interactable = true;
+                        tutoBackBtn_obj.GetComponent<Button>().interactable = true;
+                        tutoGet_obj.GetComponent<Button>().interactable = true;
+
+                        if (eventsat2 == 3)
+                        {
+                            eventBtn_obj.SetActive(true);
+                            eventsat2 = 4;
+                        }
                     }
                     else
                     {
@@ -801,7 +1312,7 @@ public class Event : MonoBehaviour
                 cck=2;
             }
             Debug.Log(cck);
-            if (getReoff_i == 0&&cck>=1)
+            if (getReoff_i == 0 && cck >= 1)
             {
                 for (int i = 0; i < 4; i++)
                 {
@@ -831,6 +1342,17 @@ public class Event : MonoBehaviour
                 indexAct = 21;
                 GM.GetComponent<DialogSys>().TextShow();
 
+                arrowR_obj.SetActive(true);
+                arrowL_obj.SetActive(true);
+                tutoUp_obj.SetActive(true);
+                tutoDown_obj.SetActive(true);
+                tutoResolve_obj.GetComponent<Button>().interactable = true;
+                tutoAdd_obj.GetComponent<Button>().interactable = true;
+                tutoUse_obj.GetComponent<Button>().interactable = true;
+                tutoFeel_obj.GetComponent<Button>().interactable = true;
+                tutoMove_obj.GetComponent<Button>().interactable = true;
+                tutoBackBtn_obj.GetComponent<Button>().interactable = true;
+                tutoGet_obj.GetComponent<Button>().interactable = true;
             }
         }
 
@@ -873,7 +1395,7 @@ public class Event : MonoBehaviour
                                     dark_obj.SetActive(false);
                                     GM.GetComponent<SoundEvt>().SwitchSound();
                                 GM.GetComponent<DialogSys>().TextShow();
-                                Debug.Log("게임끝");
+
                             }
                             
                         }
@@ -912,6 +1434,7 @@ public class Event : MonoBehaviour
                                     indexAct = 10;
 
                                     switchOn_i = 1;
+                                    eventBtn_obj.SetActive(true);
                                     dark_obj.SetActive(false);
                                     GM.GetComponent<SoundEvt>().SwitchSound();
 
@@ -932,9 +1455,16 @@ public class Event : MonoBehaviour
                                 {
                                     indexAct = 10;
                                     findGlass_i = 1;
+                                    hp_obj[2].SetActive(false);
                                 }
                                 else
                                 {
+                                    if (waterdrink_i==0)
+                                    {
+                                        waterdrink_i = 1;
+                                        eventBtn_obj.SetActive(true);
+                                    }
+                                    
                                     if (findKey_i == 1)
                                     {
                                         //액션을 취할것이 없을 때 10개 정도 이제 할것은 없다 이제 만질 것은 없다.
@@ -1010,6 +1540,7 @@ public class Event : MonoBehaviour
                                         GM.GetComponent<ItemSys>().hand_obj[0].SetActive(false);
                                         GM.GetComponent<ItemSys>().slot_obj[0].SetActive(false);
                                         GM.GetComponent<ItemSys>().slotHand_obj[0].SetActive(false);
+                                            eventBtn_obj.SetActive(true);
                                     }
                                 }
                             }
@@ -1070,6 +1601,15 @@ public class Event : MonoBehaviour
                                     get_inp.SetActive(false);
                                     indexAct = 0;
                                     GM.GetComponent<DialogSys>().TextShow();
+
+                                    if (eventsat2 == 2)
+                                    {
+                                        eventBtn_obj.SetActive(true);
+                                        eventsat2 = 3;
+                                    }
+                                    
+                                        dr_obj.SetActive(false);
+
                                 }
                             }
                             else
@@ -1209,6 +1749,7 @@ public class Event : MonoBehaviour
 
     public void Go()
     {
+        GM.GetComponent<FaceEvent>().NomalFace();
         GM.GetComponent<SoundEvt>().ArrowSound();
         if (stage_i == 0)
         {
@@ -1216,16 +1757,22 @@ public class Event : MonoBehaviour
             t_txt.text = "";
             BGSVol_f = 0.2f;
             BGS.volume = BGSVol_f;
+            eventBtn_obj.SetActive(true);
         }
         else
         {
+
+            eventBtn_obj.SetActive(true);
+            GM.GetComponent<DialogSys>().num = 0;
             go_btn.SetActive(false);
             t_txt.text = "";
             direction = 2;
+            indexAct = 0;
+            indexMove = 0;
             pos_i = 2;
-            arrowU_obj.SetActive(true);//문양1
+            arrowU_obj.SetActive(false);//문양1
             arrowD_obj.SetActive(false);//문2
-            arrowL_obj.SetActive(true);//책상3
+            arrowL_obj.SetActive(false);//책상3
             arrowR_obj.SetActive(true);//선반4
             back.GetComponent<Image>().sprite = back2_spr[2];
             tutoAdd_obj.GetComponent<Button>().interactable = true;
@@ -1249,10 +1796,10 @@ public class Event : MonoBehaviour
 
     IEnumerator imgFadein()
     {
-        for (float i = 0f; i < 1f; i += 0.05f)
+        for (float i = 1f; i > 0f; i -= 0.05f)
         {
             fade_obj.SetActive(true);
-            color.a = Mathf.Lerp(1f, 0f, i);
+            color.a = Mathf.Lerp(0f, 1f, i);
             fade_obj.GetComponent<Image>().color = color;
             yield return new WaitForSeconds(2f);
         }
@@ -1364,6 +1911,8 @@ GO버튼이 활성화되어서 나가짐
             tutocant_i = 0;
             tutoDelay_obj.SetActive(true);
             use_input.text = "";
+
+            GM.GetComponent<SoundEvt>().typingSound();
         }
     }
     public void TutoDelay()
@@ -1379,6 +1928,7 @@ GO버튼이 활성화되어서 나가짐
     }
     void TutorialUp()
     {
+        BackReSize();
         back.GetComponent<Image>().sprite = tutoBack_spr[1];
         TutoFalse();
         //t_txt.text = "이제 집으로 가야겠다. 으.. 어서 문을 열고 나가자.";
@@ -1392,6 +1942,7 @@ GO버튼이 활성화되어서 나가짐
         t_txt.text = "그런 것은 할 수 없어.";
         if (inputM_str.Equals("문"))
         {
+            BackUpSizeM();
             TutoFalse();
             switch (tutoAct_i)
             {
@@ -1414,6 +1965,7 @@ GO버튼이 활성화되어서 나가짐
     }
     void TutorialDown()
     {
+        BackReSize();
         back.GetComponent<Image>().sprite = tutoBack_spr[2];
         TutoFalse();
         //t_txt.text = "내가 앉았던 자리다. 아마 평생 여기서 일하겠지..";
@@ -1438,6 +1990,7 @@ GO버튼이 활성화되어서 나가짐
     }
     void TutorialGo()
     {
+        BackReSize();
         direction = 1;
         indexMove = 0;
         indexAct = 0;
@@ -1469,4 +2022,89 @@ GO버튼이 활성화되어서 나가짐
         tutoGo_obj.SetActive(false);
         tutoDelay_obj.SetActive(false);
     }
+
+
+    void BackUpSizeR()
+    {
+        RectTransform rectTran = back.GetComponent<RectTransform>();
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 1201);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 781);
+        Vector3 position = back.transform.localPosition;
+        position.x = position.x - 160;
+        back.transform.localPosition = position;
+    }
+    void BackUpSizeL()
+    {
+        RectTransform rectTran = back.GetComponent<RectTransform>();
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 1201);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 781);
+        Vector3 position = back.transform.localPosition;
+        position.x = position.x + 160;
+        back.transform.localPosition = position;
+    }
+    void BackUpSizeM()
+    {
+        RectTransform rectTran = back.GetComponent<RectTransform>();
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 1201);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 781);
+        Vector3 position = back.transform.localPosition;
+        position.x = 0;
+        back.transform.localPosition = position;
+    }
+    void BackReSize()
+    {
+        RectTransform rectTran = back.GetComponent<RectTransform>();
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 884);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 575);
+        Vector3 position = back.transform.localPosition;
+        position.x = 0;
+        back.transform.localPosition = position;
+    }
+
+    void EventCharMove()
+    {
+        Vector3 position = eventCharMove_obj.transform.localPosition;
+        position.x = -289.8f;
+        eventCharMove_obj.transform.localPosition = position;
+
+        Vector3 position2 = eventBall_obj.transform.localPosition;
+        position2.x = 87.0324f;
+        eventBall_obj.transform.localPosition = position2;
+    }
+
+    void EventCharBack()
+    {
+        Vector3 position = eventCharMove_obj.transform.localPosition;
+        position.x = 0f;
+        eventCharMove_obj.transform.localPosition = position;
+
+        Vector3 position2 = eventBall_obj.transform.localPosition;
+        position2.x = 376.8324f;
+        eventBall_obj.transform.localPosition = position2;
+    }
+    void EventBoxM()
+    {
+
+        RectTransform rectTran = box_obj.GetComponent<RectTransform>();
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 292.1489f);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 171.6894f);
+        Vector3 position = box_obj.transform.localPosition;
+        position.x = 363.2f;
+        position.y = 110.8f;
+        box_obj.transform.localPosition = position;
+    }
+
+    void EventBoxBack()
+    {
+
+        RectTransform rectTran = box_obj.GetComponent<RectTransform>();
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 211);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 124);
+        Vector3 position = box_obj.transform.localPosition;
+        position.x = 264.3399f;
+        position.y = 80.59f;
+        box_obj.transform.localPosition = position;
+    }
+
+
 }

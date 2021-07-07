@@ -9,12 +9,12 @@ public class DialogSys : MonoBehaviour
     public Text Text_obj, TextChar_obj, TextOther_obj;
     string[] Text_cut; //대사 끊기
 
-    int num = 0;
+    public int num = 0;
     float speedF = 0.05f;
     public GameObject speedBtn;//스피드업버튼
     public GameObject endWnd;
 
-    List<Dictionary<string, object>> data_talk, data0_talk, data1_talk, data_eventtalk; //csv파일
+    List<Dictionary<string, object>> data_talk, data0_talk, data1_talk, data_eventtalk, data_eventtalk2; //csv파일
 
     List<Dictionary<string, object>> data;
     public string str, code_str;
@@ -57,6 +57,7 @@ public class DialogSys : MonoBehaviour
         data1_talk = CSVReader.Read("CSV/stage1");
         data_talk = CSVReader.Read("CSV/stage2");
         data_eventtalk = CSVReader.Read("CSV/event0");
+        data_eventtalk2 = CSVReader.Read("CSV/event1");
         data = CSVReader.Read("CSV/stage1");
     }
 
@@ -101,11 +102,21 @@ public class DialogSys : MonoBehaviour
 
     public void talkeventbtn()
     {
-        str = "" + data_eventtalk[num]["stage2"]; //뒷부분이 항목부르기 0은 고정값
+        Debug.Log(num);
+        if (Event.stage_i == 1)
+        {
+            str = "" + data_eventtalk[num]["stage1"];
+            Debug.Log(str);
+        }
+        else if (Event.stage_i == 2)
+        {
+            str = "" + data_eventtalk2[num]["stage2"];
+        }
+        //뒷부분이 항목부르기 0은 고정값
         Text_cut = str.Split('/');
         cleantalk();
         StartCoroutine("talkEventRun");
-
+        Debug.Log(str);
         num++;
     }
 
@@ -268,7 +279,38 @@ public class DialogSys : MonoBehaviour
                 dialog_txt.text = "그런 것은 없어";
             }
 
+            if (face_i[0] == 1)
+            {
+                EyeBallMove();
+            }
+            else
+            {
+                EyeBallrBack();
+            }
         }
     }
-    
+
+
+    void EyeBallMove()
+    {
+        Vector3 position = faceParts_obj[6].transform.localPosition;
+        position.x = -44f;
+        faceParts_obj[6].transform.localPosition = position;
+
+        Vector3 position2 = faceParts_obj[0].transform.localPosition;
+        position2.x = 71.89f;
+        faceParts_obj[0].transform.localPosition = position2;
+    }
+
+    void EyeBallrBack()
+    {
+        Vector3 position = faceParts_obj[6].transform.localPosition;
+        position.x = -52.07f;
+        faceParts_obj[6].transform.localPosition = position;
+
+        Vector3 position2 = faceParts_obj[0].transform.localPosition;
+        position2.x = 49.13f;
+        faceParts_obj[0].transform.localPosition = position2;
+    }
+
 }

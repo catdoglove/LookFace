@@ -19,6 +19,8 @@ public class FaceEvent : MonoBehaviour
     /// </summary>
     public void GetItemFace()
     {
+        faceParts_obj[0].SetActive(true);
+        faceParts_obj[1].SetActive(true);
         faceParts_obj[0].GetComponent<Image>().sprite = eyeBall_spr[0];
         faceParts_obj[1].GetComponent<Image>().sprite = eyeBall_spr[0];
         faceParts_obj[2].GetComponent<Image>().sprite = mouth_spr[1];
@@ -32,15 +34,38 @@ public class FaceEvent : MonoBehaviour
     }
 
     /// <summary>
+    /// 기본
+    /// </summary>
+    public void NomalFace()
+    {
+        faceParts_obj[0].SetActive(true);
+        faceParts_obj[1].SetActive(true);
+        faceParts_obj[0].GetComponent<Image>().sprite = eyeBall_spr[0];
+        faceParts_obj[1].GetComponent<Image>().sprite = eyeBall_spr[0];
+        faceParts_obj[2].GetComponent<Image>().sprite = mouth_spr[0];
+        faceParts_obj[3].GetComponent<Image>().sprite = eyes_spr[0];
+        faceParts_obj[4].GetComponent<Image>().sprite = ears_spr[0];
+        faceParts_obj[5].GetComponent<Image>().sprite = nose_spr[0];
+        faceParts_obj[6].GetComponent<Image>().sprite = eyebrow_spr[0];
+        faceParts_obj[7].GetComponent<Image>().sprite = body_spr[0];
+        moven();
+        //faceParts_obj[0].
+        //faceParts_obj[6].
+    }
+
+    /// <summary>
     /// 대화 이밴트 놀람
     /// </summary>
     public void SurprisedFace()
     {
+        moves();
+        faceParts_obj[0].SetActive(true);
+        faceParts_obj[1].SetActive(true);
         faceParts_obj[0].GetComponent<Image>().sprite = eyeBall_spr[0];
         faceParts_obj[1].GetComponent<Image>().sprite = eyeBall_spr[0];
         faceParts_obj[2].GetComponent<Image>().sprite = mouth_spr[2];
         faceParts_obj[3].GetComponent<Image>().sprite = eyes_spr[1];
-        faceParts_obj[4].GetComponent<Image>().sprite = ears_spr[0];
+        faceParts_obj[4].GetComponent<Image>().sprite = ears_spr[1];
         faceParts_obj[5].GetComponent<Image>().sprite = nose_spr[0];
         faceParts_obj[6].GetComponent<Image>().sprite = eyebrow_spr[0];
         faceParts_obj[7].GetComponent<Image>().sprite = body_spr[3];
@@ -51,10 +76,12 @@ public class FaceEvent : MonoBehaviour
     /// </summary>
     public void WorryFace()
     {
+        faceParts_obj[0].SetActive(true);
+        faceParts_obj[1].SetActive(true);
         faceParts_obj[0].GetComponent<Image>().sprite = eyeBall_spr[0];
         faceParts_obj[1].GetComponent<Image>().sprite = eyeBall_spr[0];
         faceParts_obj[2].GetComponent<Image>().sprite = mouth_spr[5];
-        faceParts_obj[3].GetComponent<Image>().sprite = eyes_spr[1];
+        faceParts_obj[3].GetComponent<Image>().sprite = eyes_spr[0];
         faceParts_obj[4].GetComponent<Image>().sprite = ears_spr[0];
         faceParts_obj[5].GetComponent<Image>().sprite = nose_spr[0];
         faceParts_obj[6].GetComponent<Image>().sprite = eyebrow_spr[1];
@@ -67,6 +94,8 @@ public class FaceEvent : MonoBehaviour
     /// </summary>
     public void RelaxFace()
     {
+        faceParts_obj[0].SetActive(false);
+        faceParts_obj[1].SetActive(false);
         faceParts_obj[0].GetComponent<Image>().sprite = eyeBall_spr[0];
         faceParts_obj[1].GetComponent<Image>().sprite = eyeBall_spr[0];
         faceParts_obj[2].GetComponent<Image>().sprite = mouth_spr[4];
@@ -82,6 +111,8 @@ public class FaceEvent : MonoBehaviour
     /// </summary>
     public void ThinkFace()
     {
+        faceParts_obj[0].SetActive(false);
+        faceParts_obj[1].SetActive(false);
         faceParts_obj[0].GetComponent<Image>().sprite = eyeBall_spr[0];
         faceParts_obj[1].GetComponent<Image>().sprite = eyeBall_spr[0];
         faceParts_obj[2].GetComponent<Image>().sprite = mouth_spr[3];
@@ -90,5 +121,37 @@ public class FaceEvent : MonoBehaviour
         faceParts_obj[5].GetComponent<Image>().sprite = nose_spr[0];
         faceParts_obj[6].GetComponent<Image>().sprite = eyebrow_spr[0];
         faceParts_obj[7].GetComponent<Image>().sprite = body_spr[1];
+    }
+
+
+
+    void moves()
+    {
+        Vector3 position = faceParts_obj[0].transform.localPosition;
+        position.y = 172.06f;
+        faceParts_obj[0].transform.localPosition = position;
+
+        Vector3 position2 = faceParts_obj[1].transform.localPosition;
+        position2.y = 172.06f;
+        faceParts_obj[1].transform.localPosition = position2;
+
+        Vector3 position3 = faceParts_obj[6].transform.localPosition;
+        position3.y = 241.86f;
+        faceParts_obj[6].transform.localPosition = position3;
+    }
+
+    void moven()
+    {
+        Vector3 position = faceParts_obj[0].transform.localPosition;
+        position.y = 160.01f;
+        faceParts_obj[0].transform.localPosition = position;
+
+        Vector3 position2 = faceParts_obj[1].transform.localPosition;
+        position2.y = 160.01f;
+        faceParts_obj[1].transform.localPosition = position2;
+        
+        Vector3 position3 = faceParts_obj[6].transform.localPosition;
+        position3.y = 232.87f;
+        faceParts_obj[6].transform.localPosition = position3;
     }
 }
