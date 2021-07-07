@@ -84,6 +84,7 @@ public class Event : MonoBehaviour
     {
         //testcamera.Fade = 0.2f;
         //testcamera2._Fade = 0f;
+        stage_i = 1;
         if (stage_i == 0)
         {
             TutorialStart();
@@ -444,6 +445,7 @@ public class Event : MonoBehaviour
                     EventCharBack();
                     break;
                 case 34:
+                    EventCharMove();
                     //“뭐지? 무슨 소리가 났는데.” (일반
                     eventTalk2_obj.SetActive(true);
                     mirror_obj.SetActive(true);
@@ -468,6 +470,8 @@ public class Event : MonoBehaviour
                     GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[0];
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
+                    GM.GetComponent<SoundEvt>().fallingSound();
+                    StartCoroutine("imgFadeOut");
                     break;
                 case 38:
                     end_obj.SetActive(true);
@@ -1394,7 +1398,8 @@ public class Event : MonoBehaviour
                                     getReOn_i = 1;
                                     dark_obj.SetActive(false);
                                     GM.GetComponent<SoundEvt>().SwitchSound();
-                                GM.GetComponent<DialogSys>().TextShow();
+                                eventBtn_obj.SetActive(true);
+                                //GM.GetComponent<DialogSys>().TextShow();
 
                             }
                             
@@ -1784,7 +1789,9 @@ public class Event : MonoBehaviour
 
     IEnumerator imgFadeOut()
     {
-        for (float i = 0f; i < 1f; i += 0.01f)
+
+        yield return new WaitForSeconds(0.1f);
+        for (float i = 1f; i >= 0f; i -= 0.05f)
         {
             fade_obj.SetActive(true);
             color.a = Mathf.Lerp(1f, 0f, i);
