@@ -17,7 +17,11 @@ public class ItemSys : MonoBehaviour
     public GameObject bag_obj, itemWindow_obj;
     public Text itemName_txt;
 
-    public GameObject closeZipper_obj,openZipper_obj;
+    public GameObject closeZipper_obj,openZipper_obj, zipperBefore_obj, closeItemWBtn_obj, openZipperW_obj;
+
+    public float bag_x_f, zipper_y_f, bag_y_f;
+    public int bagOpen_i, zipperOpen_i;
+    public Sprite[] zipper_spr;
 
     // Start is called before the first frame update
     void Start()
@@ -108,11 +112,16 @@ public class ItemSys : MonoBehaviour
 
     public void OpenBag()
     {
-        itemWindow_obj.SetActive(true);
+        //itemWindow_obj.SetActive(true);
+        zipperOpen_i = 1;
+        StartCoroutine("OpenZipper");
     }
     public void CloseBag()
     {
-        itemWindow_obj.SetActive(false);
+        //itemWindow_obj.SetActive(false);
+
+        bagOpen_i = 1;
+        StartCoroutine("BackBagItem");
     }
 
     void SetHands(int num)
@@ -216,5 +225,164 @@ public class ItemSys : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// 마우스 오버하면 지퍼가 뒤로 들어갔다가 가방과 함께나온다
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator BounceBag()
+    {
+        while (bagOpen_i == 1)
+        {
+            if (bag_x_f <= -15f)
+            {
+                //moveX2 = 5.2f;
+            }
+            bag_x_f = bag_x_f - 0.05f;
+            if (bag_x_f <= -5.4)
+            {
+                bag_x_f = -15.4f;
+            }
 
+            bag_obj.transform.position = new Vector3(bag_x_f, bag_obj.transform.position.y, bag_obj.transform.position.z);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    /// <summary>
+    /// 지퍼를 연다
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator OpenZipper()
+    {
+        RectTransform rectTran = closeZipper_obj.GetComponent<RectTransform>();
+        Vector3 position = zipperBefore_obj.transform.localPosition;
+        while (zipperOpen_i == 1)
+        {
+            if (rectTran.sizeDelta.x <= 322.5343f)
+            {
+                zipperOpen_i = 0;
+                zipperBefore_obj.GetComponent<Image>().sprite = zipper_spr[2];
+            }
+            
+            if (rectTran.sizeDelta.x <= 700f&& rectTran.sizeDelta.x > 325f)
+            {
+                zipperBefore_obj.GetComponent<Image>().sprite = zipper_spr[1];
+            }
+            if (rectTran.sizeDelta.x < 450f)
+            {
+                zipperBefore_obj.GetComponent<Image>().sprite = zipper_spr[2];
+            }
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, rectTran.sizeDelta.x - 4.75f);
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, rectTran.sizeDelta.y - 7.57f);
+
+            if (position.y < 199.97f)
+            {
+                position.y = position.y + 3.79f;
+                zipperBefore_obj.transform.localPosition = position;
+            }
+
+            yield return new WaitForSeconds(0.005f);
+        }
+        bagOpen_i = 1;
+        StartCoroutine("ShowBagItem");
+    }
+
+
+    /// <summary>
+    /// 지퍼를 닫는다
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator CloseZipper()
+    {
+        RectTransform rectTran = closeZipper_obj.GetComponent<RectTransform>();
+        Vector3 position = zipperBefore_obj.transform.localPosition;
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 472.8093f);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 753.6f);
+        
+        while (zipperOpen_i == 1)
+        {
+            if (rectTran.sizeDelta.x >= 949.9f)
+            {
+                zipperOpen_i = 0;
+                zipperBefore_obj.GetComponent<Image>().sprite = zipper_spr[0];
+            }
+
+            if (rectTran.sizeDelta.x <= 700f && rectTran.sizeDelta.x > 450f)
+            {
+                zipperBefore_obj.GetComponent<Image>().sprite = zipper_spr[1];
+            }
+            if (rectTran.sizeDelta.x < 450f)
+            {
+                zipperBefore_obj.GetComponent<Image>().sprite = zipper_spr[2];
+            }
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, rectTran.sizeDelta.x + 4.75f);
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, rectTran.sizeDelta.y + 7.57f);
+
+            if (position.y > -179.21f)
+            {
+                position.y = position.y - 3.79f;
+                zipperBefore_obj.transform.localPosition = position;
+            }
+
+            yield return new WaitForSeconds(0.004f);
+        }
+    }
+
+    /// <summary>
+    /// 아이템창이 나온다.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ShowBagItem()
+    {
+        itemWindow_obj.SetActive(true);
+        openZipperW_obj.SetActive(true);
+        closeItemWBtn_obj.SetActive(true);
+        Vector3 position = itemWindow_obj.transform.localPosition;
+        while (bagOpen_i == 1)
+        {
+            //-212.3
+                //139.4
+            if (position.x < 139.4f)
+            {
+                position.x = position.x + 6.79f;
+                itemWindow_obj.transform.localPosition = position;
+            }
+            else
+            {
+                bagOpen_i = 0;
+            }
+            yield return new WaitForSeconds(0.002f);
+        }
+        //closeItemWBtn_obj.SetActive(true);
+        
+    }
+
+    /// <summary>
+    /// 아이템창이 들어간다
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator BackBagItem()
+    {
+        itemWindow_obj.SetActive(true);
+        openZipperW_obj.SetActive(true);
+        Vector3 position = itemWindow_obj.transform.localPosition;
+        while (bagOpen_i == 1)
+        {
+            if (position.x > -212.3f)
+            {
+                position.x = position.x - 6.79f;
+                itemWindow_obj.transform.localPosition = position;
+            }
+            else
+            {
+                bagOpen_i = 0;
+            }
+            yield return new WaitForSeconds(0.002f);
+        }
+        closeItemWBtn_obj.SetActive(false);
+        itemWindow_obj.SetActive(false);
+        openZipperW_obj.SetActive(false);
+        zipperOpen_i = 1;
+        StartCoroutine("CloseZipper");
+    }
 }
