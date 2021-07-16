@@ -113,15 +113,22 @@ public class ItemSys : MonoBehaviour
     public void OpenBag()
     {
         //itemWindow_obj.SetActive(true);
-        zipperOpen_i = 1;
-        StartCoroutine("OpenZipper");
+
+        if (zipperOpen_i == 0)
+        {
+            zipperOpen_i = 1;
+            StartCoroutine("OpenZipper");
+        }
     }
     public void CloseBag()
     {
         //itemWindow_obj.SetActive(false);
 
-        bagOpen_i = 1;
-        StartCoroutine("BackBagItem");
+        if (bagOpen_i == 0)
+        {
+            bagOpen_i = 1;
+            StartCoroutine("BackBagItem");
+        }
     }
 
     void SetHands(int num)
@@ -384,5 +391,34 @@ public class ItemSys : MonoBehaviour
         openZipperW_obj.SetActive(false);
         zipperOpen_i = 1;
         StartCoroutine("CloseZipper");
+    }
+
+
+
+    /// <summary>
+    /// 화면왼쪽에 마우스 오버하면 가방이 들어갔다가 나온다.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator MouseOverBag()
+    {
+        Vector3 position = itemWindow_obj.transform.localPosition;
+        while (bagOpen_i == 1)
+        {
+            //-917
+            //-828.38
+            //-830.82
+            if (position.x < 139.4f)
+            {
+                position.x = position.x + 6.79f;
+                itemWindow_obj.transform.localPosition = position;
+            }
+            else
+            {
+                bagOpen_i = 0;
+            }
+            yield return new WaitForSeconds(0.002f);
+        }
+        //closeItemWBtn_obj.SetActive(true);
+
     }
 }

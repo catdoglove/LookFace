@@ -134,6 +134,8 @@ public class Event : MonoBehaviour
                     eventTalk_obj.SetActive(true);
                     GM.GetComponent<SoundEvt>().MoveSound();
                     GM.GetComponent<FaceEvent>().WorryFace();
+                    GM.GetComponent<FaceEvent>().moven();
+                    GM.GetComponent<FaceEvent>().moveR();
                     break;
                 case 1:
                     GM.GetComponent<FaceEvent>().NomalFace();
@@ -164,15 +166,20 @@ public class Event : MonoBehaviour
                     //“뭐지? 어디선가 기침소리가 들리는데?” (불안한 표정)
                     eventTalk2_obj.SetActive(false);
                     eventTalk_obj.SetActive(true);
-                    GM.GetComponent<FaceEvent>().WorryFace();
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    GM.GetComponent<FaceEvent>().faceParts_obj[2].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().mouth_spr[5];
+                    GM.GetComponent<FaceEvent>().moveR();
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
                 case 4:
                     //선반 아래쪽 구석을 쳐다봤다.
                     eventTalk_obj.SetActive(false);
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    //GM.GetComponent<FaceEvent>().moveM();
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().ArrowSound();
+                    BackUpSizeR();
                     break;
                 case 5:
                     //“음.. 여기서 소리가 났을 리는 없고..” (생각하는 표정)
@@ -199,19 +206,23 @@ public class Event : MonoBehaviour
                     eventTalk2_obj.SetActive(false);
                     eventTalk_obj.SetActive(true);
                     GM.GetComponent<FaceEvent>().SurprisedFace();
+                    GM.GetComponent<FaceEvent>().moven();
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
                 case 9:
                     //아래를 향해 손을 뻗었다. .//.///. 무언가 손에 잡혔다.
                     eventTalk_obj.SetActive(false);
+                    GM.GetComponent<FaceEvent>().SurprisedFace();
+                    GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[0];
+                    GM.GetComponent<FaceEvent>().moveD();
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().ArrowSound();
                     break;
                 case 10:
                     //“..거울?” (생각하는 표정)
                     mirror_obj.SetActive(true);
-                    eventTalk_obj.SetActive(false);
+                    eventTalk_obj.SetActive(true);
                     t_txt.text = "";
                     GM.GetComponent<FaceEvent>().NomalFace();
                     GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[1];
@@ -233,6 +244,7 @@ public class Event : MonoBehaviour
                     eventTalk_obj.SetActive(true);
                     //“거울이 말을 하잖아?????!!!!!!” (놀란 표정)
                     GM.GetComponent<FaceEvent>().SurprisedFace();
+                    GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[0];
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     mirror_obj.GetComponent<Image>().sprite = mirror_spr[0];
@@ -250,7 +262,10 @@ public class Event : MonoBehaviour
                     eventTalk_obj.SetActive(true);
                     //“예 아 음.. 말하는 거울은 처음 봤어요.” (일반 표정)
                     GM.GetComponent<FaceEvent>().NomalFace();
+                    GM.GetComponent<FaceEvent>().WorryFace();
+                    GM.GetComponent<FaceEvent>().moveM();
                     GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[0];
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
                 case 15:
@@ -266,6 +281,7 @@ public class Event : MonoBehaviour
                     eventTalk_obj.SetActive(true);
                     //“에 그렇긴 하지만..” (불안한 표정)
                     GM.GetComponent<FaceEvent>().WorryFace();
+                    GM.GetComponent<FaceEvent>().faceParts_obj[2].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().mouth_spr[3];
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
@@ -281,10 +297,13 @@ public class Event : MonoBehaviour
                     eventTalk2_obj.SetActive(false);
                     eventTalk_obj.SetActive(true);
                     //“뭐가 어떻게 된 거지..”(불안한 표정)
+                    GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[0];
+                    GM.GetComponent<FaceEvent>().moveL();
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
                 case 19:
+                    BackReSize();
                     eventTalk_obj.SetActive(false);
                     GM.GetComponent<FaceEvent>().NomalFace();
                     eventBtn_obj.SetActive(false);
@@ -311,6 +330,7 @@ public class Event : MonoBehaviour
                     arrowL_obj.SetActive(false);//책상3
                     arrowR_obj.SetActive(false);//선반4
                     //드라이버로 무언가를 열 수 있겠는데.
+                    mirror_obj.GetComponent<Image>().sprite = mirror_spr[0];
                     eventTalk2_obj.SetActive(true);
                     mirror_obj.SetActive(true);
                     GM.GetComponent<DialogSys>().talkeventbtn();
@@ -320,21 +340,27 @@ public class Event : MonoBehaviour
                 case 21:
                     //“아마 열만한 게..”(생각표정
                     eventTalk_obj.SetActive(true);
+                    eventTalk2_obj.SetActive(false);
                     GM.GetComponent<FaceEvent>().ThinkFace();
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
                 case 22:
                     //“여기 있구만. 상자에 있는 못을 드라이버로 풀 수 있겠어.” (일반)
+                    eventTalk_obj.SetActive(false);
+                    eventTalk2_obj.SetActive(true);
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkMirrorSound();
                     break;
                 case 23:
                     //“아 그러면 되겠네요!” (놀란표정 손은 내림
                     eventTalk2_obj.SetActive(false);
+                    eventTalk_obj.SetActive(true);
                     GM.GetComponent<FaceEvent>().SurprisedFace();
                     GM.GetComponent<DialogSys>().talkeventbtn();
-                    GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[0];
+                    GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[1];
+                    GM.GetComponent<FaceEvent>().faceParts_obj[2].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().mouth_spr[5];
+                    GM.GetComponent<FaceEvent>().moven();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
                 case 24:
@@ -379,15 +405,24 @@ public class Event : MonoBehaviour
                 case 26:
                     //“이건 그냥 손으로 열 수 있겠는데” (일반)
                     eventTalk2_obj.SetActive(true);
+                    eventTalk_obj.SetActive(false);
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkMirrorSound();
                     break;
                 case 27:
+                    //“m / 손 / 에 / / 들 / 고 / / 분 / 해 / 를 / / 해 / 보 / 자 / 고 /
+                    eventTalk2_obj.SetActive(true);
+                    GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<SoundEvt>().TalkMirrorSound();
+                    break;
+                case 28:
                     //“한번 해볼게요.”
+                    eventTalk_obj.SetActive(true);
+                    eventTalk2_obj.SetActive(false);
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
-                case 28:
+                case 29:
                     GM.GetComponent<FaceEvent>().NomalFace();
                     eventBtn_obj.SetActive(false);
                     if (GM.GetComponent<ItemSys>().itemR_i != 0)
@@ -414,7 +449,7 @@ public class Event : MonoBehaviour
                     E_txt.text = "";
                     EventCharBack();
                     break;
-                case 29:
+                case 30:
                     EventCharMove();
                     //“어디서 본 거 같아요.” (생각하는 표정)
                     mirror_obj.SetActive(true);
@@ -423,26 +458,31 @@ public class Event : MonoBehaviour
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
-                case 30:
+                case 31:
                     //“나도 방금까지 본 거 같은데..”(일반
                     eventTalk2_obj.SetActive(true);
+                    eventTalk_obj.SetActive(false);
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkMirrorSound();
                     break;
-                case 31:
+                case 32:
                     //“아! 리모콘에서 봤어요!” (놀란 + 손은 내리고)
+                    eventTalk_obj.SetActive(true);
+                    eventTalk2_obj.SetActive(false);
                     GM.GetComponent<FaceEvent>().SurprisedFace();
                     GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[0];
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
-                case 32:
+                case 33:
                     //“오 좋아. 그럼 한번 살펴보자고”(신난 거
+                    eventTalk2_obj.SetActive(true);
+                    eventTalk_obj.SetActive(false);
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkMirrorSound();
                     mirror_obj.GetComponent<Image>().sprite = mirror_spr[1];
                     break;
-                case 33:
+                case 34:
                     mirror_obj.GetComponent<Image>().sprite = mirror_spr[0];
                     GM.GetComponent<FaceEvent>().NomalFace();
                     eventBtn_obj.SetActive(false);
@@ -471,7 +511,7 @@ public class Event : MonoBehaviour
                     E_txt.text = "";
                     EventCharBack();
                     break;
-                case 34:
+                case 35:
                     EventCharMove();
                     //“뭐지? 무슨 소리가 났는데.” (일반
                     eventTalk2_obj.SetActive(true);
@@ -479,19 +519,20 @@ public class Event : MonoBehaviour
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkMirrorSound();
                     break;
-                case 35:
+                case 36:
                     //“딱히 변한 건 없어요.” (불안한 표정으로)
                     eventTalk_obj.SetActive(true);
+                    eventTalk2_obj.SetActive(false);
                     GM.GetComponent<FaceEvent>().WorryFace();
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
-                case 36:
+                case 37:
                     //“음.. 다른데를 살펴볼..” (일반
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkMirrorSound();
                     break;
-                case 37:
+                case 38:
                     //으아아아아!! (놀란+ 손은 내리고) (불안하거나 걱정되는 땀 삐질)
                     GM.GetComponent<FaceEvent>().SurprisedFace();
                     GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[0];
@@ -501,7 +542,7 @@ public class Event : MonoBehaviour
                     fade_obj.SetActive(true);
                     StartCoroutine("imgFadeOutend");
                     break;
-                case 38:
+                case 39:
                     end_obj.SetActive(true);
                     BGS.mute = true;
                     break;
@@ -515,17 +556,19 @@ public class Event : MonoBehaviour
             switch (progress_i)
             {
                 case 0:
-                    //E_txt.text = s_str[0];
+                    //p/(/터/벅/ /터/벅/)
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     eventTalk_obj.SetActive(true);
                     GM.GetComponent<SoundEvt>().MoveSound();
                     GM.GetComponent<FaceEvent>().WorryFace();
                     break;
                 case 1:
+                    ///으/./././//// /엎/친/ /데/ /덮/친/ /격/이/네/
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
                 case 2:
+                    ///주/변/이/ /좀/ /어/두/운/ /데/ /불/ /키/는/ /거/ /없/나/?/
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
@@ -537,44 +580,63 @@ public class Event : MonoBehaviour
                     E_txt.text = "";
                     break;
                 case 4:
+                    ///휴/ /이/제/야/ /밝/아/졌/네/.///// /어/디/ /한/번/ /둘/러/볼/까/?/
                     eventTalk_obj.SetActive(true);
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     GM.GetComponent<FaceEvent>().RelaxFace();
                     break;
                 case 5:
+                    ///위/험/한/ /게/ /있/을 /수/ /있/으/니/ /조/심/해/서/ /살/펴/봐/야/겠/다/./
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
+                    GM.GetComponent<FaceEvent>().WorryFace();
+                    GM.GetComponent<FaceEvent>().faceParts_obj[2].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().mouth_spr[3];
+                    GM.GetComponent<FaceEvent>().moveL();
                     break;
                 case 6:
+                    ///어/차/피/ /표/정/에/ /다/ /드/러/나/지/만/././
                     GM.GetComponent<DialogSys>().talkeventbtn();
+                    GM.GetComponent<FaceEvent>().faceParts_obj[2].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().mouth_spr[3];
+                    GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[0];
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
                 case 7:
                     GM.GetComponent<FaceEvent>().NomalFace();
+                    GM.GetComponent<FaceEvent>().moveM();
                     eventBtn_obj.SetActive(false);
                     eventTalk_obj.SetActive(false);
+                    //GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[2];
                     E_txt.text = "";
                     break;
                 case 8:
+                    ///목/이/ /마/른/데/././///// /마/실/ /수/ /있/을/까/?/
                     eventTalk_obj.SetActive(true);
                     GM.GetComponent<FaceEvent>().WorryFace();
+                    GM.GetComponent<FaceEvent>().faceParts_obj[2].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().mouth_spr[5];
+                    GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[1];
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
+                    GM.GetComponent<FaceEvent>().moveR();
                     break;
                 case 9:
                     GM.GetComponent<FaceEvent>().NomalFace();
+                    GM.GetComponent<FaceEvent>().moveM();
                     eventBtn_obj.SetActive(false);
                     eventTalk_obj.SetActive(false);
                     E_txt.text = "";
                     break;
                 case 10:
+                    ///이/제/야/ /살/ /것/ /같/네/./ /휴/././
                     eventTalk_obj.SetActive(true);
                     GM.GetComponent<FaceEvent>().RelaxFace();
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
                 case 11:
+                    ///음/?/ /꼭/지/ /뒤/에/ /뭔/가/ /있/는/데/?/
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    GM.GetComponent<FaceEvent>().faceParts_obj[2].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().mouth_spr[5];
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
@@ -585,12 +647,19 @@ public class Event : MonoBehaviour
                     E_txt.text = "";
                     break;
                 case 13:
+                    ///깜/짝/이/야/////// /열/쇠/가/ /부/러/졌/네/./
                     eventTalk_obj.SetActive(true);
                     GM.GetComponent<FaceEvent>().SurprisedFace();
+                    GM.GetComponent<FaceEvent>().moven();
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().BrokenSound();
                     break;
                 case 14:
+                    ///문/은/ /열/렸/으/니/ /다/행/이/지/만/././
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    GM.GetComponent<FaceEvent>().faceParts_obj[2].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().mouth_spr[5];
+                    GM.GetComponent<FaceEvent>().faceParts_obj[3].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().eyes_spr[1];
+                    GM.GetComponent<FaceEvent>().faceParts_obj[8].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().eyesMask_spr[1];
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
@@ -1490,6 +1559,7 @@ public class Event : MonoBehaviour
                                     indexAct = 10;
                                     findGlass_i = 1;
                                     hp_obj[2].SetActive(false);
+                                    
                                 }
                                 else
                                 {
@@ -1497,6 +1567,8 @@ public class Event : MonoBehaviour
                                     {
                                         waterdrink_i = 1;
                                         eventBtn_obj.SetActive(true);
+                                        GM.GetComponent<SoundEvt>().waterdropSound();
+                                        hp_obj[2].SetActive(true);
                                     }
                                     
                                     if (findKey_i == 1)
@@ -1799,6 +1871,7 @@ public class Event : MonoBehaviour
         else
         {
 
+            GM.GetComponent<SoundEvt>().MoveSound();
             eventBtn_obj.SetActive(true);
             GM.GetComponent<DialogSys>().num = 0;
             go_btn.SetActive(false);
@@ -1822,9 +1895,9 @@ public class Event : MonoBehaviour
 
     IEnumerator imgFadeOut()
     {
-        
-        yield return new WaitForSeconds(0.1f);
-        for (float i = 1f; i > 0f; i -= 0.05f)
+        GM.GetComponent<SoundEvt>().typingSound();
+        yield return new WaitForSeconds(1.2f);
+        for (float i = 1f; i > 0f; i -= 0.02f)
         {
             fade_obj.SetActive(true);
             color.a = Mathf.Lerp(0f, 1f, i);
