@@ -12,15 +12,15 @@ public class ItemSys : MonoBehaviour
     public int[] bagSlot_i;
     public GameObject ItemMenu_obj;
     public GameObject ItemDetail_obj, ItemDetailBtn_obj;
-    public GameObject GM;
+    public GameObject GM, GM2;
     public string[] ItemName_str;
-    public GameObject bag_obj, itemWindow_obj;
+    public GameObject bag_obj, itemWindow_obj, bagZipper_obj;
     public Text itemName_txt;
 
     public GameObject closeZipper_obj,openZipper_obj, zipperBefore_obj, closeItemWBtn_obj, openZipperW_obj;
 
     public float bag_x_f, zipper_y_f, bag_y_f;
-    public int bagOpen_i, zipperOpen_i;
+    public int bagOpen_i, zipperOpen_i, bagZipper_i, bagZipperExit_i, bagOpenCk_i, bagZipperCk_i;
     public Sprite[] zipper_spr;
 
     // Start is called before the first frame update
@@ -42,6 +42,29 @@ public class ItemSys : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             ItemMenu_obj.SetActive(false);
+        }
+            if (bagZipper_i == 0 && GM2.GetComponent<MouseOver>().bagMOver_i == 1)
+            {
+                bagZipper_i = 1;
+                StopCoroutine("MouseOverBag");
+                StartCoroutine("MouseOverBag");
+            }
+            else if (bagZipperExit_i == 0 && GM2.GetComponent<MouseOver>().bagMOver_i == 2)
+            {
+            if (bagOpenCk_i == 0)
+            {
+                bagZipperExit_i = 1;
+                GM2.GetComponent<MouseOver>().bagMOver_i = 0;
+                StopCoroutine("MouseExitBag");
+                StartCoroutine("MouseExitBag");
+            }
+            }
+
+        if (bagZipperCk_i==0&& bagOpenCk_i==1)
+        {
+            bagOpen_i = 1;
+            StopCoroutine("BackBagItem");
+            StartCoroutine("BackBagItem");
         }
     }
 
@@ -261,6 +284,7 @@ public class ItemSys : MonoBehaviour
     /// <returns></returns>
     IEnumerator OpenZipper()
     {
+        StopCoroutine("CloseZipper");
         RectTransform rectTran = closeZipper_obj.GetComponent<RectTransform>();
         Vector3 position = zipperBefore_obj.transform.localPosition;
         while (zipperOpen_i == 1)
@@ -279,16 +303,16 @@ public class ItemSys : MonoBehaviour
             {
                 zipperBefore_obj.GetComponent<Image>().sprite = zipper_spr[2];
             }
-            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, rectTran.sizeDelta.x - 4.75f);
-            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, rectTran.sizeDelta.y - 7.57f);
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, rectTran.sizeDelta.x - 9.5f);
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, rectTran.sizeDelta.y - 15.14f);
 
             if (position.y < 199.97f)
             {
-                position.y = position.y + 3.79f;
+                position.y = position.y + 7.58f;
                 zipperBefore_obj.transform.localPosition = position;
             }
 
-            yield return new WaitForSeconds(0.005f);
+            yield return new WaitForSecondsRealtime(0.001f);
         }
         bagOpen_i = 1;
         StartCoroutine("ShowBagItem");
@@ -301,6 +325,7 @@ public class ItemSys : MonoBehaviour
     /// <returns></returns>
     IEnumerator CloseZipper()
     {
+        StopCoroutine("OpenZipper");
         RectTransform rectTran = closeZipper_obj.GetComponent<RectTransform>();
         Vector3 position = zipperBefore_obj.transform.localPosition;
         rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 472.8093f);
@@ -322,16 +347,15 @@ public class ItemSys : MonoBehaviour
             {
                 zipperBefore_obj.GetComponent<Image>().sprite = zipper_spr[2];
             }
-            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, rectTran.sizeDelta.x + 4.75f);
-            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, rectTran.sizeDelta.y + 7.57f);
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, rectTran.sizeDelta.x + 9.5f);
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, rectTran.sizeDelta.y + 15.14f);
 
             if (position.y > -179.21f)
             {
-                position.y = position.y - 3.79f;
+                position.y = position.y - 7.58f;
                 zipperBefore_obj.transform.localPosition = position;
             }
-
-            yield return new WaitForSeconds(0.004f);
+            yield return new WaitForSecondsRealtime(0.001f);
         }
     }
 
@@ -341,6 +365,8 @@ public class ItemSys : MonoBehaviour
     /// <returns></returns>
     IEnumerator ShowBagItem()
     {
+        StopCoroutine("BackBagItem");
+        bagOpenCk_i = 1;
         itemWindow_obj.SetActive(true);
         openZipperW_obj.SetActive(true);
         closeItemWBtn_obj.SetActive(true);
@@ -358,7 +384,9 @@ public class ItemSys : MonoBehaviour
             {
                 bagOpen_i = 0;
             }
-            yield return new WaitForSeconds(0.002f);
+            print(Time.time);
+            yield return new WaitForSecondsRealtime(0.001f);
+            print(Time.time);
         }
         //closeItemWBtn_obj.SetActive(true);
         
@@ -370,6 +398,9 @@ public class ItemSys : MonoBehaviour
     /// <returns></returns>
     IEnumerator BackBagItem()
     {
+
+        StopCoroutine("ShowBagItem");
+        bagOpenCk_i = 0;
         itemWindow_obj.SetActive(true);
         openZipperW_obj.SetActive(true);
         Vector3 position = itemWindow_obj.transform.localPosition;
@@ -384,7 +415,7 @@ public class ItemSys : MonoBehaviour
             {
                 bagOpen_i = 0;
             }
-            yield return new WaitForSeconds(0.002f);
+            yield return new WaitForSecondsRealtime(0.001f);
         }
         closeItemWBtn_obj.SetActive(false);
         itemWindow_obj.SetActive(false);
@@ -401,24 +432,98 @@ public class ItemSys : MonoBehaviour
     /// <returns></returns>
     IEnumerator MouseOverBag()
     {
-        Vector3 position = itemWindow_obj.transform.localPosition;
-        while (bagOpen_i == 1)
+        bagZipperCk_i = 1;
+        bagZipperExit_i = 0;
+        StopCoroutine("MouseExitBag");
+        Vector3 position = bag_obj.transform.localPosition;
+        Vector3 position2 = bagZipper_obj.transform.localPosition;
+        while (bagZipper_i == 1)
         {
             //-917
             //-828.38
             //-830.82
-            if (position.x < 139.4f)
+            //-100.07
+            //-46.52005
+            //-116.2
+
+
+            if (position2.x > -100.07f)
             {
-                position.x = position.x + 6.79f;
-                itemWindow_obj.transform.localPosition = position;
+                position2.x = position2.x - 3.79f;
+                bagZipper_obj.transform.localPosition = position2;
+            }
+            else if (position.x < -20.82)
+            {
+                if (position2.x != -100.07f)
+                {
+                    position2.x = -100.07f;
+                    bagZipper_obj.transform.localPosition = position2;
+                }
+                position.x = position.x + 2.79f;
+                bag_obj.transform.localPosition = position;
+
             }
             else
             {
-                bagOpen_i = 0;
+                bagZipper_i = 0;
+                position.x = -20.82f;
+                bag_obj.transform.localPosition = position;
             }
-            yield return new WaitForSeconds(0.002f);
+            yield return new WaitForSecondsRealtime(0.001f);
         }
         //closeItemWBtn_obj.SetActive(true);
 
+    }
+
+
+    IEnumerator MouseExitBag()
+    {
+        bagZipperCk_i = 0;
+        bagZipper_i = 0;
+        StopCoroutine("MouseOverBag");
+        Vector3 position = bag_obj.transform.localPosition;
+        Vector3 position2 = bagZipper_obj.transform.localPosition;
+        while (bagZipperExit_i == 1)
+        {
+            //-917
+            //-828.38
+            //-830.82
+            //-100.07
+            //-46.52005
+            //-116.2
+
+
+            if (position.x > -116.2)
+            {
+                position.x = position.x - 3.79f;
+                bag_obj.transform.localPosition = position;
+            }
+            else if (position2.x < -46.52f)
+            {
+                if (position.x != -116.2f)
+                {
+                    position.x = -116.2f;
+                    bag_obj.transform.localPosition = position;
+                }
+
+                position2.x = position2.x + 2.79f;
+                bagZipper_obj.transform.localPosition = position2;
+            }
+            else
+            {
+
+                position2.x = -46.52f;
+                bagZipper_obj.transform.localPosition = position2;
+                bagZipperExit_i = 0;
+            }
+            
+            yield return new WaitForSecondsRealtime(0.001f);
+        }
+        if (bagOpenCk_i == 1)
+        {
+            bagOpen_i = 1;
+            StopCoroutine("BackBagItem");
+            StartCoroutine("BackBagItem");
+        }
     }
 }

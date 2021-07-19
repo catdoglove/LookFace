@@ -5,9 +5,9 @@ using UnityEngine;
 public class SoundEvt : MonoBehaviour
 {
     public AudioSource se_move, se_switch, se_button, se_door, se_broken, se_talk, se_talkm, se_UImain, se_arrowdlg, se_keyboard, se_typing, 
-        se_falling, se_act, se_get, se_waterdrop, se_remote, se_menu;
+        se_falling, se_act, se_get, se_waterdrop, se_remote, se_menu, se_hurt;
     public AudioClip sp_move, sp_switch, sp_button, sp_door, sp_broken, sp_talk, sp_talkm, sp_UImain, sp_arrowdlg, sp_keyboard, sp_typing, 
-        sp_falling, sp_act, sp_get, sp_waterdrop, sp_remote, sp_menu;
+        sp_falling, sp_act, sp_get, sp_waterdrop, sp_remote, sp_menu, sp_hurt;
 
     public AudioSource BGM, BGS;
     float BGMVol_f, BGSVol_f;
@@ -192,6 +192,15 @@ public class SoundEvt : MonoBehaviour
         se_menu.clip = sp_menu;
         se_menu.loop = false;
         se_menu.Play();
+    }
+
+    //다칠때 소리
+    public void HurtSound()
+    {
+        se_hurt = gameObject.GetComponent<AudioSource>();
+        se_hurt.clip = sp_hurt;
+        se_hurt.loop = false;
+        se_hurt.Play();
     }
 
 }

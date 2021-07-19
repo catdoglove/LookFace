@@ -21,7 +21,7 @@ public class DialogSys : MonoBehaviour
     public string face_str;
     public Text dialog_txt;
     public GameObject[] faceParts_obj;
-    public Sprite[] eyeBall_spr, mouth_spr, eyes_spr, ears_spr, nose_spr, eyebrow_spr, container_spr;
+    public Sprite[] eyeBall_spr, mouth_spr, eyes_spr, ears_spr, nose_spr, eyebrow_spr, container_spr, eyeMask_spr;
     public int[] face_i;
     int spaceck_i;
     public GameObject GM;
@@ -31,7 +31,7 @@ public class DialogSys : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("스페이스 키 누름");
+            //Debug.Log("스페이스 키 누름");
             textSpeedUp();
         }
 
@@ -140,6 +140,10 @@ public class DialogSys : MonoBehaviour
             else if (Text_cut[0] == "t")
             {
                 Text_obj.text = str;
+            }else if (Text_cut[0] == "pm")
+            {
+                TextOther_obj.text = str;
+                TextChar_obj.text = str;
             }
 
             yield return new WaitForSeconds(speedF);
@@ -252,6 +256,7 @@ public class DialogSys : MonoBehaviour
                     faceParts_obj[3].GetComponent<Image>().sprite = ears_spr[face_i[3]];
                     faceParts_obj[4].GetComponent<Image>().sprite = nose_spr[face_i[4]];
                     faceParts_obj[5].GetComponent<Image>().sprite = eyebrow_spr[face_i[5]];
+                    faceParts_obj[7].GetComponent<Image>().sprite = eyeMask_spr[face_i[2]];
                     faceParts_obj[0].SetActive(true);
                 }
                 else
@@ -263,6 +268,7 @@ public class DialogSys : MonoBehaviour
                     faceParts_obj[3].GetComponent<Image>().sprite = ears_spr[0];
                     faceParts_obj[4].GetComponent<Image>().sprite = nose_spr[0];
                     faceParts_obj[5].GetComponent<Image>().sprite = eyebrow_spr[2];
+                    faceParts_obj[7].GetComponent<Image>().sprite = eyeMask_spr[2];
                     faceParts_obj[0].SetActive(false);
                 }
             }
@@ -275,6 +281,7 @@ public class DialogSys : MonoBehaviour
                 faceParts_obj[3].GetComponent<Image>().sprite = ears_spr[0];
                 faceParts_obj[4].GetComponent<Image>().sprite = nose_spr[0];
                 faceParts_obj[5].GetComponent<Image>().sprite = eyebrow_spr[0];
+                faceParts_obj[7].GetComponent<Image>().sprite = eyeMask_spr[0];
                 faceParts_obj[0].SetActive(true);
                 dialog_txt.text = "그런 것은 없어";
             }
@@ -294,22 +301,22 @@ public class DialogSys : MonoBehaviour
     void EyeBallMove()
     {
         Vector3 position = faceParts_obj[6].transform.localPosition;
-        position.x = -44f;
+        position.x = -46.45f;
         faceParts_obj[6].transform.localPosition = position;
 
         Vector3 position2 = faceParts_obj[0].transform.localPosition;
-        position2.x = 71.89f;
+        position2.x = 66.09f;
         faceParts_obj[0].transform.localPosition = position2;
     }
 
     void EyeBallrBack()
     {
         Vector3 position = faceParts_obj[6].transform.localPosition;
-        position.x = -52.07f;
+        position.x = -53.4f;
         faceParts_obj[6].transform.localPosition = position;
 
         Vector3 position2 = faceParts_obj[0].transform.localPosition;
-        position2.x = 49.13f;
+        position2.x = 47.8f;
         faceParts_obj[0].transform.localPosition = position2;
     }
 

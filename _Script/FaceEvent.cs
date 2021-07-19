@@ -166,11 +166,11 @@ public class FaceEvent : MonoBehaviour
     public void moveL()
     {
         Vector3 position = faceParts_obj[0].transform.localPosition;
-        position.x = -64f;
+        position.x = -74.9f;
         faceParts_obj[0].transform.localPosition = position;
 
         Vector3 position2 = faceParts_obj[1].transform.localPosition;
-        position2.x = 43.5f;
+        position2.x = 41.3f;
         faceParts_obj[1].transform.localPosition = position2;
 
     }
