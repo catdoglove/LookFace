@@ -296,7 +296,7 @@ RectTransform:
   m_GameObject: {fileID: 239744740}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 1456680369}
   m_RootOrder: 0
@@ -420,6 +420,7 @@ MonoBehaviour:
   se_waterdrop: {fileID: 0}
   se_remote: {fileID: 0}
   se_menu: {fileID: 0}
+  se_hurt: {fileID: 0}
   sp_move: {fileID: 0}
   sp_switch: {fileID: 0}
   sp_button: {fileID: 0}
@@ -437,6 +438,7 @@ MonoBehaviour:
   sp_waterdrop: {fileID: 0}
   sp_remote: {fileID: 0}
   sp_menu: {fileID: 8300000, guid: 829b605158b7c3647a3943ed343536af, type: 3}
+  sp_hurt: {fileID: 0}
   BGM: {fileID: 0}
   BGS: {fileID: 590167680}
 --- !u!82 &590167680
