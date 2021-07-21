@@ -11,6 +11,21 @@ TextureImporter:
   - first:
       213: 2614854818153883174
     second: char_eyes_mask(240x100)_2
+  - first:
+      213: 5223972330524294565
+    second: char_eyes_mask(240x100)_0
+  - first:
+      213: 952559623899599965
+    second: char_eyes_mask(240x100)_1
+  - first:
+      213: 8296516522537229841
+    second: char_eyes_mask(240x100)_2
+  - first:
+      213: -4944715387559074696
+    second: char_eyes_mask(240x100)_3
+  - first:
+      213: 4378502348159994327
+    second: char_eyes_mask(240x100)_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -112,6 +127,27 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 400
+        width: 240
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5adbe5528274f7840800000000000000
+      internalID: 5223972330524294565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char_eyes_mask(240x100)_1
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 300
         width: 240
         height: 100
@@ -122,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 79b3c65cfd2f069f0800000000000000
-      internalID: -477114517597439081
+      spriteID: d545ae95eeb283d00800000000000000
+      internalID: 952559623899599965
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_eyes_mask(240x100)_1
+      name: char_eyes_mask(240x100)_2
       rect:
         serializedVersion: 2
         x: 0
@@ -143,14 +179,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e289cf4fbcf479ea0800000000000000
-      internalID: -5866132252219631570
+      spriteID: 11e9df602d5232370800000000000000
+      internalID: 8296516522537229841
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_eyes_mask(240x100)_2
+      name: char_eyes_mask(240x100)_3
       rect:
         serializedVersion: 2
         x: 0
@@ -164,8 +200,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 626e74f5a94d94420800000000000000
-      internalID: 2614854818153883174
+      spriteID: 8742221ad87d06bb0800000000000000
+      internalID: -4944715387559074696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char_eyes_mask(240x100)_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 240
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d94a46ffa093cc30800000000000000
+      internalID: 4378502348159994327
       vertices: []
       indices: 
       edges: []

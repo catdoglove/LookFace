@@ -81,7 +81,7 @@ public class SceneMove : MonoBehaviour
     IEnumerator LogoBFadeOut()
     {
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         for (float i = 1f; i > 0f; i -= 0.05f)
         {
             logoB_obj.SetActive(true);

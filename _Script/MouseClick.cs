@@ -8,14 +8,14 @@ public class MouseClick : MonoBehaviour, IPointerClickHandler
     public string str;
     public int sub_i;
     public GameObject GM;
-    public GameObject menu_obj;
+    public GameObject menu_obj, menuSub_obj;
+    public Sprite[] menu_spr;
     public Vector2 wldObjectPos;
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            Debug.Log("Mouse Click Button : Left");
             str = this.name;
             sub_i=int.Parse(str.Substring(2, 1));
             GM.GetComponent<ItemSys>().ItemnameBtn(sub_i);
@@ -23,23 +23,33 @@ public class MouseClick : MonoBehaviour, IPointerClickHandler
         }
         else if (eventData.button == PointerEventData.InputButton.Middle)
         {
-            Debug.Log("Mouse Click Button : Middle");
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
+            GM.GetComponent<ItemSys>().ItemDetailBtn_obj.GetComponent<Button>().interactable = false;
             menu_obj.SetActive(true);
-            Debug.Log("Mouse Click Button : Right");
             str = this.name;
             sub_i = int.Parse(str.Substring(2, 1));
             PlayerPrefs.SetInt("setitem",sub_i);
-            if (GM.GetComponent<ItemSys>().bagSlot_i[sub_i] == 5)
+            if (GM.GetComponent<ItemSys>().bagSlot_i[sub_i] == 5|| GM.GetComponent<ItemSys>().bagSlot_i[sub_i] == 6)
             {
-                GM.GetComponent<ItemSys>().ItemDetailBtn_obj.GetComponent<Button>().interactable = false;
+                GM.GetComponent<ItemSys>().ItemDetailBtn_obj.GetComponent<Button>().interactable = true;
             }
             else
             {
                 GM.GetComponent<ItemSys>().ItemDetailBtn_obj.GetComponent<Button>().interactable = false;
             }
+
+            
+            if (GM.GetComponent<ItemSys>().slotHand_obj[sub_i].activeSelf == false)
+            {
+                menuSub_obj.GetComponent<Image>().sprite = menu_spr[1];
+            }
+            else
+            {
+                menuSub_obj.GetComponent<Image>().sprite = menu_spr[0];
+            }
+
             wldObjectPos = Camera.main.ScreenToWorldPoint(new Vector2(eventData.position.x, eventData.position.y));
             menu_obj.transform.position = new Vector3(wldObjectPos.x, wldObjectPos.y, 0f);
         }

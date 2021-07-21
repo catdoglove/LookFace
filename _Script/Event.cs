@@ -95,7 +95,7 @@ public class Event : MonoBehaviour
         //튜토리얼 > 스테이지1 전환할 때도 페이드 아웃...?
         //컴퓨터 화면 바로 전환말고 페이드 아웃처럼 꺼지는 효과 넣어주기
         //ㄴ왼쪽에 개발자 메일, 오른쪽 피드백보내기 버튼(유니티자체제작
-        //testcamera.Fade = 0.2f;
+        testcamera.Fade = 0.2f;
         testcamera2._Fade = 0f;
         if (stage_i == 0)
         {
@@ -131,6 +131,7 @@ public class Event : MonoBehaviour
 
     void EvetStart()
     {
+        GM.GetComponent<ItemSys>().CloseBag();
         arrowU_obj.SetActive(false);
         arrowD_obj.SetActive(false);
         arrowL_obj.SetActive(false);
@@ -452,10 +453,8 @@ public class Event : MonoBehaviour
                     tutoGet_obj.GetComponent<Button>().interactable = false;
                     E_txt.text = "";
                     EventCharBack();
-                    GM.GetComponent<ItemSys>().OpenBag();
                     break;
                 case 25:
-                    GM.GetComponent<ItemSys>().OpenBag();
                     arrowL_obj.SetActive(false);//책상3
                     arrowR_obj.SetActive(false);//선반4
                     //“캡슐 안에 뭔가 있어요.” (다 일반
@@ -513,6 +512,7 @@ public class Event : MonoBehaviour
                     tutoGet_obj.GetComponent<Button>().interactable = false;
                     E_txt.text = "";
                     EventCharBack();
+                    GM.GetComponent<ItemSys>().OpenBag();
                     break;
                 case 30:
                     EventCharMove();
@@ -591,7 +591,8 @@ public class Event : MonoBehaviour
                     //“딱히 변한 건 없어요.” (불안한 표정으로)
                     eventTalk_obj.SetActive(true);
                     eventTalk2_obj.SetActive(false);
-                    GM.GetComponent<FaceEvent>().WorryFace();
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    GM.GetComponent<FaceEvent>().faceParts_obj[2].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().mouth_spr[3];
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
@@ -627,11 +628,13 @@ public class Event : MonoBehaviour
                 case 0:
                     //p/(/터/벅/ /터/벅/)
                     GM.GetComponent<DialogSys>().talkeventbtn();
-                    eventTalk_obj.SetActive(true);
-                    GM.GetComponent<FaceEvent>().WorryFace();
+                    //eventTalk_obj.SetActive(true);
+                    GM.GetComponent<FaceEvent>().NomalFace();
+                    GM.GetComponent<FaceEvent>().faceParts_obj[6].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().eyebrow_spr[1];
                     EvetStart();
                     break;
                 case 1:
+                    eventTalk_obj.SetActive(true);
                     ///으/./././//// /엎/친/ /데/ /덮/친/ /격/이/네/
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
@@ -1609,8 +1612,11 @@ public class Event : MonoBehaviour
                                     getReOn_i = 1;
                                     dark_obj.SetActive(false);
                                     GM.GetComponent<SoundEvt>().SwitchSound();
+                                    progress2_i = 35;
                                     eventBtn_obj.SetActive(true);
                                     //GM.GetComponent<DialogSys>().TextShow();
+                                    Act_btn.SetActive(false);
+                                    use_inp.SetActive(false);
 
                                 }
                             }
@@ -1699,7 +1705,7 @@ public class Event : MonoBehaviour
                                     indexAct = 10;
                                     findGlass_i = 1;
                                     hp_obj[2].SetActive(false);
-                                    GM.GetComponent<SoundEvt>().HurtSound();
+                                    GM.GetComponent<SoundEvt>().BrokenSound();
 
                                 }
                                 else
@@ -1803,7 +1809,7 @@ public class Event : MonoBehaviour
 
                             if (indexMove == 3)
                             {
-                                if (inputA_str.Equals("문"))
+                                if (inputA_str.Equals("문")|| inputA_str.Equals("갈색 문") || inputA_str.Equals("갈색문"))
                                 {
 
                                     use_input.text = "";
@@ -1869,7 +1875,7 @@ public class Event : MonoBehaviour
                                     get_inp.SetActive(false);
                                     indexAct = 0;
                                     GM.GetComponent<DialogSys>().TextShow();
-
+                                    GM.GetComponent<SoundEvt>().getSound();
                                     if (eventsat2 == 2)
                                     {
                                         eventBtn_obj.SetActive(true);
@@ -1913,6 +1919,7 @@ public class Event : MonoBehaviour
                                 get_inp.SetActive(false);
                                 indexAct = 0;
                                 GM.GetComponent<DialogSys>().TextShow();
+                                GM.GetComponent<SoundEvt>().getSound();
                             }
                             else
                             {
@@ -1963,6 +1970,7 @@ public class Event : MonoBehaviour
                                     getKey_i = 1;
                                     indexAct = 0;
                                     GM.GetComponent<DialogSys>().TextShow();
+                                    GM.GetComponent<SoundEvt>().getSound();
                                     GetI(1);
 
 
@@ -2308,6 +2316,7 @@ GO버튼이 활성화되어서 나가짐
         back.GetComponent<Image>().sprite = back_spr[1];
         dark_obj.SetActive(true);
         GM.GetComponent<SoundEvt>().MoveSound();
+        testcamera2._Fade = 0.1f;
     }
 
     void TutoFalse()
@@ -2415,7 +2424,7 @@ GO버튼이 활성화되어서 나가짐
             fade_obj.SetActive(true);
             color.a = Mathf.Lerp(1f, 0f, i);
             fade_obj.GetComponent<Image>().color = color;
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.005f);
         }
 
         fade_obj.GetComponent<Image>().color = Color.black;
@@ -2433,9 +2442,11 @@ GO버튼이 활성화되어서 나가짐
             yield return new WaitForSeconds(0.01f);
         }
 
+        testcamera.Fade = 0f;
         back.GetComponent<Image>().sprite = tutoBack_spr[2];
         tutoBack_obj.SetActive(false);
         tutoDelay_obj.SetActive(false);
+        t_txt.text = "";
         //t_txt.text = "주문이 완료 되었다. 이제 오는 걸 기다리면 되겠지.";
         fade_obj.GetComponent<Image>().color = Color.black;
         yield return new WaitForSecondsRealtime(0.5f);
@@ -2492,6 +2503,6 @@ GO버튼이 활성화되어서 나가짐
 
     public void Pdb()
     {
-        Application.OpenURL("https://www.naver.com/");
+        Application.OpenURL("https://docs.google.com/forms/d/1JQtDxXflfUxHlVaDIVPOCnT9n3DB7fKB83UPYikYuYs/edit?usp=sharing");
     }
 }

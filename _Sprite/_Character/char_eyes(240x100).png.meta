@@ -23,6 +23,15 @@ TextureImporter:
   - first:
       213: -5745818104391953911
     second: char_eyes(240x100)_3
+  - first:
+      213: -8761404201844525792
+    second: char_eyes(240x100)_3
+  - first:
+      213: 1446834253242905831
+    second: char_eyes(240x100)_4
+  - first:
+      213: -3958627973085276973
+    second: char_eyes(240x100)_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -124,7 +133,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 300
+        y: 500
         width: 240
         height: 100
       alignment: 0
@@ -145,7 +154,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 200
+        y: 400
         width: 240
         height: 100
       alignment: 0
@@ -166,7 +175,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 100
+        y: 300
         width: 240
         height: 100
       alignment: 0
@@ -187,6 +196,48 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 200
+        width: 240
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 025317f5c4d396680800000000000000
+      internalID: -8761404201844525792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char_eyes(240x100)_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 100
+        width: 240
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e439617610341410800000000000000
+      internalID: 1446834253242905831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char_eyes(240x100)_5
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
         width: 240
         height: 100
@@ -197,8 +248,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 90295bf60e0c240b0800000000000000
-      internalID: -5745818104391953911
+      spriteID: 3d4d35a05d02019c0800000000000000
+      internalID: -3958627973085276973
       vertices: []
       indices: 
       edges: []

@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class ItemSys : MonoBehaviour
 {
     public int itemNum_i, itemR_i, itemL_i, slot_i, itemList_i;
-    public Sprite[] item_spr, handItem_spr;
+    public Sprite[] item_spr, handItem_spr, ItemDetail_spr;
     public GameObject[] slot_obj;
     public GameObject[] slotHand_obj, hand_obj;
     public int[] bagSlot_i;
     public GameObject ItemMenu_obj;
-    public GameObject ItemDetail_obj, ItemDetailBtn_obj;
+    public GameObject ItemDetail_obj, ItemDetailBtn_obj, ItemDetailImg_obj;
     public GameObject GM, GM2;
     public string[] ItemName_str;
     public GameObject bag_obj, itemWindow_obj, bagZipper_obj;
@@ -23,6 +23,8 @@ public class ItemSys : MonoBehaviour
     public int bagOpen_i, zipperOpen_i, bagZipper_i, bagZipperExit_i, bagOpenCk_i, bagZipperCk_i;
     public Sprite[] zipper_spr;
 
+    int dt_i;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +32,7 @@ public class ItemSys : MonoBehaviour
         ItemName_str[1] = "나무 열쇠";
         ItemName_str[2] = "드라이버";
         ItemName_str[3] = "건전지";
-        ItemName_str[4] = "캡슐";
+        ItemName_str[4] = "투명한 캡슐";
         ItemName_str[5] = "불 꺼진 리모컨";
         ItemName_str[6] = "불 켜진 리모컨";
         ItemName_str[7] = "";
@@ -193,15 +195,39 @@ public class ItemSys : MonoBehaviour
     /// </summary>
     public void ShowDetail()
     {
-        if (PlayerPrefs.GetInt("setitem", 0) == 5)
+        dt_i = 0;
+        if (GM.GetComponent<ItemSys>().bagSlot_i[PlayerPrefs.GetInt("setitem", 0)] == 5)
         {
-
+            ItemDetailImg_obj.GetComponent<Image>().sprite = ItemDetail_spr[0];
             ItemDetail_obj.SetActive(true);
+            if (GM.GetComponent<ItemSys>().bagSlot_i[PlayerPrefs.GetInt("setitem", 0)] == 6)
+            {
+                ItemDetailImg_obj.GetComponent<Image>().sprite = ItemDetail_spr[2];
+            }
         }
     }
     public void CloseDetail()
     {
+        ItemDetailImg_obj.GetComponent<Image>().sprite = ItemDetail_spr[0];
         ItemDetail_obj.SetActive(false);
+    }
+
+    public void DetailTurn()
+    {
+        if (dt_i == 0)
+        {
+            ItemDetailImg_obj.GetComponent<Image>().sprite = ItemDetail_spr[1];
+                dt_i = 1;
+        }
+        else
+        {
+            ItemDetailImg_obj.GetComponent<Image>().sprite = ItemDetail_spr[0];
+            if (GM.GetComponent<ItemSys>().bagSlot_i[PlayerPrefs.GetInt("setitem", 0)] == 6)
+            {
+                ItemDetailImg_obj.GetComponent<Image>().sprite = ItemDetail_spr[2];
+            }
+            dt_i = 0;
+        }
     }
 
     public void SetRightItem()
@@ -284,6 +310,8 @@ public class ItemSys : MonoBehaviour
     /// <returns></returns>
     IEnumerator OpenZipper()
     {
+
+        GM.GetComponent<SoundEvt>().ArrowSound();
         StopCoroutine("CloseZipper");
         RectTransform rectTran = closeZipper_obj.GetComponent<RectTransform>();
         Vector3 position = zipperBefore_obj.transform.localPosition;
@@ -325,6 +353,7 @@ public class ItemSys : MonoBehaviour
     /// <returns></returns>
     IEnumerator CloseZipper()
     {
+        GM.GetComponent<SoundEvt>().ArrowSound();
         StopCoroutine("OpenZipper");
         RectTransform rectTran = closeZipper_obj.GetComponent<RectTransform>();
         Vector3 position = zipperBefore_obj.transform.localPosition;
