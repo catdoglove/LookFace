@@ -164,6 +164,7 @@ public class ItemSys : MonoBehaviour
             SetItemcheck(itemL_i);
             hand_obj[0].GetComponent<Image>().sprite = handItem_spr[num];
             hand_obj[0].SetActive(true);
+            itemName_txt.text = ItemName_str[num];
         }
         else if (itemR_i == 0)
         {
@@ -171,6 +172,7 @@ public class ItemSys : MonoBehaviour
             SetItemcheck(itemR_i);
             hand_obj[1].GetComponent<Image>().sprite = handItem_spr[num];
             hand_obj[1].SetActive(true);
+            itemName_txt.text = ItemName_str[num];
         }
     }
 
@@ -181,12 +183,14 @@ public class ItemSys : MonoBehaviour
             itemL_i = 0;
             hand_obj[0].SetActive(false);
             SetItemcheck(itemL_i);
+            itemName_txt.text = "";
         }
         else if(num == itemR_i)
         {
             itemR_i = 0;
             hand_obj[1].SetActive(false);
             SetItemcheck(itemR_i);
+            itemName_txt.text = "";
         }
     }
 

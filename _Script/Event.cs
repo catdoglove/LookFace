@@ -77,7 +77,8 @@ public class Event : MonoBehaviour
 
     public AudioSource BGS;
     float BGSVol_f;
-    
+
+    public Sprite[] eyesBlink_spr, maskBlink_spr;
     
 
     private void Update()
@@ -127,6 +128,8 @@ public class Event : MonoBehaviour
         fade_obj.SetActive(true);
         StopCoroutine("imgFadeOut");
         StartCoroutine("imgFadeOut");
+        char_i = 1;
+        StartCoroutine("movechar");
     }
 
     void EvetStart()
@@ -631,11 +634,13 @@ public class Event : MonoBehaviour
                     //eventTalk_obj.SetActive(true);
                     GM.GetComponent<FaceEvent>().NomalFace();
                     GM.GetComponent<FaceEvent>().faceParts_obj[6].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().eyebrow_spr[1];
+                    GM.GetComponent<FaceEvent>().faceParts_obj[2].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().mouth_spr[5];
                     EvetStart();
                     break;
                 case 1:
                     eventTalk_obj.SetActive(true);
                     ///으/./././//// /엎/친/ /데/ /덮/친/ /격/이/네/
+                    GM.GetComponent<FaceEvent>().WorryFace();
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     break;
@@ -1554,6 +1559,7 @@ public class Event : MonoBehaviour
                     GetI(5);
                     Act_btn.SetActive(false);
                     get_inp.SetActive(false);
+                    //dis_inp.SetActive(false);
                     indexAct = 21;
                     GM.GetComponent<DialogSys>().TextShow();
 
@@ -1803,6 +1809,7 @@ public class Event : MonoBehaviour
                                         GM.GetComponent<ItemSys>().slot_obj[0].SetActive(false);
                                         GM.GetComponent<ItemSys>().slotHand_obj[0].SetActive(false);
                                         eventBtn_obj.SetActive(true);
+                                        GM.GetComponent<ItemSys>().itemName_txt.text = "";
                                     }
                                 }
                             }
@@ -1972,9 +1979,6 @@ public class Event : MonoBehaviour
                                     GM.GetComponent<DialogSys>().TextShow();
                                     GM.GetComponent<SoundEvt>().getSound();
                                     GetI(1);
-
-
-
                                     //handR_obj.SetActive(true);
                                     //itemR_obj.GetComponent<Image>().sprite = key_spr;
                                 }
@@ -2029,6 +2033,7 @@ public class Event : MonoBehaviour
                     GM.GetComponent<ItemSys>().hand_obj[0].SetActive(true);
                     GM.GetComponent<ItemSys>().slotHand_obj[i].SetActive(true);
                     GM.GetComponent<ItemSys>().itemL_i = numi;
+                    GM.GetComponent<ItemSys>().itemName_txt.text = GM.GetComponent<ItemSys>().ItemName_str[numi];
                 }
                 else if (GM.GetComponent<ItemSys>().itemR_i == 0)
                 {
@@ -2036,6 +2041,7 @@ public class Event : MonoBehaviour
                     GM.GetComponent<ItemSys>().hand_obj[1].SetActive(true);
                     GM.GetComponent<ItemSys>().slotHand_obj[i].SetActive(true);
                     GM.GetComponent<ItemSys>().itemR_i = numi;
+                    GM.GetComponent<ItemSys>().itemName_txt.text = GM.GetComponent<ItemSys>().ItemName_str[numi];
                 }
                 i = 4;
             }
@@ -2119,20 +2125,73 @@ public class Event : MonoBehaviour
     //캐락터 움작임
     IEnumerator movechar()
     {
+        int blinT_i = 0;
         int sc = 0;
         while (char_i == 1)
         {
-            if (sc == 0)
+            int k = 1;
+            if (GM.GetComponent<FaceEvent>().faceParts_obj[3].GetComponent<Image>().sprite.name.Equals("char_eyes(240x100)_1"))
             {
-                char_obj.GetComponent<Image>().sprite = char_spr[sc];
-                sc = 1;
+                k = 0;
             }
-            else
+            if (GM.GetComponent<FaceEvent>().faceParts_obj[3].GetComponent<Image>().sprite.name.Equals("char_eyes(240x100)_2"))
             {
-                char_obj.GetComponent<Image>().sprite = char_spr[sc];
-                sc = 0;
+                k = 0;
             }
-            yield return new WaitForSeconds(0.6f);
+            if (k==1)
+            {
+                if (sc <= 5)
+                {
+                    GM.GetComponent<FaceEvent>().faceParts_obj[3].GetComponent<Image>().sprite = eyesBlink_spr[0];
+                    GM.GetComponent<FaceEvent>().faceParts_obj[8].GetComponent<Image>().sprite = maskBlink_spr[0];
+                }
+                else if (sc <= 9)
+                {
+                    GM.GetComponent<FaceEvent>().faceParts_obj[3].GetComponent<Image>().sprite = eyesBlink_spr[1];
+                    GM.GetComponent<FaceEvent>().faceParts_obj[8].GetComponent<Image>().sprite = maskBlink_spr[1];
+                }
+                else if (sc <= 13)
+                {
+                    GM.GetComponent<FaceEvent>().faceParts_obj[3].GetComponent<Image>().sprite = eyesBlink_spr[2];
+                    GM.GetComponent<FaceEvent>().faceParts_obj[8].GetComponent<Image>().sprite = maskBlink_spr[2];
+                }
+                else if (sc <= 17)
+                {
+                    GM.GetComponent<FaceEvent>().faceParts_obj[3].GetComponent<Image>().sprite = eyesBlink_spr[3];
+                    GM.GetComponent<FaceEvent>().faceParts_obj[8].GetComponent<Image>().sprite = maskBlink_spr[3];
+                }
+                else if (sc <= 21)
+                {
+                    GM.GetComponent<FaceEvent>().faceParts_obj[3].GetComponent<Image>().sprite = eyesBlink_spr[4];
+                    GM.GetComponent<FaceEvent>().faceParts_obj[8].GetComponent<Image>().sprite = maskBlink_spr[4];
+                }
+                else if (sc <= 31)
+                {
+                    GM.GetComponent<FaceEvent>().faceParts_obj[3].GetComponent<Image>().sprite = eyesBlink_spr[5];
+                    GM.GetComponent<FaceEvent>().faceParts_obj[8].GetComponent<Image>().sprite = maskBlink_spr[5];
+
+                    if (blinT_i == 2)
+                    {
+                        sc = 0;
+                        blinT_i = 0;
+                    }
+                }
+                else if(sc>=1000)
+                {
+                    if (blinT_i == 1)
+                    {
+                        blinT_i = 2;
+                    }
+                    else
+                    {
+                        blinT_i = 1;
+                    }
+                    sc = 0;
+                }
+
+                sc++;
+            }
+            yield return new WaitForSecondsRealtime(0.01f);
         }
     }
 

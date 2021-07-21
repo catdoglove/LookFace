@@ -533,6 +533,20 @@ MonoBehaviour:
   bagHoverSite_obj: {fileID: 860784241}
   tutohand: {fileID: 948687097}
   BGS: {fileID: 1693873149}
+  eyesBlink_spr:
+  - {fileID: -6951003498108097930, guid: 7d00330a64abde243b9b211489438279, type: 3}
+  - {fileID: 1446834253242905831, guid: 7d00330a64abde243b9b211489438279, type: 3}
+  - {fileID: -5745818104391953911, guid: 7d00330a64abde243b9b211489438279, type: 3}
+  - {fileID: -3958627973085276973, guid: 7d00330a64abde243b9b211489438279, type: 3}
+  - {fileID: 1446834253242905831, guid: 7d00330a64abde243b9b211489438279, type: 3}
+  - {fileID: -6951003498108097930, guid: 7d00330a64abde243b9b211489438279, type: 3}
+  maskBlink_spr:
+  - {fileID: -477114517597439081, guid: 47966727e6f022140a16be5bf844c86b, type: 3}
+  - {fileID: -4944715387559074696, guid: 47966727e6f022140a16be5bf844c86b, type: 3}
+  - {fileID: 21300000, guid: f31ff8935a44c9d4b8a72b80c120a7a2, type: 3}
+  - {fileID: 4378502348159994327, guid: 47966727e6f022140a16be5bf844c86b, type: 3}
+  - {fileID: -4944715387559074696, guid: 47966727e6f022140a16be5bf844c86b, type: 3}
+  - {fileID: -477114517597439081, guid: 47966727e6f022140a16be5bf844c86b, type: 3}
 --- !u!4 &72734671
 Transform:
   m_ObjectHideFlags: 0
