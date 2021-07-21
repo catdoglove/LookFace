@@ -53,7 +53,7 @@ public class SceneMove : MonoBehaviour
     IEnumerator imgFadeOut()
     {
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         for (float i = 1f; i > 0f; i -= 0.05f)
         {
             logo_obj.SetActive(true);
