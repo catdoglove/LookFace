@@ -34,7 +34,7 @@ public class Event : MonoBehaviour
     public int going_i;
 
     //배경
-    public GameObject back, backEffect_obj;
+    public GameObject back, backEffect_obj,redLight_obj, Help_obj;
     public Sprite[] back_spr, back2_spr;
 
     public GameObject ActBtn_obj, FeelBtn_obj;
@@ -637,7 +637,7 @@ public class Event : MonoBehaviour
                     GM.GetComponent<FaceEvent>().NomalFace();
                     GM.GetComponent<SoundEvt>().ArrowSound();
                     GM.GetComponent<FaceEvent>().faceParts_obj[6].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().eyebrow_spr[1];
-                    GM.GetComponent<FaceEvent>().faceParts_obj[2].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().mouth_spr[5];
+                    GM.GetComponent<FaceEvent>().faceParts_obj[2].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().mouth_spr[0];
                     EvetStart();
                     break;
                 case 1:
@@ -836,6 +836,10 @@ public class Event : MonoBehaviour
                 arrowL_obj.SetActive(true);
                 arrowR_obj.SetActive(true);
             }
+            if (stage_i == 1)
+            {
+                redLight_obj.SetActive(true);
+            }
         }
         dr_obj.SetActive(false);
         box_obj.SetActive(false);
@@ -901,6 +905,11 @@ public class Event : MonoBehaviour
                     waterSee_i = 1;
                     eventBtn_obj.SetActive(true);
                 }
+            }
+
+            if (stage_i == 1)
+            {
+                redLight_obj.SetActive(false);
             }
         }
         dr_obj.SetActive(false);
@@ -1322,7 +1331,18 @@ public class Event : MonoBehaviour
                 switch (direction)
                 {
                     case 1:
-                        if (inputM_str.Equals("붉은 빛") || inputM_str.Equals("붉은빛") || inputM_str.Equals("빛"))
+
+                        string e1_i, e2_i, e3_i;
+                        e1_i = "붉은 빛";
+                        e2_i = "붉은빛";
+                        e3_i = "빛";
+                        if (switchOn_i == 1)
+                        {
+                            e1_i = "스위치";
+                            e2_i = "낡은스위치";
+                            e3_i = "낡은 스위치";
+                        }
+                        if (inputM_str.Equals(e1_i) || inputM_str.Equals(e2_i) || inputM_str.Equals(e3_i))
                         {
                             BackUpSizeL();
                             t_txt.text = "스위치 앞에 섰다.";
@@ -1693,10 +1713,10 @@ public class Event : MonoBehaviour
                     GetI(5);
                     Act_btn.SetActive(false);
                     get_inp.SetActive(false);
-                    //dis_inp.SetActive(false);
+                    Dis_inp.SetActive(false);
                     indexAct = 21;
                     GM.GetComponent<DialogSys>().TextShow();
-
+                    dis_input.text = "";
                     arrowR_obj.SetActive(true);
                     arrowL_obj.SetActive(true);
                     tutoUp_obj.SetActive(true);
@@ -2550,6 +2570,10 @@ GO버튼이 활성화되어서 나가짐
         Vector3 position = back.transform.localPosition;
         position.x = position.x + 160;
         back.transform.localPosition = position;
+        if (redLight_obj.activeSelf == true)
+        {
+            EventLight();
+        }
     }
     void BackUpSizeM()
     {
@@ -2568,6 +2592,10 @@ GO버튼이 활성화되어서 나가짐
         Vector3 position = back.transform.localPosition;
         position.x = 0;
         back.transform.localPosition = position;
+        if (redLight_obj.activeSelf==true)
+        {
+            EventLightBack();
+        }
     }
 
     void EventCharMove()
@@ -2613,6 +2641,31 @@ GO버튼이 활성화되어서 나가짐
         position.x = 264.3399f;
         position.y = 80.59f;
         box_obj.transform.localPosition = position;
+    }
+
+
+    void EventLight()
+    {
+
+        RectTransform rectTran = redLight_obj.GetComponent<RectTransform>();
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 36f);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 36f);
+        Vector3 position = redLight_obj.transform.localPosition;
+        position.x = -248.4f;
+        position.y = 309f;
+        redLight_obj.transform.localPosition = position;
+    }
+
+    void EventLightBack()
+    {
+
+        RectTransform rectTran = redLight_obj.GetComponent<RectTransform>();
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 28);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 28);
+        Vector3 position = redLight_obj.transform.localPosition;
+        position.x = -299.5f;
+        position.y = 234.9f;
+        redLight_obj.transform.localPosition = position;
     }
 
     IEnumerator imgFadeOutend()
@@ -2687,6 +2740,10 @@ GO버튼이 활성화되어서 나가짐
         {
             GoShot();
         }
+        if (stage_i == 1)
+        {
+            redLight_obj.SetActive(true);
+        }
 
         fade_obj.GetComponent<Image>().color = Color.black;
         yield return new WaitForSecondsRealtime(1.8f);
@@ -2704,5 +2761,19 @@ GO버튼이 활성화되어서 나가짐
     public void Pdb()
     {
         Application.OpenURL("https://docs.google.com/forms/d/1JQtDxXflfUxHlVaDIVPOCnT9n3DB7fKB83UPYikYuYs/edit?usp=sharing");
+    }
+
+    public void AtiveHelp()
+    {
+        if (Help_obj.activeSelf == true)
+        {
+            Help_obj.SetActive(false);
+        }
+        else
+        {
+            Help_obj.SetActive(true);
+        }
+
+        GM.GetComponent<DialogSys>().closeEndWnd();
     }
 }
