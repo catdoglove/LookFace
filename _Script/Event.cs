@@ -836,7 +836,7 @@ public class Event : MonoBehaviour
                 arrowL_obj.SetActive(true);
                 arrowR_obj.SetActive(true);
             }
-            if (stage_i == 1)
+            if (stage_i == 1&&switchOn_i==0)
             {
                 redLight_obj.SetActive(true);
             }
@@ -1047,7 +1047,6 @@ public class Event : MonoBehaviour
         }
         else {
         fal();
-            Debug.Log(switchOn_i);
 
             if (stage_i == 2)
             {
@@ -1843,6 +1842,7 @@ public class Event : MonoBehaviour
                                     indexAct = 10;
 
                                     switchOn_i = 1;
+                                    redLight_obj.SetActive(false);
                                     eventBtn_obj.SetActive(true);
                                     dark_obj.SetActive(false);
                                     GM.GetComponent<SoundEvt>().SwitchSound();
@@ -2265,6 +2265,7 @@ public class Event : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
         fade_obj.SetActive(false);
+        
     }
 
     IEnumerator imgFadein()
@@ -2671,13 +2672,13 @@ GO버튼이 활성화되어서 나가짐
     IEnumerator imgFadeOutend()
     {
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.6f);
         for (float i = 1f; i >= 0f; i -= 0.05f)
         {
             fade_obj.SetActive(true);
             color.a = Mathf.Lerp(1f, 0f, i);
             fade_obj.GetComponent<Image>().color = color;
-            yield return new WaitForSeconds(0.005f);
+            yield return new WaitForSeconds(0.007f);
         }
 
         fade_obj.GetComponent<Image>().color = Color.black;
