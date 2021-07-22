@@ -99,6 +99,7 @@ public class FaceEvent : MonoBehaviour
     /// </summary>
     public void RelaxFace()
     {
+
         faceParts_obj[0].SetActive(false);
         faceParts_obj[1].SetActive(false);
         faceParts_obj[0].GetComponent<Image>().sprite = eyeBall_spr[0];

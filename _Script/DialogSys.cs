@@ -298,7 +298,7 @@ public class DialogSys : MonoBehaviour
     }
 
 
-    void EyeBallMove()
+    public void EyeBallMove()
     {
         Vector3 position = faceParts_obj[6].transform.localPosition;
         position.x = -46.45f;
@@ -309,7 +309,7 @@ public class DialogSys : MonoBehaviour
         faceParts_obj[0].transform.localPosition = position2;
     }
 
-    void EyeBallrBack()
+    public void EyeBallrBack()
     {
         Vector3 position = faceParts_obj[6].transform.localPosition;
         position.x = -53.4f;

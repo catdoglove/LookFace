@@ -204,10 +204,14 @@ public class ItemSys : MonoBehaviour
         {
             ItemDetailImg_obj.GetComponent<Image>().sprite = ItemDetail_spr[0];
             ItemDetail_obj.SetActive(true);
-            if (GM.GetComponent<ItemSys>().bagSlot_i[PlayerPrefs.GetInt("setitem", 0)] == 6)
-            {
-                ItemDetailImg_obj.GetComponent<Image>().sprite = ItemDetail_spr[2];
-            }
+            itemName_txt.text = "불 꺼진 리모컨";
+        }
+
+        if (GM.GetComponent<ItemSys>().bagSlot_i[PlayerPrefs.GetInt("setitem", 0)] == 6)
+        {
+            ItemDetail_obj.SetActive(true);
+            ItemDetailImg_obj.GetComponent<Image>().sprite = ItemDetail_spr[2];
+            itemName_txt.text = "불 켜진 리모컨";
         }
     }
     public void CloseDetail()
@@ -314,8 +318,7 @@ public class ItemSys : MonoBehaviour
     /// <returns></returns>
     IEnumerator OpenZipper()
     {
-
-        GM.GetComponent<SoundEvt>().ArrowSound();
+        
         StopCoroutine("CloseZipper");
         RectTransform rectTran = closeZipper_obj.GetComponent<RectTransform>();
         Vector3 position = zipperBefore_obj.transform.localPosition;
@@ -357,7 +360,6 @@ public class ItemSys : MonoBehaviour
     /// <returns></returns>
     IEnumerator CloseZipper()
     {
-        GM.GetComponent<SoundEvt>().ArrowSound();
         StopCoroutine("OpenZipper");
         RectTransform rectTran = closeZipper_obj.GetComponent<RectTransform>();
         Vector3 position = zipperBefore_obj.transform.localPosition;
