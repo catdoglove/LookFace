@@ -347,7 +347,7 @@ public class ItemSys : MonoBehaviour
                 zipperBefore_obj.transform.localPosition = position;
             }
 
-            yield return new WaitForSecondsRealtime(0.001f);
+            yield return new WaitForSeconds(0.001f);
         }
         bagOpen_i = 1;
         StartCoroutine("ShowBagItem");
@@ -390,7 +390,7 @@ public class ItemSys : MonoBehaviour
                 position.y = position.y - 7.58f;
                 zipperBefore_obj.transform.localPosition = position;
             }
-            yield return new WaitForSecondsRealtime(0.001f);
+            yield return new WaitForSeconds(0.001f);
         }
     }
 
@@ -420,7 +420,7 @@ public class ItemSys : MonoBehaviour
                 bagOpen_i = 0;
             }
             print(Time.time);
-            yield return new WaitForSecondsRealtime(0.001f);
+            yield return new WaitForSeconds(0.001f);
             print(Time.time);
         }
         //closeItemWBtn_obj.SetActive(true);
@@ -450,7 +450,7 @@ public class ItemSys : MonoBehaviour
             {
                 bagOpen_i = 0;
             }
-            yield return new WaitForSecondsRealtime(0.001f);
+            yield return new WaitForSeconds(0.001f);
         }
         closeItemWBtn_obj.SetActive(false);
         itemWindow_obj.SetActive(false);
@@ -504,7 +504,7 @@ public class ItemSys : MonoBehaviour
                 position.x = -20.82f;
                 bag_obj.transform.localPosition = position;
             }
-            yield return new WaitForSecondsRealtime(0.001f);
+            yield return new WaitForSeconds(0.001f);
         }
         //closeItemWBtn_obj.SetActive(true);
 
@@ -552,7 +552,7 @@ public class ItemSys : MonoBehaviour
                 bagZipperExit_i = 0;
             }
             
-            yield return new WaitForSecondsRealtime(0.001f);
+            yield return new WaitForSeconds(0.001f);
         }
         if (bagOpenCk_i == 1)
         {

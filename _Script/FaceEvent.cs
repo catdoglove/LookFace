@@ -8,6 +8,8 @@ public class FaceEvent : MonoBehaviour
     //얼굴
     public GameObject[] faceParts_obj;
     public Sprite[] eyeBall_spr, mouth_spr, eyes_spr, ears_spr, nose_spr, eyebrow_spr, body_spr, eyesMask_spr;
+    
+
 
     void Start()
     {

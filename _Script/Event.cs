@@ -54,7 +54,7 @@ public class Event : MonoBehaviour
 
     public CameraFilterPack_Blizzard testcamera2;
 
-    Color color, colorw;
+    Color color, colorw, colorC, colorM;
 
     Vector2 pos;
 
@@ -124,6 +124,8 @@ public class Event : MonoBehaviour
         //색초기설정
         color = fade_obj.GetComponent<Image>().color;
         colorw = fadein_obj.GetComponent<Image>().color;
+        //colorC = GM.GetComponent<FaceEvent>().faceParts_obj[2].GetComponent<Image>().color;
+        //colorM=GM.GetComponent<FaceEvent>().faceParts_obj[2].GetComponent<Image>().color;
 
         fade_obj.SetActive(true);
         StopCoroutine("imgFadeOut");
@@ -170,6 +172,15 @@ public class Event : MonoBehaviour
             arrowR_obj.SetActive(false);
         }
     }
+    public void CharSetFront()
+    {
+
+    }
+    public void MirrorSetFront()
+    {
+
+    }
+
     public void EventSnene1()
     {
 
@@ -282,6 +293,7 @@ public class Event : MonoBehaviour
                     eventTalk_obj.SetActive(false);
                     GM.GetComponent<FaceEvent>().SurprisedFace();
                     GM.GetComponent<FaceEvent>().faceParts_obj[7].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().body_spr[0];
+                    GM.GetComponent<FaceEvent>().faceParts_obj[2].GetComponent<Image>().sprite = GM.GetComponent<FaceEvent>().mouth_spr[0];
                     GM.GetComponent<FaceEvent>().moveD();
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().ArrowSound();
@@ -1787,13 +1799,13 @@ public class Event : MonoBehaviour
 
                                 if (inputA_str.Equals("불 꺼진 리모컨") || inputA_str.Equals("리모컨"))
                                 {
-                                    item();
+                                    //item();
                                     use_input.text = "";
                                     indexAct = 11;
-                                    getReOn_i = 1;
+                                    //getReOn_i = 1;
                                     dark_obj.SetActive(false);
                                     GM.GetComponent<SoundEvt>().SwitchSound();
-                                    eventBtn_obj.SetActive(true);
+                                    //eventBtn_obj.SetActive(true);
                                     //GM.GetComponent<DialogSys>().TextShow();
 
                                 }
@@ -2211,7 +2223,6 @@ public class Event : MonoBehaviour
         {
             going_i = 1;
             GM.GetComponent<FaceEvent>().NomalFace();
-            GM.GetComponent<SoundEvt>().ArrowSound();
             StartCoroutine("StageFadeInOut");
         }
     }
@@ -2227,13 +2238,13 @@ public class Event : MonoBehaviour
         BGS.Play();
         eventBtn_obj.SetActive(true);
         bagHoverSite_obj.SetActive(true);
+        GM.GetComponent<SoundEvt>().MoveSound();
     }
 
 
     void GoShot()
     {
         Back();
-        GM.GetComponent<SoundEvt>().MoveSound();
         eventBtn_obj.SetActive(true);
         GM.GetComponent<DialogSys>().num = 0;
         go_btn.SetActive(false);
@@ -2250,6 +2261,7 @@ public class Event : MonoBehaviour
         tutoAdd_obj.GetComponent<Button>().interactable = true;
         tutoResolve_obj.GetComponent<Button>().interactable = true;
         stage_i = 2;
+        GM.GetComponent<SoundEvt>().MoveSound();
     }
 
 
@@ -2536,7 +2548,7 @@ GO버튼이 활성화되어서 나가짐
         tutoBody_obj.SetActive(false);
         back.GetComponent<Image>().sprite = back_spr[1];
         dark_obj.SetActive(true);
-        GM.GetComponent<SoundEvt>().MoveSound();
+        //GM.GetComponent<SoundEvt>().MoveSound();
         testcamera2._Fade = 0.1f;
     }
 
@@ -2757,6 +2769,7 @@ GO버튼이 활성화되어서 나가짐
         }
         going_i = 0;
         fade_obj.SetActive(false);
+        EventSnene1();
     }
 
     public void Pdb()
