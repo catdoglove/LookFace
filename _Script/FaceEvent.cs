@@ -16,6 +16,7 @@ public class FaceEvent : MonoBehaviour
         
     }
     
+    
     /// <summary>
     /// 아이탬 획득 살짝 웃음
     /// </summary>

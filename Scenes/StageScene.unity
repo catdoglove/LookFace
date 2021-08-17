@@ -441,6 +441,22 @@ MonoBehaviour:
   inputG_str: 
   inputSum_str: 
   inputDis_str: 
+  cantDo_str:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  cantG_str:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   text: {fileID: 597042103}
   move_inp: {fileID: 816627619}
   use_inp: {fileID: 1818743100}
@@ -869,6 +885,9 @@ MonoBehaviour:
   - {fileID: 453796467}
   - {fileID: 1127608737}
   - {fileID: 198349107}
+  - {fileID: 2059515233}
+  - {fileID: 953491370}
+  - {fileID: 813880890}
   eyeBall_spr:
   - {fileID: 7430102873583402952, guid: b0a5f786e87f433418ec161cef8ff698, type: 3}
   - {fileID: 3315007645561495236, guid: b0a5f786e87f433418ec161cef8ff698, type: 3}
@@ -5707,7 +5726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
