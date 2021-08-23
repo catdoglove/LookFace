@@ -80,7 +80,13 @@ public class Event : MonoBehaviour
     float BGSVol_f;
 
     public Sprite[] eyesBlink_spr, maskBlink_spr;
-    
+
+    public CameraFilterPack_AAA_SuperComputer hitandhealeff;
+
+    public string[] moveSave_str0,moveSave_str1, moveSave_str2, moveSave_str3, moveSave_str4;
+    public int moveSaveNum0_i,moveSaveNum1_i, moveSaveNum2_i, moveSaveNum3_i, moveSaveNum4_i;
+    public GameObject[] MSavebtn_obj;
+    public Text[] MSavebtn_txt;
 
     private void Update()
     {
@@ -1229,6 +1235,7 @@ public class Event : MonoBehaviour
     {
         GM.GetComponent<SoundEvt>().ArrowSound();
         fal();
+        MSaveOn();
         move_inp.SetActive(true);
     }
 
@@ -1264,6 +1271,11 @@ public class Event : MonoBehaviour
 
     void fal()
     {
+
+        for (int i = 0; i < 5; i++)
+        {
+            MSavebtn_obj[i].SetActive(false);
+        }
         //GM.GetComponent<SoundEvt>().ArrowSound();
         use_input.text = "";
         move_input.text = "";
@@ -1276,6 +1288,46 @@ public class Event : MonoBehaviour
         Dis_inp.SetActive(false);
     }
 
+
+    void MoveSaveCk(string text)
+    {
+        MSaveDef();
+        int svck = 0;
+        for (int i = 0; i < 5; i++)
+        {
+            if (moveSave_str0[i].Equals(text))
+            {
+                svck = 1;
+            }
+        }
+        if (svck == 0)
+        {
+            moveSave_str0[moveSaveNum0_i] = text;
+            moveSaveNum0_i++;
+        }
+
+        switch (direction)
+        {
+            case 1:
+                moveSave_str1 = moveSave_str0;
+                moveSaveNum1_i = moveSaveNum0_i;
+                break;
+            case 2:
+                moveSave_str2 = moveSave_str0;
+                moveSaveNum2_i = moveSaveNum0_i;
+                break;
+            case 3:
+                moveSave_str3 = moveSave_str0;
+                moveSaveNum3_i = moveSaveNum0_i;
+                break;
+            case 4:
+                moveSave_str4 = moveSave_str0;
+                moveSaveNum4_i = moveSaveNum0_i;
+                break;
+            default:
+                break;
+        }
+    }
 
 
     public void MoveOk()
@@ -1299,6 +1351,7 @@ public class Event : MonoBehaviour
                     case 1:
                         if (inputM_str.Equals("문양") || inputM_str.Equals("커다란문양") || inputM_str.Equals("커다란 문양"))
                         {
+                            MoveSaveCk("문양");
                             BackUpSizeM();
                             indexMove = 1;
                             move_input.text = "";
@@ -1309,6 +1362,7 @@ public class Event : MonoBehaviour
                     case 2:
                         if (inputM_str.Equals("문"))
                         {
+                            MoveSaveCk("문");
                             BackUpSizeM();
                             indexMove = 0;
                             move_input.text = "";
@@ -1321,6 +1375,7 @@ public class Event : MonoBehaviour
                     case 3:
                         if (inputM_str.Equals("책상"))
                         {
+                            MoveSaveCk("책상");
                             BackUpSizeR();
                             EventBoxM();
                             indexMove = 1;
@@ -1337,6 +1392,7 @@ public class Event : MonoBehaviour
                     case 4:
                         if (inputM_str.Equals("선반") || inputM_str.Equals("커다란선반") || inputM_str.Equals("커다란 선반"))
                         {
+                            MoveSaveCk("선반");
                             BackUpSizeR();
                             indexMove = 1;
                             move_input.text = "";
@@ -1366,12 +1422,13 @@ public class Event : MonoBehaviour
                         e3_i = "빛";
                         if (switchOn_i == 1)
                         {
-                            e1_i = "스위치";
+                            e1_i = "낡은 스위치";
                             e2_i = "낡은스위치";
-                            e3_i = "낡은 스위치";
+                            e3_i = "스위치";
                         }
                         if (inputM_str.Equals(e1_i) || inputM_str.Equals(e2_i) || inputM_str.Equals(e3_i))
                         {
+                            MoveSaveCk(e3_i);
                             BackUpSizeL();
                             t_txt.text = "스위치 앞에 섰다.";
                             move_input.text = "";
@@ -1393,6 +1450,7 @@ public class Event : MonoBehaviour
                             if (inputM_str.Equals("캐비넷"))
                             {
 
+                                MoveSaveCk("캐비넷");
                                 BackUpSizeR();
                                 indexMove = 2;
                                 move_input.text = "";
@@ -1412,6 +1470,7 @@ public class Event : MonoBehaviour
                     case 2:
                         if (inputM_str.Equals("급수대"))
                         {
+                            MoveSaveCk("급수대");
                             BackUpSizeR();
                             move_input.text = "";
                             fal();
@@ -1431,6 +1490,7 @@ public class Event : MonoBehaviour
                         {
                             if (inputM_str.Equals("문") || inputM_str.Equals("갈색문") || inputM_str.Equals("갈색 문"))
                             {
+                                MoveSaveCk("문");
                                 BackUpSizeL();
                                 move_input.text = "";
                                 fal();
@@ -1459,6 +1519,104 @@ public class Event : MonoBehaviour
 
             }
         }
+    }
+
+    void MSaveDef()
+    {
+        switch (direction)
+        {
+            case 1:
+                moveSave_str0 = moveSave_str1;
+                moveSaveNum0_i = moveSaveNum1_i;
+                break;
+            case 2:
+                moveSave_str0 = moveSave_str2;
+                moveSaveNum0_i = moveSaveNum2_i;
+                break;
+            case 3:
+                moveSave_str0 = moveSave_str3;
+                moveSaveNum0_i = moveSaveNum3_i;
+                break;
+            case 4:
+                moveSave_str0 = moveSave_str4;
+                moveSaveNum0_i = moveSaveNum4_i;
+                break;
+            default:
+                break;
+        }
+    }
+
+    void MSaveClear()
+    {
+
+        for (int i = 0; i < 5; i++)
+        {
+            moveSave_str0[i] = "";
+        }
+        moveSaveNum0_i = 0;
+        moveSave_str1 = moveSave_str0;
+        moveSaveNum1_i = moveSaveNum0_i;
+        moveSave_str2 = moveSave_str0;
+        moveSaveNum2_i = moveSaveNum0_i;
+        moveSave_str3 = moveSave_str0;
+        moveSaveNum3_i = moveSaveNum0_i;
+        moveSave_str4 = moveSave_str0;
+        moveSaveNum4_i = moveSaveNum0_i;
+    }
+
+    void MSaveOn()
+    {
+        MSaveDef();
+        for (int i = 0; i < 5; i++)
+        {
+            MSavebtn_obj[i].SetActive(false);
+        }
+        for (int i = 0; i < moveSaveNum0_i; i++)
+        {
+            MSavebtn_txt[i].text = moveSave_str0[i];
+            MSavebtn_obj[i].SetActive(true);
+        }
+    }
+
+    public void MovePlaceBtn0()
+    {
+        MSaveDef();
+        move_input.text = ""+ moveSave_str0[0];
+        MoveOk();
+        GM.GetComponent<DialogSys>().TextShow();
+        MoveOkS();
+    }
+    public void MovePlaceBtn1()
+    {
+        MSaveDef();
+        move_input.text = "" + moveSave_str0[1];
+        MoveOk();
+        GM.GetComponent<DialogSys>().TextShow();
+        MoveOkS();
+    }
+    public void MovePlaceBtn2()
+    {
+        MSaveDef();
+        move_input.text = "" + moveSave_str0[2];
+        MoveOk();
+        GM.GetComponent<DialogSys>().TextShow();
+        MoveOkS();
+    }
+    public void MovePlaceBtn3()
+    {
+        MSaveDef();
+        move_input.text = "" + moveSave_str0[3];
+        MoveOk();
+        GM.GetComponent<DialogSys>().TextShow();
+        MoveOkS();
+    }
+    public void MovePlaceBtn4()
+    {
+        MSaveDef();
+        move_input.text = "" + moveSave_str0[4];
+        MoveOk();
+        GM.GetComponent<DialogSys>().TextShow();
+        MoveOkS();
     }
 
     public void MoveOkS()
@@ -1871,6 +2029,7 @@ public class Event : MonoBehaviour
                                 }
                                 else
                                 {
+                                    moveSave_str1[0] = "스위치";
                                     item();
                                     use_input.text = "";
 
@@ -1903,7 +2062,7 @@ public class Event : MonoBehaviour
                                     findGlass_i = 1;
                                     hp_obj[2].SetActive(false);
                                     GM.GetComponent<SoundEvt>().BrokenSound();
-
+                                    ShowRed();
                                 }
                                 else
                                 {
@@ -1913,6 +2072,7 @@ public class Event : MonoBehaviour
                                         eventBtn_obj.SetActive(true);
                                         GM.GetComponent<SoundEvt>().waterdropSound();
                                         hp_obj[2].SetActive(true);
+                                        ShowGreen();
                                     }
 
                                     if (findKey_i == 1)
@@ -2074,7 +2234,7 @@ public class Event : MonoBehaviour
                                     get_inp.SetActive(false);
                                     indexAct = 0;
                                     GM.GetComponent<DialogSys>().TextShow();
-                                    GM.GetComponent<SoundEvt>().getSound();
+                                    GM.GetComponent<SoundEvt>().BrokenSound();
                                     if (eventsat2 == 2)
                                     {
                                         eventBtn_obj.SetActive(true);
@@ -2260,6 +2420,7 @@ public class Event : MonoBehaviour
 
     public void Go()
     {
+        MSaveClear();
         if (going_i==0)
         {
             going_i = 1;
@@ -2833,5 +2994,42 @@ GO버튼이 활성화되어서 나가짐
         }
 
         GM.GetComponent<DialogSys>().closeEndWnd();
+    }
+
+
+
+    void ShowRed()
+    {
+        hitandhealeff._BorderColor.r = 1f;
+        hitandhealeff._BorderColor.b = 0f;
+        hitandhealeff._BorderColor.g = 0f;
+        StartCoroutine("fadeinout");
+    }
+    void ShowGreen()
+    {
+        hitandhealeff._BorderColor.r = 0f;
+        hitandhealeff._BorderColor.b = 0f;
+        hitandhealeff._BorderColor.g = 1f;
+        StartCoroutine("fadeinout");
+    }
+
+    IEnumerator fadeinout()
+    {
+
+
+        for (float f = 0; f <= 1f; f += 0.1f)
+        {
+            hitandhealeff._AlphaHexa = f;
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        for (float f = 1; f >= 0f; f -= 0.1f)
+        {
+            hitandhealeff._AlphaHexa = f;
+            yield return new WaitForSeconds(0.01f);
+        }
+        hitandhealeff._AlphaHexa = 0f;
     }
 }
