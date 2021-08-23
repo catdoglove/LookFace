@@ -1554,13 +1554,13 @@ public class Event : MonoBehaviour
             moveSave_str0[i] = "";
         }
         moveSaveNum0_i = 0;
-        moveSave_str1 = moveSave_str0;
+        moveSave_str1 = (string[])moveSave_str0.Clone();
         moveSaveNum1_i = moveSaveNum0_i;
-        moveSave_str2 = moveSave_str0;
+        moveSave_str2 = (string[])moveSave_str0.Clone();
         moveSaveNum2_i = moveSaveNum0_i;
-        moveSave_str3 = moveSave_str0;
+        moveSave_str3 = (string[])moveSave_str0.Clone();
         moveSaveNum3_i = moveSaveNum0_i;
-        moveSave_str4 = moveSave_str0;
+        moveSave_str4 = (string[])moveSave_str0.Clone();
         moveSaveNum4_i = moveSaveNum0_i;
     }
 
@@ -1573,6 +1573,7 @@ public class Event : MonoBehaviour
         }
         for (int i = 0; i < moveSaveNum0_i; i++)
         {
+            Debug.Log(moveSave_str0[i]);
             MSavebtn_txt[i].text = moveSave_str0[i];
             MSavebtn_obj[i].SetActive(true);
         }
