@@ -25,6 +25,9 @@ public class DialogSys : MonoBehaviour
     public int[] face_i;
     int spaceck_i;
     public GameObject GM;
+
+
+    public string d_str;
     // Start is called before the first frame update
 
     private void Update()
@@ -97,6 +100,11 @@ public class DialogSys : MonoBehaviour
         speedBtn.SetActive(false);
         speedF = 0.05f;
         spaceck_i = 0;
+
+        if (GM.GetComponent<Event>().tutocant_i != 1)
+        {
+            d_str = "" + str;
+        }
     }
 
 

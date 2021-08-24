@@ -1516,8 +1516,35 @@ public class Event : MonoBehaviour
                     default:
                         break;
                 }
-
             }
+            //DefaultMove();
+        }
+    }
+
+    void DefaultMove()
+    {
+        switch (direction)
+        {
+            case 1:
+
+                if (inputM_str.Equals("벽") || inputM_str.Equals("벽쪽"))
+                {
+                    MoveSaveCk("벽");
+                    BackUpSizeM();
+                    indexMove = 3;
+                    move_input.text = "";
+                    fal();
+                    back_btn.SetActive(true);
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            default:
+                break;
         }
     }
 
@@ -1652,6 +1679,7 @@ public class Event : MonoBehaviour
         get_inp.SetActive(false);
         go_btn.SetActive(false);
         t_txt.text = "다시 제자리로 돌아왔다.";
+        GM.GetComponent<DialogSys>().d_str="다시 제자리로 돌아왔다.";
         BasicFace();
         BackReSize();
         EventBoxBack();

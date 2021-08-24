@@ -121,14 +121,11 @@ public class ItemSys : MonoBehaviour
     public void GetItem(int num)
     {
         itemName_txt.text= ItemName_str[num];
-        if (itemList_i < 4)
-        {
             bagSlot_i[itemList_i] = num;
             slot_i=itemList_i;
             SetItemImage();
             itemList_i++;
             SetHands(num);
-        }
     }
     public void ShowBag()
     {
@@ -173,6 +170,26 @@ public class ItemSys : MonoBehaviour
             hand_obj[1].GetComponent<Image>().sprite = handItem_spr[num];
             hand_obj[1].SetActive(true);
             itemName_txt.text = ItemName_str[num];
+        }else if (itemL_i!=num)
+        {
+            int pick = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                if (bagSlot_i[i] == itemL_i)
+                {
+                    pick = i;
+                }
+            }
+            slotHand_obj[pick].SetActive(false);
+
+            Debug.Log("a"+ pick);
+            itemL_i = num;
+            SetItemcheck(itemL_i);
+            Debug.Log("a" + slot_i);
+            hand_obj[0].GetComponent<Image>().sprite = handItem_spr[num];
+            hand_obj[0].SetActive(true);
+            itemName_txt.text = ItemName_str[num];
+
         }
     }
 
