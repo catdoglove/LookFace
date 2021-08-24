@@ -599,6 +599,7 @@ public class Event : MonoBehaviour
                     mirror_obj.GetComponent<Image>().sprite = mirror_spr[1];
                     break;
                 case 34:
+                    CharSetFront();
                     mirror_obj.GetComponent<Image>().sprite = mirror_spr[0];
                     GM.GetComponent<FaceEvent>().NomalFace();
                     eventBtn_obj.SetActive(false);
@@ -1447,7 +1448,7 @@ public class Event : MonoBehaviour
                         {
 
 
-                            if (inputM_str.Equals("캐비넷"))
+                            if (inputM_str.Equals("캐비넷")&& switchOn_i==1)
                             {
 
                                 MoveSaveCk("캐비넷");
@@ -1517,7 +1518,7 @@ public class Event : MonoBehaviour
                         break;
                 }
             }
-            //DefaultMove();
+            DefaultMove();
         }
     }
 
@@ -1526,7 +1527,6 @@ public class Event : MonoBehaviour
         switch (direction)
         {
             case 1:
-
                 if (inputM_str.Equals("벽") || inputM_str.Equals("벽쪽"))
                 {
                     MoveSaveCk("벽");
@@ -1535,6 +1535,20 @@ public class Event : MonoBehaviour
                     move_input.text = "";
                     fal();
                     back_btn.SetActive(true);
+                }
+
+                if (inputM_str.Equals("기운") || inputM_str.Equals("알 수 없는 기운"))
+                {
+                    indexAct = 21;
+                    move_input.text = "";
+                    fal();
+                }
+
+                if (inputM_str.Equals("방안") || inputM_str.Equals("방"))
+                {
+                    indexAct = 22;
+                    move_input.text = "";
+                    fal();
                 }
                 break;
             case 2:
@@ -1709,7 +1723,7 @@ public class Event : MonoBehaviour
                     {
                         cdck++;
                         inputSum_str = sum2_input.text;
-                        if (inputSum_str.Equals("드라이버"))
+                        if (inputSum_str.Equals("드라이버") || inputSum_str.Equals("낡은 드라이버") || inputSum_str.Equals("낡은드라이버"))
                         {
                             cdck++;
                         }
@@ -1719,7 +1733,7 @@ public class Event : MonoBehaviour
                         cdck = 0;
                     }
                     inputSum_str = sum1_input.text;
-                    if (inputSum_str.Equals("드라이버"))
+                    if (inputSum_str.Equals("드라이버") || inputSum_str.Equals("낡은 드라이버") || inputSum_str.Equals("낡은드라이버"))
                     {
                         cdck++;
                         inputSum_str = sum2_input.text;
@@ -1750,11 +1764,34 @@ public class Event : MonoBehaviour
                         tutoBackBtn_obj.GetComponent<Button>().interactable = true;
                         tutoGet_obj.GetComponent<Button>().interactable = true;
 
+
                         if (eventsat2 == 3)
                         {
                             eventBtn_obj.SetActive(true);
                             eventsat2 = 4;
                         }
+
+                        if (GM.GetComponent<ItemSys>().itemL_i == 2)
+                        {
+                            GM.GetComponent<ItemSys>().itemL_i = 0;
+                            GM.GetComponent<ItemSys>().hand_obj[0].SetActive(false);
+                        }
+                        if (GM.GetComponent<ItemSys>().itemR_i == 2)
+                        {
+                            GM.GetComponent<ItemSys>().itemR_i = 0;
+                            GM.GetComponent<ItemSys>().hand_obj[1].SetActive(false);
+                        }
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (GM.GetComponent<ItemSys>().bagSlot_i[i] == 2)
+                            {
+                                GM.GetComponent<ItemSys>().bagSlot_i[i] = 0;
+                                GM.GetComponent<ItemSys>().slot_obj[i].SetActive(false);
+                                GM.GetComponent<ItemSys>().slotHand_obj[i].SetActive(false);
+                            }
+                        }
+                        GM.GetComponent<ItemSys>().itemName_txt.text = "";
+                        GM.GetComponent<SoundEvt>().BrokenSound();
                     }
                     else
                     {
@@ -2082,7 +2119,16 @@ public class Event : MonoBehaviour
                     case 2:
                         if (indexMove == 1)
                         {
-                            if (inputA_str.Equals("급수대"))
+                            if (waterdrink_i>=1)
+                            {
+                                string[] _s = new string[7] { "물", "수돗물", "먹는 물", "마시는 물", "수면", "수면 위", "급수대" };
+
+                                for (int i = 0; i < 7; i++)
+                                {
+
+                                }
+                            }
+                            if (inputA_str.Equals("급수대") || inputA_str.Equals("수도꼭지") || inputA_str.Equals("수도 꼭지") || inputA_str.Equals("꼭지"))
                             {
 
                                 if (findGlass_i == 0)
@@ -2151,7 +2197,7 @@ public class Event : MonoBehaviour
                             }
 
 
-                            if (inputA_str.Equals("유리조각") || inputA_str.Equals("거울") || inputA_str.Equals("유리 조각"))
+                            if (inputA_str.Equals("유리조각") || inputA_str.Equals("거울") || inputA_str.Equals("유리 조각") || inputA_str.Equals("발밑"))
                             {
                                 indexAct = 13;
                                 use_input.text = "";
@@ -2263,7 +2309,7 @@ public class Event : MonoBehaviour
                                     get_inp.SetActive(false);
                                     indexAct = 0;
                                     GM.GetComponent<DialogSys>().TextShow();
-                                    GM.GetComponent<SoundEvt>().BrokenSound();
+                                    GM.GetComponent<SoundEvt>().getSound();
                                     if (eventsat2 == 2)
                                     {
                                         eventBtn_obj.SetActive(true);
@@ -2928,6 +2974,7 @@ GO버튼이 활성화되어서 나가짐
         }
 
         fade_obj.GetComponent<Image>().color = Color.black;
+        EventSnene1();
     }
 
     IEnumerator TutoimgFadeInOut()
