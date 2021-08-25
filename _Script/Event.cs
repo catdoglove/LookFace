@@ -88,6 +88,9 @@ public class Event : MonoBehaviour
     public GameObject[] MSavebtn_obj;
     public Text[] MSavebtn_txt;
 
+    public string cashA_txt, cashG_txt;
+    public int cash_i;
+
     private void Update()
     {
 
@@ -1242,6 +1245,7 @@ public class Event : MonoBehaviour
 
     public void Act()
     {
+        cashA_txt = "";
         GM.GetComponent<SoundEvt>().ArrowSound();
         fal();
         Act_btn.SetActive(true);
@@ -1995,6 +1999,7 @@ public class Event : MonoBehaviour
 
     public void ActOK()
     {
+        cash_i = 0;
         GM.GetComponent<SoundEvt>().ArrowSound();
         if (stage_i == 0)
         {
@@ -2004,7 +2009,6 @@ public class Event : MonoBehaviour
         else
         {
             indexAct = 99;
-            t_txt.text = "그런 것은 없어.";
 
             /*
             arrowU_obj.SetActive(true);//문양1
@@ -2039,12 +2043,15 @@ public class Event : MonoBehaviour
                                     use_inp.SetActive(false);
 
                                 }
+                                else
+                                {
+
+                                    cash_i = 1;
+                                }
                             }
                             else
                             {
-
-                                t_txt.text = "그런 것은 없어.";
-                                DefaultTextAct();
+                                
                                 if (inputA_str.Equals("불 꺼진 리모컨") || inputA_str.Equals("리모컨"))
                                 {
                                     //item();
@@ -2056,6 +2063,11 @@ public class Event : MonoBehaviour
                                     //eventBtn_obj.SetActive(true);
                                     //GM.GetComponent<DialogSys>().TextShow();
 
+                                }
+                                else
+                                {
+
+                                    cash_i = 1;
                                 }
                             }
 
@@ -2070,6 +2082,11 @@ public class Event : MonoBehaviour
                             use_input.text = "";
                             Act_btn.SetActive(false);
                             use_inp.SetActive(false);
+                        }
+                        else
+                        {
+
+                            cash_i = 1;
                         }
                         break;
                     case 4:
@@ -2112,6 +2129,11 @@ public class Event : MonoBehaviour
                                 }
                                 Act_btn.SetActive(false);
                                 use_inp.SetActive(false);
+                            }
+                            else
+                            {
+
+                                cash_i = 1;
                             }
                         }
                         
@@ -2204,6 +2226,11 @@ public class Event : MonoBehaviour
                                 Act_btn.SetActive(false);
                                 use_inp.SetActive(false);
                             }
+                            else
+                            {
+
+                                cash_i = 1;
+                            }
 
                         }
                         else
@@ -2238,6 +2265,11 @@ public class Event : MonoBehaviour
                                         GM.GetComponent<ItemSys>().itemName_txt.text = "";
                                     }
                                 }
+                                else
+                                {
+
+                                    cash_i = 1;
+                                }
                             }
 
                             if (indexMove == 3)
@@ -2250,6 +2282,11 @@ public class Event : MonoBehaviour
                                     use_inp.SetActive(false);
                                     indexAct = 13;
                                 }
+                                else
+                                {
+
+                                    cash_i = 1;
+                                }
                             }
                         }
                         break;
@@ -2260,8 +2297,17 @@ public class Event : MonoBehaviour
         }
     }
 
+    public void ActOKS()
+    {
+        if (cash_i == 1)
+        {
+            DefaultTextAct();
+        }
+    }
+
     public void Get()
     {
+        cashG_txt = "";
         GM.GetComponent<SoundEvt>().ArrowSound();
         get_input.text = "";
         fal();
@@ -2298,7 +2344,6 @@ public class Event : MonoBehaviour
                         {
                             if (inputG_str.Equals("드라이버") || inputG_str.Equals("낡은 드라이버") || inputG_str.Equals("낡은드라이버"))
                             {
-                                t_txt.text = "그런 것은 없어.";
                                 DefaultTextGet();
                                 if (getDr_i == 0)
                                 {
@@ -2322,7 +2367,6 @@ public class Event : MonoBehaviour
                             }
                             else
                             {
-                                t_txt.text = "그런 것은 없어.";
                                 DefaultTextGet();
                             }
 
@@ -2338,7 +2382,6 @@ public class Event : MonoBehaviour
                         }
                         else
                         {
-                            t_txt.text = "그런 것은 없어.";
                             DefaultTextGet();
                         }
                         break;
@@ -2359,13 +2402,11 @@ public class Event : MonoBehaviour
                             }
                             else
                             {
-                                t_txt.text = "그런 것은 없어.";
                                 DefaultTextGet();
                             }
                         }
                         else
                         {
-                            t_txt.text = "그런 것은 없어.";
                             DefaultTextGet();
                         }
                         break;
@@ -2381,7 +2422,6 @@ public class Event : MonoBehaviour
                     case 1:
                         if (indexMove == 1)
                         {
-                            t_txt.text = "그런 것은 없어.";
                             DefaultTextGet();
                         }
                         break;
@@ -2420,7 +2460,6 @@ public class Event : MonoBehaviour
                             else
                             {
                                 //오타가 난 경우 확인할 수 있도록
-                                t_txt.text = "그런 것은 없어.";
                                 DefaultTextGet();
                             }
 
@@ -2435,7 +2474,6 @@ public class Event : MonoBehaviour
                         }
                         else
                         {
-                            t_txt.text = "그런 것은 없어.";
                             DefaultTextGet();
                         }
                         break;
@@ -2448,11 +2486,31 @@ public class Event : MonoBehaviour
 
     void DefaultTextGet()
     {
-        t_txt.text = cantG_str[UnityEngine.Random.Range(0, 6)];
+        if (cashG_txt.Equals(inputG_str))
+        {
+            cashG_txt = inputG_str;
+        }
+        else
+        {
+            cashG_txt = inputG_str;
+            t_txt.text = cantG_str[UnityEngine.Random.Range(0, 6)];
+
+        }
     }
     void DefaultTextAct()
     {
-        t_txt.text = cantDo_str[UnityEngine.Random.Range(0, 6)];
+
+        if (cashA_txt.Equals(inputA_str))
+        {
+            Debug.Log("a" + inputA_str + cashA_txt);
+            cashA_txt = inputA_str;
+        }
+        else
+        {
+            Debug.Log("a"+ inputA_str+ cashA_txt);
+            cashA_txt = inputA_str;
+            t_txt.text = cantDo_str[UnityEngine.Random.Range(0, 6)];
+        }
     }
 
     /// <summary>
@@ -2495,6 +2553,7 @@ public class Event : MonoBehaviour
 
     public void Go()
     {
+        GM.GetComponent<DialogSys>().d_str = "";
         MSaveClear();
         if (going_i==0)
         {
@@ -2722,7 +2781,6 @@ GO버튼이 활성화되어서 나가짐
     void TutorialAct()
     {
         tutocant_i = 1;
-        t_txt.text = "그런 것은 할 수 없어.";
         DefaultTextAct();
         if (inputA_str.Equals("거울"))
         {
@@ -2761,6 +2819,7 @@ GO버튼이 활성화되어서 나가짐
         t_txt.text = "그런 것은 할 수 없어.";
         if (inputM_str.Equals("문"))
         {
+            MoveSaveCk("문");
             BackUpSizeM();
             TutoFalse();
             switch (tutoAct_i)
@@ -2795,8 +2854,7 @@ GO버튼이 활성화되어서 나가짐
     void TutorialGet()
     {
         tutocant_i = 1;
-        t_txt.text = "그런 것은 할 수 없어.";
-        DefaultTextGet();
+        //t_txt.text = "그런 것은 할 수 없어.";
         if (inputG_str.Equals("가방"))
         {
             TutoFalse();
@@ -2807,6 +2865,7 @@ GO버튼이 활성화되어서 나가짐
             tutohand.SetActive(true);
         }
         GM.GetComponent<DialogSys>().TextShow();
+        DefaultTextGet();
     }
     void TutorialGo()
     {

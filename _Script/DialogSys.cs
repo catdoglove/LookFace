@@ -183,21 +183,21 @@ public class DialogSys : MonoBehaviour
 
         if (Event.stage_i == 0)
         {
-            data = data0_talk;
-            code_str = "문장" + GM.GetComponent<Event>().tutoPro_i;
-            //대사
-            Debug.Log(code_str);
-            str = "" + data[0][code_str];
-
-            //GM.GetComponent<SoundEvt>().ArrowSound();
-            //TalkSound();
-            if (GM.GetComponent<Event>().tutocant_i==1)
+            if (GM.GetComponent<Event>().tutocant_i == 0)
             {
-                str = "그/런/ /것/은/ /할/ /수/ /없/어/.";
-            }
+                data = data0_talk;
+                code_str = "문장" + GM.GetComponent<Event>().tutoPro_i;
+                //대사
+                Debug.Log(code_str);
+                str = "" + data[0][code_str];
+
+                //GM.GetComponent<SoundEvt>().ArrowSound();
+                //TalkSound();
+                //str = "그/런/ /것/은/ /할/ /수/ /없/어/.";
             Text_cut = str.Split('/');
             cleantalk();
             StartCoroutine("talkRun");
+        }
 
         }
         else

@@ -615,6 +615,9 @@ MonoBehaviour:
   - {fileID: 423756788}
   - {fileID: 109016294}
   - {fileID: 1697225756}
+  cashA_txt: 
+  cashG_txt: 
+  cash_i: 0
 --- !u!4 &72734671
 Transform:
   m_ObjectHideFlags: 0
@@ -4300,6 +4303,17 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 72734672}
         m_MethodName: TextShow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 72734670}
+        m_MethodName: ActOKS
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
