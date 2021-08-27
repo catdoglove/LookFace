@@ -291,7 +291,7 @@ public class DialogSys : MonoBehaviour
                 faceParts_obj[5].GetComponent<Image>().sprite = eyebrow_spr[0];
                 faceParts_obj[7].GetComponent<Image>().sprite = eyeMask_spr[0];
                 faceParts_obj[0].SetActive(true);
-                dialog_txt.text = "그런 것은 없어";
+                //dialog_txt.text = "그런 것은 없어";
             }
 
             if (face_i[0] == 1)
