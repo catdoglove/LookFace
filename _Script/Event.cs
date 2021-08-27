@@ -1724,10 +1724,10 @@ public class Event : MonoBehaviour
         {
             MSavebtn_obj[i].SetActive(true);
         }
-        horizLayoutGroup.CalculateLayoutInputHorizontal();
-        horizLayoutGroup.CalculateLayoutInputVertical();
-        horizLayoutGroup.SetLayoutHorizontal();
-        horizLayoutGroup.SetLayoutVertical();
+        //horizLayoutGroup.CalculateLayoutInputHorizontal();
+        //horizLayoutGroup.CalculateLayoutInputVertical();
+        //horizLayoutGroup.SetLayoutHorizontal();
+        //horizLayoutGroup.SetLayoutVertical();
         LayoutRebuilder.ForceRebuildLayoutImmediate(horizRectTransform);
     }
 
@@ -3647,7 +3647,7 @@ GO버튼이 활성화되어서 나가짐
             fade_obj.SetActive(true);
             color.a = Mathf.Lerp(1f, 0f, i);
             fade_obj.GetComponent<Image>().color = color;
-            yield return new WaitForSeconds(0.007f);
+            yield return new WaitForSeconds(0.05f);
         }
 
         fade_obj.GetComponent<Image>().color = Color.black;
