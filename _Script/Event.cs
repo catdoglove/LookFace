@@ -48,6 +48,7 @@ public class Event : MonoBehaviour
 
     //이밴트
     public GameObject eventBtn_obj, dark_obj, eventTalk_obj, eventCharMove_obj, eventCharMove2_obj, eventBall_obj, eventTalk2_obj, end_obj;
+    public GameObject eventImg_obj;
 
     public GameObject GM;
 
@@ -90,7 +91,10 @@ public class Event : MonoBehaviour
 
     public string cashA_txt, cashG_txt;
     public int cash_i;
-    
+
+    public HorizontalLayoutGroup horizLayoutGroup;
+    public RectTransform horizRectTransform;
+
     void Start()
     {
         cantDo_str[0] = "그런 건 할 수 없다.";
@@ -649,8 +653,7 @@ public class Event : MonoBehaviour
                     GM.GetComponent<DialogSys>().talkeventbtn();
                     GM.GetComponent<SoundEvt>().TalkSound();
                     GM.GetComponent<SoundEvt>().fallingSound();
-                    fade_obj.SetActive(true);
-                    StartCoroutine("imgFadeOutend");
+                    Invoke("EventInVoke", 0.2f);
                     break;
                 case 39:
                     end_obj.SetActive(true);
@@ -1249,10 +1252,11 @@ public class Event : MonoBehaviour
     }
 
 
-        public void Move()
+    public void Move()
     {
         GM.GetComponent<SoundEvt>().ArrowSound();
         fal();
+        MSaveOn();
         MSaveOn();
         move_inp.SetActive(true);
     }
@@ -1377,7 +1381,11 @@ public class Event : MonoBehaviour
                             fal();
                             back_btn.SetActive(true);
                         }
-                            break;
+                        else
+                        {
+                            t_txt.text = "그런 곳으로는 갈수 없어.";
+                        }
+                        break;
                     case 2:
                         if (inputM_str.Equals("문"))
                         {
@@ -1411,6 +1419,10 @@ public class Event : MonoBehaviour
                             back_btn.SetActive(true);
                             moveCk_i = 1;
                         }
+                        else
+                        {
+                            t_txt.text = "그런 곳으로는 갈수 없어.";
+                        }
 
                         break;
                     case 3:
@@ -1440,6 +1452,10 @@ public class Event : MonoBehaviour
                             back_btn.SetActive(true);
                             moveCk_i = 1;
                         }
+                        else
+                        {
+                            t_txt.text = "그런 곳으로는 갈수 없어.";
+                        }
                         break;
                     case 4:
                         if (inputM_str.Equals("선반") || inputM_str.Equals("커다란선반") || inputM_str.Equals("커다란 선반"))
@@ -1466,6 +1482,10 @@ public class Event : MonoBehaviour
                             fal();
                             back_btn.SetActive(true);
                             moveCk_i = 1;
+                        }
+                        else
+                        {
+                            t_txt.text = "그런 곳으로는 갈수 없어.";
                         }
                         break;
 
@@ -1550,7 +1570,17 @@ public class Event : MonoBehaviour
                                 indexAct = 22;
                                 move_input.text = "";
                                 fal();
-                            }else if(inputM_str.Equals("방안") || inputM_str.Equals("방 안") || inputM_str.Equals("방"))
+                            }
+                            else if (inputM_str.Equals("어둠") || inputM_str.Equals("어둠속"))
+                            {
+                                if (switchOn_i != 1)
+                                {
+                                    indexAct = 24;
+                                    move_input.text = "";
+                                    fal();
+                                }
+                            }
+                            else if(inputM_str.Equals("방안") || inputM_str.Equals("방 안") || inputM_str.Equals("방"))
                             {
                                 indexAct = 23;
                                 move_input.text = "";
@@ -1676,15 +1706,29 @@ public class Event : MonoBehaviour
     void MSaveOn()
     {
         MSaveDef();
+
+        for (int i = 0; i < moveSaveNum0_i; i++)
+        {
+            MSavebtn_obj[i].SetActive(true);
+            MSavebtn_txt[i].text = moveSave_str0[i];
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            MSavebtn_obj[i].SetActive(true);
+        }
         for (int i = 0; i < 5; i++)
         {
             MSavebtn_obj[i].SetActive(false);
         }
         for (int i = 0; i < moveSaveNum0_i; i++)
         {
-            MSavebtn_txt[i].text = moveSave_str0[i];
             MSavebtn_obj[i].SetActive(true);
         }
+        horizLayoutGroup.CalculateLayoutInputHorizontal();
+        horizLayoutGroup.CalculateLayoutInputVertical();
+        horizLayoutGroup.SetLayoutHorizontal();
+        horizLayoutGroup.SetLayoutVertical();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(horizRectTransform);
     }
 
     public void MovePlaceBtn0()
@@ -1963,7 +2007,7 @@ public class Event : MonoBehaviour
             }
             else
             {
-                t_txt.text = "그런 것은 할 수 없어.";
+                //t_txt.text = "그런 것은 할 수 없어.";
                 DefaultTextAct();
             }
         }
@@ -2136,6 +2180,10 @@ public class Event : MonoBehaviour
                             }
 
                         }
+                        else
+                        {
+                            cash_i = 1;
+                        }
                         break;
                     case 2:
                         if (indexMove == 1)
@@ -2260,6 +2308,7 @@ public class Event : MonoBehaviour
                         }
                         break;
                     default:
+                        cash_i = 1;
                         break;
                 }
             }
@@ -2276,6 +2325,21 @@ public class Event : MonoBehaviour
                                 use_input.text = "";
                                 Act_btn.SetActive(false);
                                 use_inp.SetActive(false);
+                            }
+                            else if (inputA_str.Equals("어둠") || inputA_str.Equals("어둠속"))
+                            {
+                                if (switchOn_i != 1)
+                                {
+                                    indexAct = 24;
+                                    use_input.text = "";
+                                    Act_btn.SetActive(false);
+                                    use_inp.SetActive(false);
+                                }
+                                else
+                                {
+
+                                    cash_i = 1;
+                                }
                             }
                         }
                         else if (indexMove == 1)
@@ -2491,23 +2555,31 @@ public class Event : MonoBehaviour
                                         eventBtn_obj.SetActive(true);
                                         GM.GetComponent<ItemSys>().itemName_txt.text = "";
                                     }
-                                }
-                                if (inputA_str.Equals("열쇠 구멍") || inputA_str.Equals("구멍") || inputA_str.Equals("열쇠구멍"))
+                                }else if (inputA_str.Equals("열쇠 구멍") || inputA_str.Equals("구멍") || inputA_str.Equals("열쇠구멍"))
                                 {
                                     use_input.text = "";
                                     indexAct = 14;
                                     Act_btn.SetActive(false);
                                     use_inp.SetActive(false);
-                                }else if (inputA_str.Equals("문") || inputA_str.Equals("갈색 문") || inputA_str.Equals("갈색문") || inputA_str.Equals("문고리") || inputA_str.Equals("손잡이"))
+                                    if (doorOpen_i == 1)
+                                    {
+                                        indexAct = 15;
+                                    }
+                                }
+                                else if (inputA_str.Equals("문") || inputA_str.Equals("갈색 문") || inputA_str.Equals("갈색문") || inputA_str.Equals("문고리") || inputA_str.Equals("손잡이"))
                                 {
                                     use_input.text = "";
                                     Act_btn.SetActive(false);
                                     use_inp.SetActive(false);
                                     indexAct = 13;
-                                }
-                                if (inputA_str.Equals("문 밑") || inputA_str.Equals("문 안내판") || inputA_str.Equals("안내판") || inputA_str.Equals("문 안내판") || inputA_str.Equals("표지판") || inputA_str.Equals("문 표지판"))
+                                    if (doorOpen_i == 1)
+                                    {
+                                        indexAct = 15;
+                                    }
+                                    cash_i = 0;
+                                }else if (inputA_str.Equals("문 밑") || inputA_str.Equals("문 안내판") || inputA_str.Equals("안내판") || inputA_str.Equals("문 안내판") || inputA_str.Equals("표지판") || inputA_str.Equals("문 표지판"))
                                 {
-                                    indexAct = 23;
+                                    indexAct = 21;
                                     use_input.text = "";
                                     Act_btn.SetActive(false);
                                     use_inp.SetActive(false);
@@ -2526,6 +2598,7 @@ public class Event : MonoBehaviour
                         }
                         break;
                     default:
+                        cash_i = 1;
                         break;
                 }
             }
@@ -2644,12 +2717,7 @@ public class Event : MonoBehaviour
 
                                 }
                             }
-                            else
-                            {
-                                DefaultTextGet();
-                            }
-
-                            if (inputG_str.Equals("종이") || inputG_str.Equals("포스터"))
+                            else if (inputG_str.Equals("종이") || inputG_str.Equals("포스터"))
                             {
                                 Debug.Log("dsads"+indexMove);
                                 indexAct = 13;
@@ -2755,6 +2823,7 @@ public class Event : MonoBehaviour
                         }
                         break;
                     default:
+                        DefaultTextGet();
                         break;
                 }
 
@@ -2773,6 +2842,21 @@ public class Event : MonoBehaviour
                                 Act_btn.SetActive(false);
                                 get_inp.SetActive(false);
                                 GM.GetComponent<DialogSys>().TextShow();
+                            }
+                            else if (inputG_str.Equals("어둠") || inputG_str.Equals("어둠속"))
+                            {
+                                if (switchOn_i != 1)
+                                {
+                                    indexAct = 24;
+                                    get_input.text = "";
+                                    Act_btn.SetActive(false);
+                                    get_inp.SetActive(false);
+                                    GM.GetComponent<DialogSys>().TextShow();
+                                }
+                                else
+                                {
+                                    DefaultTextGet();
+                                }
                             }
                         }
                         else if (indexMove == 1)
@@ -2896,6 +2980,7 @@ public class Event : MonoBehaviour
                         }
                         break;
                     default:
+                        DefaultTextGet();
                         break;
                 }
             }
@@ -3035,6 +3120,17 @@ public class Event : MonoBehaviour
         return a;
     }
 
+    void EventInVoke()
+    {
+        eventImg_obj.SetActive(true);
+    }
+
+        public void Event1()
+    {
+        //eventImg_obj.SetActive(fal);
+        fade_obj.SetActive(true);
+        StartCoroutine("imgFadeOutend");
+    }
 
     /// <summary>
     /// 아이템을 얻었을때 처리
@@ -3285,7 +3381,6 @@ GO버튼이 활성화되어서 나가짐
         {
             case 0:
                 //t_txt.text = "‘누구나 무엇이든 구매할 수 있다!’ ?0?마켓 사이트가 열려있다. 아!그래 주문해야지.분명..거울이라고 했었지 아마?";
-
                 tutoPro_i++;
                 tutocant_i = 0;
                 tutoAct_obj.GetComponent<Button>().interactable = true;
